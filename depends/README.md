@@ -34,6 +34,7 @@ The following can be set when running make: make FOO=bar
     BASE_CACHE: built packages will be placed here
     SDK_PATH: Path where sdk's can be found (used by OSX)
     PRIORITY_DOWNLOAD_PATH: Try fetching source files from here before using their own URLs
+    NO_QT: Don't download/build/cache qt and its dependencies
     NO_WALLET: Don't download/build/cache libs needed to enable the wallet
     DEBUG: disable some optimizations and enable more runtime checking
 

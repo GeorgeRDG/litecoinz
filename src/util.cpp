@@ -103,6 +103,7 @@ map<string, string> mapArgs;
 map<string, vector<string> > mapMultiArgs;
 bool fDebug = false;
 bool fPrintToConsole = false;
+bool fQtGui = false;
 bool fPrintToDebugLog = true;
 bool fDaemon = false;
 bool fServer = false;
@@ -890,9 +891,7 @@ void SetThreadPriority(int nPriority)
 
 std::string PrivacyInfo()
 {
-    return "\n" +
-           FormatParagraph(strprintf(_("In order to ensure you are adequately protecting your privacy when using LitecoinZ, please see <%s>."),
-                                     "https://litecoinz.info/support/security/")) + "\n";
+    return "\n";
 }
 
 std::string LicenseInfo()

@@ -1124,7 +1124,7 @@ bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler)
 
     if ((chainparams.NetworkIDString() != "regtest") &&
             GetBoolArg("-showmetrics", isatty(STDOUT_FILENO)) &&
-            !fPrintToConsole && !GetBoolArg("-daemon", false)) {
+            !fPrintToConsole && !GetBoolArg("-daemon", false) && !fQtGui) {
         // Start the persistent metrics interface
         ConnectMetricsScreen();
         threadGroup.create_thread(&ThreadShowMetricsScreen);
