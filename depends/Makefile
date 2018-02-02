@@ -5,16 +5,17 @@ BASE_CACHE ?= $(BASEDIR)/built
 SDK_PATH ?= $(BASEDIR)/SDKs
 NO_QT ?=
 NO_WALLET ?=
+FALLBACK_DOWNLOAD_PATH ?= https://litecoinz.info/depends-sources/
 
-PRIORITY_DOWNLOAD_PATH ?= https://litecoinz.info/depends-sources/
-
-BUILD ?= $(shell ./config.guess)
+BUILD = $(shell ./config.guess)
 HOST ?= $(BUILD)
 PATCHES_PATH = $(BASEDIR)/patches
 BASEDIR = $(CURDIR)
 HASH_LENGTH:=11
 DOWNLOAD_CONNECT_TIMEOUT:=10
 DOWNLOAD_RETRIES:=3
+HOST_ID_SALT ?= salt
+BUILD_ID_SALT ?= salt
 
 host:=$(BUILD)
 ifneq ($(HOST),)
@@ -50,7 +51,6 @@ full_host_os:=$(subst $(host_arch)-$(host_vendor)-,,$(canonical_host))
 host_os:=$(findstring linux,$(full_host_os))
 host_os+=$(findstring darwin,$(full_host_os))
 host_os+=$(findstring mingw32,$(full_host_os))
-host_os+=$(findstring mingw64,$(full_host_os))
 host_os:=$(strip $(host_os))
 ifeq ($(host_os),)
 host_os=$(full_host_os)
@@ -74,6 +74,20 @@ include builders/$(build_os).mk
 include builders/default.mk
 include packages/packages.mk
 
+build_id_string:=$(BUILD_ID_SALT)
+build_id_string+=$(shell $(build_CC) --version 2>/dev/null)
+build_id_string+=$(shell $(build_AR) --version 2>/dev/null)
+build_id_string+=$(shell $(build_CXX) --version 2>/dev/null)
+build_id_string+=$(shell $(build_RANLIB) --version 2>/dev/null)
+build_id_string+=$(shell $(build_STRIP) --version 2>/dev/null)
+
+$(host_arch)_$(host_os)_id_string:=$(HOST_ID_SALT)
+$(host_arch)_$(host_os)_id_string+=$(shell $(host_CC) --version 2>/dev/null)
+$(host_arch)_$(host_os)_id_string+=$(shell $(host_AR) --version 2>/dev/null)
+$(host_arch)_$(host_os)_id_string+=$(shell $(host_CXX) --version 2>/dev/null)
+$(host_arch)_$(host_os)_id_string+=$(shell $(host_RANLIB) --version 2>/dev/null)
+$(host_arch)_$(host_os)_id_string+=$(shell $(host_STRIP) --version 2>/dev/null)
+
 qt_packages_$(NO_QT) = $(qt_packages) $(qt_$(host_os)_packages) $(qt_$(host_arch)_$(host_os)_packages)
 wallet_packages_$(NO_WALLET) = $(wallet_packages)
 proton_packages_$(NO_PROTON) = $(proton_packages)
@@ -95,7 +109,7 @@ include funcs.mk
 
 toolchain_path=$($($(host_arch)_$(host_os)_native_toolchain)_prefixbin)
 final_build_id_long+=$(shell $(build_SHA256SUM) config.site.in)
-final_build_id+=$(shell echo -n $(final_build_id_long) | $(build_SHA256SUM) | cut -c-$(HASH_LENGTH))
+final_build_id+=$(shell echo -n "$(final_build_id_long)" | $(build_SHA256SUM) | cut -c-$(HASH_LENGTH))
 $(host_prefix)/.stamp_$(final_build_id): $(native_packages) $(packages)
 	$(AT)rm -rf $(@D)
 	$(AT)mkdir -p $(@D)
@@ -119,6 +133,7 @@ $(host_prefix)/share/config.site : config.site.in $(host_prefix)/.stamp_$(final_
             -e 's|@CXXFLAGS@|$(strip $(host_CXXFLAGS) $(host_$(release_type)_CXXFLAGS))|' \
             -e 's|@CPPFLAGS@|$(strip $(host_CPPFLAGS) $(host_$(release_type)_CPPFLAGS))|' \
             -e 's|@LDFLAGS@|$(strip $(host_LDFLAGS) $(host_$(release_type)_LDFLAGS))|' \
+            -e 's|@allow_host_packages@|$(ALLOW_HOST_PACKAGES)|' \
             -e 's|@no_qt@|$(NO_QT)|' \
             -e 's|@no_wallet@|$(NO_WALLET)|' \
             -e 's|@debug@|$(DEBUG)|' \
@@ -135,9 +150,9 @@ endef
 
 define check_or_remove_sources
   mkdir -p $($(package)_source_dir); cd $($(package)_source_dir); \
-  $(build_SHA256SUM) -c $($(package)_fetched) >/dev/null 2>/dev/null || \
-    ( if test -f $($(package)_all_sources); then echo "Checksum missing or mismatched for $(package) source. Forcing re-download."; fi; \
-      rm -f $($(package)_all_sources) $($(1)_fetched))
+  test -f $($(package)_fetched) && ( $(build_SHA256SUM) -c $($(package)_fetched) >/dev/null 2>/dev/null || \
+    ( echo "Checksum missing or mismatched for $(package) source. Forcing re-download."; \
+      rm -f $($(package)_all_sources) $($(1)_fetched))) || true
 endef
 
 check-packages:
@@ -159,7 +174,7 @@ download-osx:
 download-linux:
 	@$(MAKE) -s HOST=x86_64-unknown-linux-gnu download-one
 download-win:
-	@$(MAKE) -s HOST=x86_64-pc-mingw64 download-one
+	@$(MAKE) -s HOST=x86_64-w64-mingw32 download-one
 download: download-osx download-linux download-win
 
 .PHONY: install cached download-one download-osx download-linux download-win download check-packages check-sources
