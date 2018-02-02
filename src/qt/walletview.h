@@ -65,7 +65,6 @@ private:
     SendCoinsDialog *sendCoinsPage;
     AddressBookPage *usedSendingAddressesPage;
     AddressBookPage *usedReceivingAddressesPage;
-    ZAddressBookPage *usedSendingZAddressesPage;
     ZAddressBookPage *usedReceivingZAddressesPage;
 
     TransactionView *transactionView;
@@ -104,7 +103,6 @@ public Q_SLOTS:
 
     /** Show used sending addresses */
     void usedSendingAddresses();
-    void usedSendingZAddresses();
     /** Show used receiving addresses */
     void usedReceivingAddresses();
     void usedReceivingZAddresses();

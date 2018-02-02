@@ -12,7 +12,6 @@
 #include "zaddresstablemodel.h"
 #include "bitcoingui.h"
 #include "csvmodelwriter.h"
-#include "zeditaddressdialog.h"
 #include "guiutil.h"
 #include "platformstyle.h"
 
@@ -21,81 +20,51 @@
 #include <QMessageBox>
 #include <QSortFilterProxyModel>
 
-ZAddressBookPage::ZAddressBookPage(const PlatformStyle *platformStyle, Mode mode, Tabs tab, QWidget *parent) :
+ZAddressBookPage::ZAddressBookPage(const PlatformStyle *platformStyle, Mode mode, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ZAddressBookPage),
     model(0),
-    mode(mode),
-    tab(tab)
+    mode(mode)
 {
     ui->setupUi(this);
 
     if (!platformStyle->getImagesOnButtons()) {
         ui->newAddress->setIcon(QIcon());
         ui->copyAddress->setIcon(QIcon());
-        ui->deleteAddress->setIcon(QIcon());
         ui->exportButton->setIcon(QIcon());
     } else {
         ui->newAddress->setIcon(platformStyle->SingleColorIcon(":/icons/add"));
         ui->copyAddress->setIcon(platformStyle->SingleColorIcon(":/icons/editcopy"));
-        ui->deleteAddress->setIcon(platformStyle->SingleColorIcon(":/icons/remove"));
         ui->exportButton->setIcon(platformStyle->SingleColorIcon(":/icons/export"));
     }
 
     switch(mode)
     {
     case ForSelection:
-        switch(tab)
-        {
-        case SendingTab: setWindowTitle(tr("Choose the z-address to send coins to")); break;
-        case ReceivingTab: setWindowTitle(tr("Choose the z-address to receive coins with")); break;
-        }
+        setWindowTitle(tr("Choose the z-address to send coins to")); break;
         connect(ui->tableView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(accept()));
         ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
         ui->tableView->setFocus();
         ui->closeButton->setText(tr("C&hoose"));
         ui->exportButton->hide();
+        ui->labelExplanation->setText(tr("These are your LitecoinZ z-addresses for shielding coins."));
         break;
     case ForEditing:
-        switch(tab)
-        {
-        case SendingTab: setWindowTitle(tr("Sending z-addresses")); break;
-        case ReceivingTab: setWindowTitle(tr("Receiving z-addresses")); break;
-        }
-        break;
-    }
-    switch(tab)
-    {
-    case SendingTab:
-        ui->labelExplanation->setText(tr("These are your LitecoinZ z-addresses for sending payments. Always check the amount and the receiving z-address before sending coins."));
-        ui->deleteAddress->setVisible(true);
-        break;
-    case ReceivingTab:
-        ui->labelExplanation->setText(tr("These are your LitecoinZ z-addresses for receiving payments. It is recommended to use a new receiving z-address for each transaction."));
-        ui->deleteAddress->setVisible(false);
+        setWindowTitle(tr("Receiving z-addresses")); break;
+        ui->labelExplanation->setText(tr("These are your LitecoinZ z-addresses for shielding coins or receiving payments."));
         break;
     }
 
     // Context menu actions
     QAction *copyAddressAction = new QAction(tr("&Copy Z-Address"), this);
-    QAction *copyLabelAction = new QAction(tr("Copy &Label"), this);
-    QAction *editAction = new QAction(tr("&Edit"), this);
-    deleteAction = new QAction(ui->deleteAddress->text(), this);
 
     // Build context menu
     contextMenu = new QMenu(this);
     contextMenu->addAction(copyAddressAction);
-    contextMenu->addAction(copyLabelAction);
-    contextMenu->addAction(editAction);
-    if(tab == SendingTab)
-        contextMenu->addAction(deleteAction);
     contextMenu->addSeparator();
 
     // Connect signals for context menu actions
     connect(copyAddressAction, SIGNAL(triggered()), this, SLOT(on_copyAddress_clicked()));
-    connect(copyLabelAction, SIGNAL(triggered()), this, SLOT(onCopyLabelAction()));
-    connect(editAction, SIGNAL(triggered()), this, SLOT(onEditAction()));
-    connect(deleteAction, SIGNAL(triggered()), this, SLOT(on_deleteAddress_clicked()));
 
     connect(ui->tableView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextualMenu(QPoint)));
 
@@ -118,28 +87,13 @@ void ZAddressBookPage::setModel(ZAddressTableModel *model)
     proxyModel->setDynamicSortFilter(true);
     proxyModel->setSortCaseSensitivity(Qt::CaseInsensitive);
     proxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
-    switch(tab)
-    {
-    case ReceivingTab:
-        // Receive filter
-        proxyModel->setFilterRole(ZAddressTableModel::TypeRole);
-        proxyModel->setFilterFixedString(ZAddressTableModel::Receive);
-        break;
-    case SendingTab:
-        // Send filter
-        proxyModel->setFilterRole(ZAddressTableModel::TypeRole);
-        proxyModel->setFilterFixedString(ZAddressTableModel::Send);
-        break;
-    }
     ui->tableView->setModel(proxyModel);
     ui->tableView->sortByColumn(0, Qt::AscendingOrder);
 
     // Set column widths
 #if QT_VERSION < 0x050000
-    ui->tableView->horizontalHeader()->setResizeMode(ZAddressTableModel::Label, QHeaderView::Stretch);
     ui->tableView->horizontalHeader()->setResizeMode(ZAddressTableModel::Address, QHeaderView::ResizeToContents);
 #else
-    ui->tableView->horizontalHeader()->setSectionResizeMode(ZAddressTableModel::Label, QHeaderView::Stretch);
     ui->tableView->horizontalHeader()->setSectionResizeMode(ZAddressTableModel::Address, QHeaderView::ResizeToContents);
 #endif
 
@@ -157,34 +111,9 @@ void ZAddressBookPage::on_copyAddress_clicked()
     GUIUtil::copyEntryData(ui->tableView, ZAddressTableModel::Address);
 }
 
-void ZAddressBookPage::onCopyLabelAction()
-{
-    GUIUtil::copyEntryData(ui->tableView, ZAddressTableModel::Label);
-}
-
-void ZAddressBookPage::onEditAction()
-{
-    if(!model)
-        return;
-
-    if(!ui->tableView->selectionModel())
-        return;
-    QModelIndexList indexes = ui->tableView->selectionModel()->selectedRows();
-    if(indexes.isEmpty())
-        return;
-
-    ZEditAddressDialog dlg(
-        tab == SendingTab ?
-        ZEditAddressDialog::EditSendingAddress :
-        ZEditAddressDialog::EditReceivingAddress, this);
-    dlg.setModel(model);
-    QModelIndex origIndex = proxyModel->mapToSource(indexes.at(0));
-    dlg.loadRow(origIndex.row());
-    dlg.exec();
-}
-
 void ZAddressBookPage::on_newAddress_clicked()
 {
+/*
     if(!model)
         return;
 
@@ -197,19 +126,7 @@ void ZAddressBookPage::on_newAddress_clicked()
     {
         newAddressToSelect = dlg.getAddress();
     }
-}
-
-void ZAddressBookPage::on_deleteAddress_clicked()
-{
-    QTableView *table = ui->tableView;
-    if(!table->selectionModel())
-        return;
-
-    QModelIndexList indexes = table->selectionModel()->selectedRows();
-    if(!indexes.isEmpty())
-    {
-        table->model()->removeRow(indexes.at(0).row());
-    }
+*/
 }
 
 void ZAddressBookPage::selectionChanged()
@@ -221,26 +138,10 @@ void ZAddressBookPage::selectionChanged()
 
     if(table->selectionModel()->hasSelection())
     {
-        switch(tab)
-        {
-        case SendingTab:
-            // In sending tab, allow deletion of selection
-            ui->deleteAddress->setEnabled(true);
-            ui->deleteAddress->setVisible(true);
-            deleteAction->setEnabled(true);
-            break;
-        case ReceivingTab:
-            // Deleting receiving z-addresses, however, is not allowed
-            ui->deleteAddress->setEnabled(false);
-            ui->deleteAddress->setVisible(false);
-            deleteAction->setEnabled(false);
-            break;
-        }
         ui->copyAddress->setEnabled(true);
     }
     else
     {
-        ui->deleteAddress->setEnabled(false);
         ui->copyAddress->setEnabled(false);
     }
 }
@@ -282,7 +183,6 @@ void ZAddressBookPage::on_exportButton_clicked()
 
     // name, column, role
     writer.setModel(proxyModel);
-    writer.addColumn("Label", ZAddressTableModel::Label, Qt::EditRole);
     writer.addColumn("Z-Address", ZAddressTableModel::Address, Qt::EditRole);
 
     if(!writer.write()) {

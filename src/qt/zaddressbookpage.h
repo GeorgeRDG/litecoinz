@@ -30,17 +30,12 @@ class ZAddressBookPage : public QDialog
     Q_OBJECT
 
 public:
-    enum Tabs {
-        SendingTab = 0,
-        ReceivingTab = 1
-    };
-
     enum Mode {
         ForSelection, /**< Open z-address book to pick z-address */
         ForEditing  /**< Open z-address book for editing */
     };
 
-    explicit ZAddressBookPage(const PlatformStyle *platformStyle, Mode mode, Tabs tab, QWidget *parent);
+    explicit ZAddressBookPage(const PlatformStyle *platformStyle, Mode mode, QWidget *parent);
     ~ZAddressBookPage();
 
     void setModel(ZAddressTableModel *model);
@@ -53,24 +48,16 @@ private:
     Ui::ZAddressBookPage *ui;
     ZAddressTableModel *model;
     Mode mode;
-    Tabs tab;
     QString returnValue;
     QSortFilterProxyModel *proxyModel;
     QMenu *contextMenu;
-    QAction *deleteAction; // to be able to explicitly disable it
     QString newAddressToSelect;
 
 private Q_SLOTS:
-    /** Delete currently selected z-address entry */
-    void on_deleteAddress_clicked();
     /** Create a new z-address for receiving coins and / or add a new z-address book entry */
     void on_newAddress_clicked();
     /** Copy z-address of currently selected z-address entry to clipboard */
     void on_copyAddress_clicked();
-    /** Copy label of currently selected z-address entry to clipboard (no button) */
-    void onCopyLabelAction();
-    /** Edit currently selected z-address entry (no button) */
-    void onEditAction();
     /** Export button clicked */
     void on_exportButton_clicked();
 

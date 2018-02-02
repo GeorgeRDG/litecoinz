@@ -59,8 +59,7 @@ WalletView::WalletView(const PlatformStyle *platformStyle, QWidget *parent):
 
     usedSendingAddressesPage = new AddressBookPage(platformStyle, AddressBookPage::ForEditing, AddressBookPage::SendingTab, this);
     usedReceivingAddressesPage = new AddressBookPage(platformStyle, AddressBookPage::ForEditing, AddressBookPage::ReceivingTab, this);
-    usedSendingZAddressesPage = new ZAddressBookPage(platformStyle, ZAddressBookPage::ForEditing, ZAddressBookPage::SendingTab, this);
-    usedReceivingZAddressesPage = new ZAddressBookPage(platformStyle, ZAddressBookPage::ForEditing, ZAddressBookPage::ReceivingTab, this);
+    usedReceivingZAddressesPage = new ZAddressBookPage(platformStyle, ZAddressBookPage::ForEditing, this);
 
     addWidget(overviewPage);
     addWidget(transactionsPage);
@@ -125,7 +124,6 @@ void WalletView::setWalletModel(WalletModel *walletModel)
     usedReceivingAddressesPage->setModel(walletModel->getAddressTableModel());
     usedSendingAddressesPage->setModel(walletModel->getAddressTableModel());
     usedReceivingZAddressesPage->setModel(walletModel->getZAddressTableModel());
-    usedSendingZAddressesPage->setModel(walletModel->getZAddressTableModel());
 
     if (walletModel)
     {
@@ -288,16 +286,6 @@ void WalletView::usedSendingAddresses()
     usedSendingAddressesPage->show();
     usedSendingAddressesPage->raise();
     usedSendingAddressesPage->activateWindow();
-}
-
-void WalletView::usedSendingZAddresses()
-{
-    if(!walletModel)
-        return;
-
-    usedSendingZAddressesPage->show();
-    usedSendingZAddressesPage->raise();
-    usedSendingZAddressesPage->activateWindow();
 }
 
 void WalletView::usedReceivingAddresses()

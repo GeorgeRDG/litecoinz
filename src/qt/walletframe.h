@@ -80,7 +80,6 @@ public Q_SLOTS:
 
     /** Show used sending addresses */
     void usedSendingAddresses();
-    void usedSendingZAddresses();
     /** Show used receiving addresses */
     void usedReceivingAddresses();
     void usedReceivingZAddresses();

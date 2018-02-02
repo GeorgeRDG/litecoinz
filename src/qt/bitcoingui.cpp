@@ -94,7 +94,6 @@ BitcoinGUI::BitcoinGUI(const PlatformStyle *platformStyle, const NetworkStyle *n
     sendCoinsMenuAction(0),
     usedSendingAddressesAction(0),
     usedReceivingAddressesAction(0),
-    usedSendingZAddressesAction(0),
     usedReceivingZAddressesAction(0),
     signMessageAction(0),
     verifyMessageAction(0),
@@ -358,10 +357,8 @@ void BitcoinGUI::createActions()
     usedReceivingAddressesAction = new QAction(platformStyle->TextColorIcon(":/icons/address-book"), tr("&Receiving T-addresses..."), this);
     usedReceivingAddressesAction->setStatusTip(tr("Show the list of used receiving transparent addresses and labels"));
 
-    usedSendingZAddressesAction = new QAction(platformStyle->TextColorIcon(":/icons/address-book"), tr("&Sending Z-addresses..."), this);
-    usedSendingZAddressesAction->setStatusTip(tr("Show the list of used sending private addresses and labels"));
     usedReceivingZAddressesAction = new QAction(platformStyle->TextColorIcon(":/icons/address-book"), tr("&Receiving Z-addresses..."), this);
-    usedReceivingZAddressesAction->setStatusTip(tr("Show the list of used receiving private addresses and labels"));
+    usedReceivingZAddressesAction->setStatusTip(tr("Show the list of used receiving private addresses"));
 
     openAction = new QAction(platformStyle->TextColorIcon(":/icons/open"), tr("Open &URI..."), this);
     openAction->setStatusTip(tr("Open a litecoinz: URI or payment request"));
@@ -390,7 +387,6 @@ void BitcoinGUI::createActions()
         connect(verifyMessageAction, SIGNAL(triggered()), this, SLOT(gotoVerifyMessageTab()));
         connect(usedSendingAddressesAction, SIGNAL(triggered()), walletFrame, SLOT(usedSendingAddresses()));
         connect(usedReceivingAddressesAction, SIGNAL(triggered()), walletFrame, SLOT(usedReceivingAddresses()));
-        connect(usedSendingZAddressesAction, SIGNAL(triggered()), walletFrame, SLOT(usedSendingZAddresses()));
         connect(usedReceivingZAddressesAction, SIGNAL(triggered()), walletFrame, SLOT(usedReceivingZAddresses()));
         connect(openAction, SIGNAL(triggered()), this, SLOT(openClicked()));
     }
@@ -422,7 +418,6 @@ void BitcoinGUI::createMenuBar()
         file->addAction(usedSendingAddressesAction);
         file->addAction(usedReceivingAddressesAction);
         file->addSeparator();
-        file->addAction(usedSendingZAddressesAction);
         file->addAction(usedReceivingZAddressesAction);
         file->addSeparator();
     }
@@ -563,7 +558,6 @@ void BitcoinGUI::setWalletActionsEnabled(bool enabled)
     verifyMessageAction->setEnabled(enabled);
     usedSendingAddressesAction->setEnabled(enabled);
     usedReceivingAddressesAction->setEnabled(enabled);
-    usedSendingZAddressesAction->setEnabled(enabled);
     usedReceivingZAddressesAction->setEnabled(enabled);
     openAction->setEnabled(enabled);
 }

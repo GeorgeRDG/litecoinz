@@ -56,7 +56,6 @@ void ZEditAddressDialog::setModel(ZAddressTableModel *model)
         return;
 
     mapper->setModel(model);
-    mapper->addMapping(ui->labelEdit, ZAddressTableModel::Label);
     mapper->addMapping(ui->addressEdit, ZAddressTableModel::Address);
 }
 
@@ -74,11 +73,6 @@ bool ZEditAddressDialog::saveCurrentRow()
     {
     case NewReceivingAddress:
     case NewSendingAddress:
-        address = model->addRow(
-                mode == NewSendingAddress ? ZAddressTableModel::Send : ZAddressTableModel::Receive,
-                ui->labelEdit->text(),
-                ui->addressEdit->text());
-        break;
     case EditReceivingAddress:
     case EditSendingAddress:
         if(mapper->submit())
@@ -95,40 +89,6 @@ void ZEditAddressDialog::accept()
     if(!model)
         return;
 
-    if(!saveCurrentRow())
-    {
-        switch(model->getEditStatus())
-        {
-        case ZAddressTableModel::OK:
-            // Failed with unknown reason. Just reject.
-            break;
-        case ZAddressTableModel::NO_CHANGES:
-            // No changes were made during edit operation. Just reject.
-            break;
-        case ZAddressTableModel::INVALID_ADDRESS:
-            QMessageBox::warning(this, windowTitle(),
-                tr("The entered address \"%1\" is not a valid LitecoinZ address.").arg(ui->addressEdit->text()),
-                QMessageBox::Ok, QMessageBox::Ok);
-            break;
-        case ZAddressTableModel::DUPLICATE_ADDRESS:
-            QMessageBox::warning(this, windowTitle(),
-                tr("The entered address \"%1\" is already in the address book.").arg(ui->addressEdit->text()),
-                QMessageBox::Ok, QMessageBox::Ok);
-            break;
-        case ZAddressTableModel::WALLET_UNLOCK_FAILURE:
-            QMessageBox::critical(this, windowTitle(),
-                tr("Could not unlock wallet."),
-                QMessageBox::Ok, QMessageBox::Ok);
-            break;
-        case ZAddressTableModel::KEY_GENERATION_FAILURE:
-            QMessageBox::critical(this, windowTitle(),
-                tr("New key generation failed."),
-                QMessageBox::Ok, QMessageBox::Ok);
-            break;
-
-        }
-        return;
-    }
     QDialog::accept();
 }
 

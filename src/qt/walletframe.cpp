@@ -185,13 +185,6 @@ void WalletFrame::usedSendingAddresses()
         walletView->usedSendingAddresses();
 }
 
-void WalletFrame::usedSendingZAddresses()
-{
-    WalletView *walletView = currentWalletView();
-    if (walletView)
-        walletView->usedSendingZAddresses();
-}
-
 void WalletFrame::usedReceivingAddresses()
 {
     WalletView *walletView = currentWalletView();

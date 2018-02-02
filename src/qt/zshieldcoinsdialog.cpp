@@ -41,7 +41,7 @@ void ZShieldCoinsDialog::on_AddressBookButton_clicked()
 {
     if(!model)
         return;
-    ZAddressBookPage dlg(platformStyle, ZAddressBookPage::ForSelection, ZAddressBookPage::SendingTab, this);
+    ZAddressBookPage dlg(platformStyle, ZAddressBookPage::ForSelection, this);
     dlg.setModel(model->getZAddressTableModel());
     if(dlg.exec())
     {

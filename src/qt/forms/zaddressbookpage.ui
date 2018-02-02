@@ -54,10 +54,10 @@
      <item>
       <widget class="QPushButton" name="newAddress">
        <property name="toolTip">
-        <string>Create a new address</string>
+        <string>Create a new z-address</string>
        </property>
        <property name="text">
-        <string>&amp;New</string>
+        <string>&amp;Generate a new Z-Address</string>
        </property>
        <property name="icon">
         <iconset resource="../bitcoin.qrc">
@@ -79,23 +79,6 @@
        <property name="icon">
         <iconset resource="../bitcoin.qrc">
          <normaloff>:/icons/editcopy</normaloff>:/icons/editcopy</iconset>
-       </property>
-       <property name="autoDefault">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="deleteAddress">
-       <property name="toolTip">
-        <string>Delete the currently selected address from the list</string>
-       </property>
-       <property name="text">
-        <string>&amp;Delete</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../bitcoin.qrc">
-         <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
        </property>
        <property name="autoDefault">
         <bool>false</bool>

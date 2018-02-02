@@ -233,13 +233,6 @@ void WalletModel::updateAddressBook(const QString &address, const QString &label
         addressTableModel->updateEntry(address, label, isMine, purpose, status);
 }
 
-void WalletModel::updateZAddressBook(const QString &address, const QString &label,
-        bool isMine, const QString &purpose, int status)
-{
-    if(zaddressTableModel)
-        zaddressTableModel->updateEntry(address, label, isMine, purpose, status);
-}
-
 void WalletModel::updateWatchOnlyFlag(bool fHaveWatchonly)
 {
     fHaveWatchOnly = fHaveWatchonly;
