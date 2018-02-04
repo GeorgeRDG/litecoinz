@@ -8,6 +8,7 @@
 #include <QDialog>
 
 class AddressTableModel;
+class ZAddressTableModel;
 class OptionsModel;
 class PlatformStyle;
 
@@ -44,6 +45,7 @@ public:
     ~AddressBookPage();
 
     void setModel(AddressTableModel *model);
+    void setZModel(ZAddressTableModel *zmodel);
     const QString &getReturnValue() const { return returnValue; }
 
 public Q_SLOTS:
@@ -52,13 +54,16 @@ public Q_SLOTS:
 private:
     Ui::AddressBookPage *ui;
     AddressTableModel *model;
+    ZAddressTableModel *zmodel;
     Mode mode;
     Tabs tab;
     QString returnValue;
     QSortFilterProxyModel *proxyModel;
+    QSortFilterProxyModel *proxyZModel;
     QMenu *contextMenu;
     QAction *deleteAction; // to be able to explicitly disable it
     QString newAddressToSelect;
+    QString newZAddressToSelect;
 
 private Q_SLOTS:
     /** Delete currently selected address entry */
@@ -76,10 +81,12 @@ private Q_SLOTS:
 
     /** Set button states based on selected tab and selection */
     void selectionChanged();
+    void selectionZChanged();
     /** Spawn contextual menu (right mouse menu) for address book entry */
     void contextualMenu(const QPoint &point);
     /** New entry/entries were added to address table */
     void selectNewAddress(const QModelIndex &parent, int begin, int /*end*/);
+    void selectNewZAddress(const QModelIndex &parent, int begin, int /*end*/);
 
 Q_SIGNALS:
     void sendCoins(QString addr);

@@ -10,6 +10,7 @@
 #include "ui_addressbookpage.h"
 
 #include "addresstablemodel.h"
+#include "zaddresstablemodel.h"
 #include "bitcoingui.h"
 #include "csvmodelwriter.h"
 #include "editaddressdialog.h"
@@ -69,9 +70,13 @@ AddressBookPage::AddressBookPage(const PlatformStyle *platformStyle, Mode mode, 
     case SendingTab:
         ui->labelExplanation->setText(tr("These are your LitecoinZ addresses for sending payments. Always check the amount and the receiving address before sending coins."));
         ui->deleteAddress->setVisible(true);
+        ui->newAddressZ->setVisible(false);
+        ui->tableViewZ->setVisible(false);
+        resize(sizeHint());
         break;
     case ReceivingTab:
-        ui->labelExplanation->setText(tr("These are your LitecoinZ addresses for receiving payments. It is recommended to use a new receiving address for each transaction."));
+        ui->labelExplanation->setText(tr("These are your LitecoinZ transparent addresses for receiving payments. It is recommended to use a new receiving address for each transaction."));
+        ui->labelExplanationZ->setText(tr("These are your LitecoinZ private addresses for shielding coins."));
         ui->deleteAddress->setVisible(false);
         break;
     }
@@ -152,6 +157,37 @@ void AddressBookPage::setModel(AddressTableModel *model)
     selectionChanged();
 }
 
+void AddressBookPage::setZModel(ZAddressTableModel *zmodel)
+{
+    this->zmodel = zmodel;
+    if(!zmodel)
+        return;
+
+    proxyZModel = new QSortFilterProxyModel(this);
+    proxyZModel->setSourceModel(zmodel);
+    proxyZModel->setDynamicSortFilter(true);
+    proxyZModel->setSortCaseSensitivity(Qt::CaseInsensitive);
+    proxyZModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+
+    ui->tableViewZ->setModel(proxyZModel);
+    ui->tableViewZ->sortByColumn(0, Qt::AscendingOrder);
+
+    // Set column widths
+#if QT_VERSION < 0x050000
+    ui->tableViewZ->horizontalHeader()->setResizeMode(ZAddressTableModel::Address, QHeaderView::Stretch);
+#else
+    ui->tableViewZ->horizontalHeader()->setSectionResizeMode(ZAddressTableModel::Address, QHeaderView::Stretch);
+#endif
+
+    connect(ui->tableViewZ->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+        this, SLOT(selectionZChanged()));
+
+    // Select row for newly created z-address
+    connect(zmodel, SIGNAL(zrowsInserted(QModelIndex,int,int)), this, SLOT(selectNewZAddress(QModelIndex,int,int)));
+
+    selectionZChanged();
+}
+
 void AddressBookPage::on_copyAddress_clicked()
 {
     GUIUtil::copyEntryData(ui->tableView, AddressTableModel::Address);
@@ -221,6 +257,8 @@ void AddressBookPage::selectionChanged()
 
     if(table->selectionModel()->hasSelection())
     {
+        ui->tableViewZ->selectionModel()->clear();
+
         switch(tab)
         {
         case SendingTab:
@@ -242,6 +280,19 @@ void AddressBookPage::selectionChanged()
     {
         ui->deleteAddress->setEnabled(false);
         ui->copyAddress->setEnabled(false);
+    }
+}
+
+void AddressBookPage::selectionZChanged()
+{
+    // Set button states based on selected tab and selection
+    QTableView *table = ui->tableViewZ;
+    if(!table->selectionModel())
+        return;
+
+    if(table->selectionModel()->hasSelection())
+    {
+        ui->tableView->selectionModel()->clear();
     }
 }
 
@@ -309,5 +360,17 @@ void AddressBookPage::selectNewAddress(const QModelIndex &parent, int begin, int
         ui->tableView->setFocus();
         ui->tableView->selectRow(idx.row());
         newAddressToSelect.clear();
+    }
+}
+
+void AddressBookPage::selectNewZAddress(const QModelIndex &parent, int begin, int /*end*/)
+{
+    QModelIndex idx = proxyZModel->mapFromSource(model->index(begin, ZAddressTableModel::Address, parent));
+    if(idx.isValid() && (idx.data(Qt::EditRole).toString() == newZAddressToSelect))
+    {
+        // Select row of newly created address, once
+        ui->tableViewZ->setFocus();
+        ui->tableViewZ->selectRow(idx.row());
+        newZAddressToSelect.clear();
     }
 }

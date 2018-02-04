@@ -120,6 +120,7 @@ void WalletView::setWalletModel(WalletModel *walletModel)
     receiveCoinsPage->setModel(walletModel);
     sendCoinsPage->setModel(walletModel);
     usedReceivingAddressesPage->setModel(walletModel->getAddressTableModel());
+    usedReceivingAddressesPage->setZModel(walletModel->getZAddressTableModel());
     usedSendingAddressesPage->setModel(walletModel->getAddressTableModel());
 
     if (walletModel)
