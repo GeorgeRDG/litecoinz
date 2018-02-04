@@ -5,7 +5,6 @@
 #include "walletview.h"
 
 #include "addressbookpage.h"
-#include "zaddressbookpage.h"
 #include "askpassphrasedialog.h"
 #include "bitcoingui.h"
 #include "clientmodel.h"
@@ -59,7 +58,6 @@ WalletView::WalletView(const PlatformStyle *platformStyle, QWidget *parent):
 
     usedSendingAddressesPage = new AddressBookPage(platformStyle, AddressBookPage::ForEditing, AddressBookPage::SendingTab, this);
     usedReceivingAddressesPage = new AddressBookPage(platformStyle, AddressBookPage::ForEditing, AddressBookPage::ReceivingTab, this);
-    usedReceivingZAddressesPage = new ZAddressBookPage(platformStyle, ZAddressBookPage::ForEditing, this);
 
     addWidget(overviewPage);
     addWidget(transactionsPage);
@@ -123,7 +121,6 @@ void WalletView::setWalletModel(WalletModel *walletModel)
     sendCoinsPage->setModel(walletModel);
     usedReceivingAddressesPage->setModel(walletModel->getAddressTableModel());
     usedSendingAddressesPage->setModel(walletModel->getAddressTableModel());
-    usedReceivingZAddressesPage->setModel(walletModel->getZAddressTableModel());
 
     if (walletModel)
     {
@@ -296,16 +293,6 @@ void WalletView::usedReceivingAddresses()
     usedReceivingAddressesPage->show();
     usedReceivingAddressesPage->raise();
     usedReceivingAddressesPage->activateWindow();
-}
-
-void WalletView::usedReceivingZAddresses()
-{
-    if(!walletModel)
-        return;
-
-    usedReceivingZAddressesPage->show();
-    usedReceivingZAddressesPage->raise();
-    usedReceivingZAddressesPage->activateWindow();
 }
 
 void WalletView::showProgress(const QString &title, int nProgress)

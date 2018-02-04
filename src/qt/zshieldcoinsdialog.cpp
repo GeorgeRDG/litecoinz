@@ -5,7 +5,7 @@
 #include "zshieldcoinsdialog.h"
 #include "ui_zshieldcoinsdialog.h"
 
-#include "zaddressbookpage.h"
+#include "addressbookpage.h"
 #include "zaddresstablemodel.h"
 #include "guiutil.h"
 #include "optionsmodel.h"
@@ -41,8 +41,8 @@ void ZShieldCoinsDialog::on_AddressBookButton_clicked()
 {
     if(!model)
         return;
-    ZAddressBookPage dlg(platformStyle, ZAddressBookPage::ForSelection, this);
-    dlg.setModel(model->getZAddressTableModel());
+    AddressBookPage dlg(platformStyle, AddressBookPage::ForSelection, AddressBookPage::ReceivingTab, this);
+    dlg.setModel(model->getAddressTableModel());
     if(dlg.exec())
     {
         ui->reqShieldAddress->setText(dlg.getReturnValue());

@@ -19,7 +19,6 @@ class SendCoinsRecipient;
 class TransactionView;
 class WalletModel;
 class AddressBookPage;
-class ZAddressBookPage;
 
 QT_BEGIN_NAMESPACE
 class QModelIndex;
@@ -65,7 +64,6 @@ private:
     SendCoinsDialog *sendCoinsPage;
     AddressBookPage *usedSendingAddressesPage;
     AddressBookPage *usedReceivingAddressesPage;
-    ZAddressBookPage *usedReceivingZAddressesPage;
 
     TransactionView *transactionView;
 
@@ -105,7 +103,6 @@ public Q_SLOTS:
     void usedSendingAddresses();
     /** Show used receiving addresses */
     void usedReceivingAddresses();
-    void usedReceivingZAddresses();
 
     /** Re-emit encryption status signal */
     void updateEncryptionStatus();
