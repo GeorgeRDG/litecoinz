@@ -45,18 +45,35 @@ AddressBookPage::AddressBookPage(const PlatformStyle *platformStyle, Mode mode, 
 
     switch(mode)
     {
-    case ForSelection:
+    case ForTSelection:
         switch(tab)
         {
-        case SendingTab: setWindowTitle(tr("Choose the address to send coins to")); break;
-        case ReceivingTab: setWindowTitle(tr("Choose the address to receive coins with")); break;
+        case SendingTab: setWindowTitle(tr("Choose the transparent address to send coins to")); break;
+        case ReceivingTab: setWindowTitle(tr("Choose the transparent address to receive coins with")); break;
         }
         connect(ui->tableView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(accept()));
-        connect(ui->tableViewZ, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(accept()));
         ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
         ui->tableView->setFocus();
         ui->closeButton->setText(tr("C&hoose"));
         ui->exportButton->hide();
+        ui->tableViewZ->setVisible(false);
+        ui->labelExplanationZ->setVisible(false);
+        resize(sizeHint());
+        break;
+    case ForZSelection:
+        switch(tab)
+        {
+        case SendingTab: setWindowTitle(tr("Choose the private address to send coins to")); break;
+        case ReceivingTab: setWindowTitle(tr("Choose the private address to receive coins with")); break;
+        }
+        connect(ui->tableViewZ, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(accept()));
+        ui->tableViewZ->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        ui->tableViewZ->setFocus();
+        ui->closeButton->setText(tr("C&hoose"));
+        ui->exportButton->hide();
+        ui->tableView->setVisible(false);
+        ui->labelExplanation->setVisible(false);
+        resize(sizeHint());
         break;
     case ForEditing:
         switch(tab)

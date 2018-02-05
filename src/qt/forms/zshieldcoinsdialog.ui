@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>651</width>
+    <width>998</width>
     <height>123</height>
    </rect>
   </property>
@@ -74,8 +74,11 @@
           </item>
           <item>
            <widget class="QLineEdit" name="reqShieldAddress">
-            <property name="dragEnabled">
+            <property name="enabled">
              <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>Pick a private address from the address book.</string>
             </property>
             <property name="readOnly">
              <bool>true</bool>

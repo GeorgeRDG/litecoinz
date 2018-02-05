@@ -37,7 +37,8 @@ public:
     };
 
     enum Mode {
-        ForSelection, /**< Open address book to pick address */
+        ForTSelection, /**< Open address book to pick t-address */
+        ForZSelection, /**< Open address book to pick z-address */
         ForEditing  /**< Open address book for editing */
     };
 
