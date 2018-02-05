@@ -26,12 +26,7 @@ ZShieldCoinsDialog::ZShieldCoinsDialog(const PlatformStyle *platformStyle, QWidg
 {
     ui->setupUi(this);
 
-    if (!platformStyle->getImagesOnButtons()) {
-        ui->shieldButton->setIcon(QIcon());
-    } else {
-        ui->shieldButton->setIcon(platformStyle->SingleColorIcon(":/icons/send"));
-    }
-
+    ui->shieldButton->setEnabled(false);
     connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(accept()));
 }
 
@@ -57,6 +52,7 @@ void ZShieldCoinsDialog::on_AddressBookButton_clicked()
     if(dlg.exec())
     {
         ui->reqShieldAddress->setText(dlg.getReturnValue());
+        ui->shieldButton->setEnabled(true);
         ui->shieldButton->setFocus();
     }
 }
