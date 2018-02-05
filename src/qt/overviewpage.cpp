@@ -120,7 +120,8 @@ OverviewPage::OverviewPage(const PlatformStyle *platformStyle, QWidget *parent) 
     currentWatchOnlyBalance(-1),
     currentWatchUnconfBalance(-1),
     currentWatchImmatureBalance(-1),
-    txdelegate(new TxViewDelegate(platformStyle, this))
+    txdelegate(new TxViewDelegate(platformStyle, this)),
+    platformStyle(platformStyle)
 {
     ui->setupUi(this);
 
@@ -292,8 +293,6 @@ void OverviewPage::on_shieldCoinsButton_clicked()
 {
     ZShieldCoinsDialog dlg(platformStyle, this);
     dlg.setModel(walletModel);
-    if(dlg.exec())
-    {
-    }
+    dlg.exec();
 }
 

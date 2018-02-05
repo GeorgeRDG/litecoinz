@@ -2,6 +2,10 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
+#if defined(HAVE_CONFIG_H)
+#include "config/bitcoin-config.h"
+#endif
+
 #include "zshieldcoinsdialog.h"
 #include "ui_zshieldcoinsdialog.h"
 
@@ -13,7 +17,6 @@
 #include "walletmodel.h"
 
 #include <QApplication>
-#include <QClipboard>
 
 ZShieldCoinsDialog::ZShieldCoinsDialog(const PlatformStyle *platformStyle, QWidget *parent) :
     QDialog(parent),
@@ -22,6 +25,12 @@ ZShieldCoinsDialog::ZShieldCoinsDialog(const PlatformStyle *platformStyle, QWidg
     platformStyle(platformStyle)
 {
     ui->setupUi(this);
+
+    if (!platformStyle->getImagesOnButtons()) {
+        ui->shieldButton->setIcon(QIcon());
+    } else {
+        ui->shieldButton->setIcon(platformStyle->SingleColorIcon(":/icons/send"));
+    }
 
     connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(accept()));
 }
@@ -41,8 +50,10 @@ void ZShieldCoinsDialog::on_AddressBookButton_clicked()
 {
     if(!model)
         return;
+
     AddressBookPage dlg(platformStyle, AddressBookPage::ForSelection, AddressBookPage::ReceivingTab, this);
     dlg.setModel(model->getAddressTableModel());
+    dlg.setZModel(model->getZAddressTableModel());
     if(dlg.exec())
     {
         ui->reqShieldAddress->setText(dlg.getReturnValue());

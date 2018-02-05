@@ -52,6 +52,7 @@ AddressBookPage::AddressBookPage(const PlatformStyle *platformStyle, Mode mode, 
         case ReceivingTab: setWindowTitle(tr("Choose the address to receive coins with")); break;
         }
         connect(ui->tableView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(accept()));
+        connect(ui->tableViewZ, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(accept()));
         ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
         ui->tableView->setFocus();
         ui->closeButton->setText(tr("C&hoose"));
@@ -299,15 +300,30 @@ void AddressBookPage::selectionZChanged()
 void AddressBookPage::done(int retval)
 {
     QTableView *table = ui->tableView;
+    QTableView *tableZ = ui->tableViewZ;
+
     if(!table->selectionModel() || !table->model())
         return;
 
-    // Figure out which address was selected, and return it
-    QModelIndexList indexes = table->selectionModel()->selectedRows(AddressTableModel::Address);
+    if(!tableZ->selectionModel() || !tableZ->model())
+        return;
 
-    Q_FOREACH (const QModelIndex& index, indexes) {
-        QVariant address = table->model()->data(index);
-        returnValue = address.toString();
+    // Figure out which address was selected, and return it
+    if(table->selectionModel()->hasSelection())
+    {
+        QModelIndexList indexes = table->selectionModel()->selectedRows(AddressTableModel::Address);
+        Q_FOREACH (const QModelIndex& index, indexes) {
+            QVariant address = table->model()->data(index);
+            returnValue = address.toString();
+        }
+    }
+    else
+    {
+        QModelIndexList indexes = tableZ->selectionModel()->selectedRows(ZAddressTableModel::Address);
+        Q_FOREACH (const QModelIndex& index, indexes) {
+            QVariant address = tableZ->model()->data(index);
+            returnValue = address.toString();
+        }
     }
 
     if(returnValue.isEmpty())

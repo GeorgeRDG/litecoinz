@@ -9,6 +9,7 @@
 
 #include <QDialog>
 
+class ZAddressTableModel;
 class WalletModel;
 class PlatformStyle;
 
