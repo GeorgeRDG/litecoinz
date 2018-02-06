@@ -6,6 +6,7 @@
 #define BITCOIN_QT_ZSHIELDCOINSDIALOG_H
 
 #include "walletmodel.h"
+#include <univalue.h>
 
 #include <QDialog>
 
@@ -16,6 +17,8 @@ class PlatformStyle;
 namespace Ui {
     class ZShieldCoinsDialog;
 }
+
+extern UniValue z_shieldcoinbase(const UniValue& params, bool fHelp); // in rpcwallet.cpp
 
 /** Widget that shows a list of sending or receiving addresses.
   */

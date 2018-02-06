@@ -10,13 +10,18 @@
 #include "ui_zshieldcoinsdialog.h"
 
 #include "addressbookpage.h"
+#include "resultsdialog.h"
 #include "zaddresstablemodel.h"
 #include "guiutil.h"
 #include "optionsmodel.h"
 #include "platformstyle.h"
 #include "walletmodel.h"
+#include <univalue.h>
+
+#include "wallet/asyncrpcoperation_shieldcoinbase.h"
 
 #include <QApplication>
+#include <QMessageBox>
 
 ZShieldCoinsDialog::ZShieldCoinsDialog(const PlatformStyle *platformStyle, QWidget *parent) :
     QDialog(parent),
@@ -27,6 +32,13 @@ ZShieldCoinsDialog::ZShieldCoinsDialog(const PlatformStyle *platformStyle, QWidg
     ui->setupUi(this);
 
     ui->shieldButton->setEnabled(false);
+    ui->reqShieldAddress->setEnabled(false);
+
+    ui->reqFee->setInputMask("9.9999");
+    ui->reqFee->setValidator(new QDoubleValidator(0, 1, 4, this));
+
+    ui->reqFee->setInputMask("9999");
+    ui->reqFee->setValidator(new QIntValidator(50, 9999, this));
     connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(accept()));
 }
 
@@ -37,8 +49,31 @@ ZShieldCoinsDialog::~ZShieldCoinsDialog()
 
 void ZShieldCoinsDialog::on_shieldButton_clicked()
 {
-    // todo
-    // todo
+    UniValue params(UniValue::VARR);
+    params.push_back("*");
+    params.push_back(ui->reqShieldAddress->text().toStdString());
+    params.push_back(ui->reqFee->text().toULong());
+    params.push_back(ui->reqLimit->text().toInt());
+
+    UniValue ret = z_shieldcoinbase(params, false);
+
+    QString remainingUTXOs = QString("%1").arg(ret[0].get_int());
+    QString remainingValue = QString("%1").arg(ret[1].get_real());
+    QString shieldingUTXOs = QString("%1").arg(ret[2].get_int());
+    QString shieldingValue = QString("%1").arg(ret[3].get_real());
+    QString opid = QString::fromStdString(ret[4].get_str());
+
+    QString label1 = "Operation was submitted in background.";
+    QString label2 = "remainingUTXOs: " + remainingUTXOs;
+    QString label3 = "remainingValue: " + remainingValue;
+    QString label4 = "shieldingUTXOs: " + shieldingUTXOs;
+    QString label5 = "shieldingValue: " + shieldingValue;
+    QString label6 = "opid: " + opid;
+
+    ResultsDialog dlg(platformStyle, "Shielding coinbase.", label1, label2, label3, label4, label5, label6, this);
+    dlg.exec();
+
+    this->close();
 }
 
 void ZShieldCoinsDialog::on_AddressBookButton_clicked()

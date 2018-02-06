@@ -189,15 +189,19 @@ void OverviewPage::setBalance(const CAmount& balance, const CAmount& unconfirmed
     ui->labelZBalance->setText(BitcoinUnits::formatWithUnit(unit, z_balance, false, BitcoinUnits::separatorAlways));
     ui->labelUnshielded->setText(BitcoinUnits::formatWithUnit(unit, unshielded, false, BitcoinUnits::separatorAlways));
 
-    // only show immature (newly mined) balance if it's non-zero, so as not to complicate things
-    // for the non-mining users
-    bool showImmature = immatureBalance != 0;
-    bool showWatchOnlyImmature = watchImmatureBalance != 0;
+//    // only show immature (newly mined) balance if it's non-zero, so as not to complicate things
+//    // for the non-mining users
+//    bool showImmature = immatureBalance != 0;
+//    bool showWatchOnlyImmature = watchImmatureBalance != 0;
+//
+//    // for symmetry reasons also show immature label when the watch-only one is shown
+//    ui->labelImmature->setVisible(showImmature || showWatchOnlyImmature);
+//    ui->labelImmatureText->setVisible(showImmature || showWatchOnlyImmature);
+//    ui->labelWatchImmature->setVisible(showWatchOnlyImmature); // show watch-only immature balance
 
-    // for symmetry reasons also show immature label when the watch-only one is shown
-    ui->labelImmature->setVisible(showImmature || showWatchOnlyImmature);
-    ui->labelImmatureText->setVisible(showImmature || showWatchOnlyImmature);
-    ui->labelWatchImmature->setVisible(showWatchOnlyImmature); // show watch-only immature balance
+    // only enable shieldCoinsButton if required to shield coinbase
+    bool showUnshielded = unshielded != 0;
+    ui->shieldCoinsButton->setEnabled(showUnshielded);
 }
 
 // show/hide watch-only labels

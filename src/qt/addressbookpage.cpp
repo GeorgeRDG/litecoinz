@@ -33,11 +33,13 @@ AddressBookPage::AddressBookPage(const PlatformStyle *platformStyle, Mode mode, 
 
     if (!platformStyle->getImagesOnButtons()) {
         ui->newAddress->setIcon(QIcon());
+        ui->newAddressZ->setIcon(QIcon());
         ui->copyAddress->setIcon(QIcon());
         ui->deleteAddress->setIcon(QIcon());
         ui->exportButton->setIcon(QIcon());
     } else {
         ui->newAddress->setIcon(platformStyle->SingleColorIcon(":/icons/add"));
+        ui->newAddressZ->setIcon(platformStyle->SingleColorIcon(":/icons/add"));
         ui->copyAddress->setIcon(platformStyle->SingleColorIcon(":/icons/editcopy"));
         ui->deleteAddress->setIcon(platformStyle->SingleColorIcon(":/icons/remove"));
         ui->exportButton->setIcon(platformStyle->SingleColorIcon(":/icons/export"));
@@ -72,6 +74,8 @@ AddressBookPage::AddressBookPage(const PlatformStyle *platformStyle, Mode mode, 
         ui->closeButton->setText(tr("C&hoose"));
         ui->exportButton->hide();
         ui->tableView->setVisible(false);
+        ui->newAddress->setVisible(false);
+        ui->copyAddress->setVisible(false);
         ui->labelExplanation->setVisible(false);
         resize(sizeHint());
         break;
@@ -123,6 +127,7 @@ AddressBookPage::AddressBookPage(const PlatformStyle *platformStyle, Mode mode, 
     connect(ui->tableView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextualMenu(QPoint)));
 
     connect(ui->closeButton, SIGNAL(clicked()), this, SLOT(accept()));
+
 }
 
 AddressBookPage::~AddressBookPage()
@@ -201,7 +206,7 @@ void AddressBookPage::setZModel(ZAddressTableModel *zmodel)
         this, SLOT(selectionZChanged()));
 
     // Select row for newly created z-address
-    connect(zmodel, SIGNAL(zrowsInserted(QModelIndex,int,int)), this, SLOT(selectNewZAddress(QModelIndex,int,int)));
+    connect(zmodel, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(selectNewZAddress(QModelIndex,int,int)));
 
     selectionZChanged();
 }
