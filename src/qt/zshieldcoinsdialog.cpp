@@ -37,8 +37,8 @@ ZShieldCoinsDialog::ZShieldCoinsDialog(const PlatformStyle *platformStyle, QWidg
     ui->reqFee->setInputMask("9.9999");
     ui->reqFee->setValidator(new QDoubleValidator(0, 1, 4, this));
 
-    ui->reqFee->setInputMask("9999");
-    ui->reqFee->setValidator(new QIntValidator(50, 9999, this));
+    ui->reqLimit->setInputMask("9999");
+    ui->reqLimit->setValidator(new QIntValidator(50, 9999, this));
     connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(accept()));
 }
 
