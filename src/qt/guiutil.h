@@ -42,6 +42,7 @@ namespace GUIUtil
 
     // Set up widgets for address and amounts
     void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent);
+    void setupZAddressWidget(QValidatedLineEdit *widget, QWidget *parent);
     void setupAmountWidget(QLineEdit *widget, QWidget *parent);
 
     // Parse "litecoinz:" URI into recipient object, return true on successful parsing

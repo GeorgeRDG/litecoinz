@@ -29,9 +29,11 @@ UnspentDialog::UnspentDialog(const PlatformStyle *platformStyle, Mode mode, QWid
     switch(mode)
     {
     case ForSelection:
+        setWindowTitle(tr("Choose the transparent address to send coins from"));
         ui->closeButton->setText(tr("C&hoose"));
         break;
     case ForEditing:
+        setWindowTitle(tr("List unspent transparent transactions"));
         ui->closeButton->setText(tr("C&lose"));
         break;
     }

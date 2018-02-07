@@ -29,9 +29,11 @@ ZUnspentDialog::ZUnspentDialog(const PlatformStyle *platformStyle, Mode mode, QW
     switch(mode)
     {
     case ForSelection:
+        setWindowTitle(tr("Choose the shielded address to send coins from"));
         ui->closeButton->setText(tr("C&hoose"));
         break;
     case ForEditing:
+        setWindowTitle(tr("List unspent shielded transactions"));
         ui->closeButton->setText(tr("C&lose"));
         break;
     }

@@ -48,6 +48,8 @@ SendCoinsEntry::SendCoinsEntry(const PlatformStyle *platformStyle, QWidget *pare
     connect(ui->deleteButton, SIGNAL(clicked()), this, SLOT(deleteClicked()));
     connect(ui->deleteButton_is, SIGNAL(clicked()), this, SLOT(deleteClicked()));
     connect(ui->deleteButton_s, SIGNAL(clicked()), this, SLOT(deleteClicked()));
+
+    connect(ui->checkboxSendToZAddress, SIGNAL(stateChanged(int)), this, SLOT(sendToZAddressChangeChecked(int)));
 }
 
 SendCoinsEntry::~SendCoinsEntry()
@@ -96,6 +98,7 @@ void SendCoinsEntry::clear()
     ui->addAsLabel->clear();
     ui->payAmount->clear();
     ui->checkboxSubtractFeeFromAmount->setCheckState(Qt::Unchecked);
+    ui->checkboxSendToZAddress->setCheckState(Qt::Unchecked);
     ui->messageTextLabel->clear();
     ui->messageTextLabel->hide();
     ui->messageLabel->hide();
@@ -178,7 +181,8 @@ QWidget *SendCoinsEntry::setupTabChain(QWidget *prev)
     QWidget::setTabOrder(ui->payTo, ui->addAsLabel);
     QWidget *w = ui->payAmount->setupTabChain(ui->addAsLabel);
     QWidget::setTabOrder(w, ui->checkboxSubtractFeeFromAmount);
-    QWidget::setTabOrder(ui->checkboxSubtractFeeFromAmount, ui->addressBookButton);
+    QWidget::setTabOrder(ui->checkboxSendToZAddress, ui->checkboxSubtractFeeFromAmount);
+    QWidget::setTabOrder(ui->checkboxSendToZAddress, ui->addressBookButton);
     QWidget::setTabOrder(ui->addressBookButton, ui->pasteButton);
     QWidget::setTabOrder(ui->pasteButton, ui->deleteButton);
     return ui->deleteButton;
@@ -263,4 +267,28 @@ bool SendCoinsEntry::updateLabel(const QString &address)
     }
 
     return false;
+}
+
+void SendCoinsEntry::sendToZAddressChangeChecked(int state)
+{
+    if (state == Qt::Checked)
+    {
+        ui->addAsLabel->clear();
+        ui->addAsLabel->setEnabled(false);
+        ui->addAsLabel->setVisible(false);
+        ui->labellLabel->setVisible(false);
+        ui->addressBookButton->setVisible(false);
+        ui->payTo->clear();
+        GUIUtil::setupZAddressWidget(ui->payTo, this);
+    }
+    else
+    {
+        ui->addAsLabel->clear();
+        ui->addAsLabel->setEnabled(true);
+        ui->addAsLabel->setVisible(true);
+        ui->labellLabel->setVisible(true);
+        ui->addressBookButton->setVisible(true);
+        ui->payTo->clear();
+        GUIUtil::setupAddressWidget(ui->payTo, this);
+    }
 }

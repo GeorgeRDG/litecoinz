@@ -102,6 +102,8 @@ BitcoinGUI::BitcoinGUI(const PlatformStyle *platformStyle, const NetworkStyle *n
     optionsAction(0),
     toggleHideAction(0),
     encryptWalletAction(0),
+    listUnspentAction(0),
+    listZUnspentAction(0),
     backupWalletAction(0),
     changePassphraseAction(0),
     aboutQtAction(0),
@@ -337,14 +339,22 @@ void BitcoinGUI::createActions()
     encryptWalletAction = new QAction(platformStyle->TextColorIcon(":/icons/lock_closed"), tr("&Encrypt Wallet..."), this);
     encryptWalletAction->setStatusTip(tr("Encrypt the private keys that belong to your wallet"));
     encryptWalletAction->setCheckable(true);
+    encryptWalletAction->setVisible(false); //TODO
     backupWalletAction = new QAction(platformStyle->TextColorIcon(":/icons/filesave"), tr("&Backup Wallet..."), this);
     backupWalletAction->setStatusTip(tr("Backup wallet to another location"));
     changePassphraseAction = new QAction(platformStyle->TextColorIcon(":/icons/key"), tr("&Change Passphrase..."), this);
     changePassphraseAction->setStatusTip(tr("Change the passphrase used for wallet encryption"));
+    changePassphraseAction->setVisible(false); //TODO
     signMessageAction = new QAction(platformStyle->TextColorIcon(":/icons/edit"), tr("Sign &message..."), this);
     signMessageAction->setStatusTip(tr("Sign messages with your LitecoinZ addresses to prove you own them"));
     verifyMessageAction = new QAction(platformStyle->TextColorIcon(":/icons/verify"), tr("&Verify message..."), this);
     verifyMessageAction->setStatusTip(tr("Verify messages to ensure they were signed with specified LitecoinZ addresses"));
+
+    // LITECOINZ
+    listUnspentAction = new QAction(platformStyle->TextColorIcon(":/icons/address-book"), tr("&List transparent unspent transactions..."), this);
+    listUnspentAction->setStatusTip(tr("List unspent from transparent transactions"));
+    listZUnspentAction = new QAction(platformStyle->TextColorIcon(":/icons/address-book"), tr("&List shielded unspent transactions..."), this);
+    listZUnspentAction->setStatusTip(tr("List unspent from shielded transactions"));
 
     openRPCConsoleAction = new QAction(platformStyle->TextColorIcon(":/icons/debugwindow"), tr("&Debug window"), this);
     openRPCConsoleAction->setStatusTip(tr("Open debugging and diagnostic console"));
@@ -384,6 +394,10 @@ void BitcoinGUI::createActions()
         connect(usedSendingAddressesAction, SIGNAL(triggered()), walletFrame, SLOT(usedSendingAddresses()));
         connect(usedReceivingAddressesAction, SIGNAL(triggered()), walletFrame, SLOT(usedReceivingAddresses()));
         connect(openAction, SIGNAL(triggered()), this, SLOT(openClicked()));
+
+        // LITECOINZ
+        connect(listUnspentAction, SIGNAL(triggered(bool)), walletFrame, SLOT(listUnspent()));
+        connect(listZUnspentAction, SIGNAL(triggered(bool)), walletFrame, SLOT(listZUnspent()));
     }
 #endif // ENABLE_WALLET
 
@@ -416,13 +430,21 @@ void BitcoinGUI::createMenuBar()
     }
     file->addAction(quitAction);
 
-    QMenu *settings = appMenuBar->addMenu(tr("&Settings"));
+    QMenu *utilities = appMenuBar->addMenu(tr("&Utilities"));
     if(walletFrame)
     {
-        settings->addAction(encryptWalletAction);
-        settings->addAction(changePassphraseAction);
-        settings->addSeparator();
+        utilities->addAction(listUnspentAction);
+        utilities->addAction(listZUnspentAction);
+        utilities->addSeparator();
     }
+
+    QMenu *settings = appMenuBar->addMenu(tr("&Settings"));
+//    if(walletFrame)
+//    {
+//        settings->addAction(encryptWalletAction);
+//        settings->addAction(changePassphraseAction);
+//        settings->addSeparator();
+//    }
     settings->addAction(optionsAction);
 
     QMenu *help = appMenuBar->addMenu(tr("&Help"));
@@ -545,6 +567,8 @@ void BitcoinGUI::setWalletActionsEnabled(bool enabled)
     receiveCoinsMenuAction->setEnabled(enabled);
     historyAction->setEnabled(enabled);
     encryptWalletAction->setEnabled(enabled);
+    listUnspentAction->setEnabled(enabled);
+    listZUnspentAction->setEnabled(enabled);
     backupWalletAction->setEnabled(enabled);
     changePassphraseAction->setEnabled(enabled);
     signMessageAction->setEnabled(enabled);

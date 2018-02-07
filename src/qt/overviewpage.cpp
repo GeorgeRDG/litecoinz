@@ -301,17 +301,3 @@ void OverviewPage::on_shieldCoinsButton_clicked()
     dlg.setModel(walletModel);
     dlg.exec();
 }
-
-void OverviewPage::on_pushTUnspentButton_clicked()
-{
-    UnspentDialog dlg(platformStyle, UnspentDialog::ForEditing, this);
-    dlg.setModel(walletModel->getUnspentTableModel());
-    dlg.exec();
-}
-
-void OverviewPage::on_pushZUnspentButton_clicked()
-{
-    ZUnspentDialog dlg(platformStyle, ZUnspentDialog::ForEditing, this);
-    dlg.setModel(walletModel->getZUnspentTableModel());
-    dlg.exec();
-}

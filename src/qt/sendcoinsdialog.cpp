@@ -6,6 +6,7 @@
 #include "ui_sendcoinsdialog.h"
 
 #include "addresstablemodel.h"
+#include "zunspentdialog.h"
 #include "bitcoinunits.h"
 #include "clientmodel.h"
 #include "coincontroldialog.h"
@@ -63,7 +64,7 @@ SendCoinsDialog::SendCoinsDialog(const PlatformStyle *platformStyle, QWidget *pa
     connect(ui->checkBoxCoinControlChange, SIGNAL(stateChanged(int)), this, SLOT(coinControlChangeChecked(int)));
     connect(ui->lineEditCoinControlChange, SIGNAL(textEdited(const QString &)), this, SLOT(coinControlChangeEdited(const QString &)));
 
-    connect(ui->checkBoxZaddress, SIGNAL(stateChanged(int)), this, SLOT(shieldControlChangeChecked(int)));
+    connect(ui->checkboxSenFromZAddress, SIGNAL(stateChanged(int)), this, SLOT(shieldControlChangeChecked(int)));
 
     // Coin Control: clipboard actions
     QAction *clipboardQuantityAction = new QAction(tr("Copy quantity"), this);
@@ -118,10 +119,12 @@ SendCoinsDialog::SendCoinsDialog(const PlatformStyle *platformStyle, QWidget *pa
     minimizeFeeSection(settings.value("fFeeSectionMinimized").toBool());
 
     // LitecoinZ
-    ui->zAaddress->setVisible(false);
+    ui->zAddress->setVisible(false);
     ui->addressBookButton->setVisible(false);
     ui->deleteButton->setVisible(false);
     ui->sendZButton->setVisible(false);
+    ui->frameShielded->setVisible(false);
+    ui->frameShieldedCoin->setVisible(false);
 }
 
 void SendCoinsDialog::setClientModel(ClientModel *clientModel)
@@ -158,6 +161,9 @@ void SendCoinsDialog::setModel(WalletModel *model)
         connect(model->getOptionsModel(), SIGNAL(displayUnitChanged(int)), this, SLOT(coinControlUpdateLabels()));
         connect(model->getOptionsModel(), SIGNAL(coinControlFeaturesChanged(bool)), this, SLOT(coinControlFeatureChanged(bool)));
         ui->frameCoinControl->setVisible(model->getOptionsModel()->getCoinControlFeatures());
+        ui->frameShielded->setVisible(!model->getOptionsModel()->getCoinControlFeatures());
+        if (model->getOptionsModel()->getCoinControlFeatures())
+            ui->frameShieldedCoin->setVisible(false);
         coinControlUpdateLabels();
 
         // fee section
@@ -690,6 +696,9 @@ void SendCoinsDialog::coinControlClipboardChange()
 void SendCoinsDialog::coinControlFeatureChanged(bool checked)
 {
     ui->frameCoinControl->setVisible(checked);
+    ui->frameShielded->setVisible(!checked);
+    if (checked)
+        ui->frameShieldedCoin->setVisible(false);
 
     if (!checked && model) // coin control features disabled
         CoinControlDialog::coinControl->SetNull();
@@ -712,24 +721,24 @@ void SendCoinsDialog::shieldControlChangeChecked(int state)
 {
     if (state == Qt::Unchecked)
     {
-        ui->zAaddress->clear();
-        ui->zAaddress->setVisible(false);
+        ui->zAddress->clear();
+        ui->zAddress->setVisible(false);
         ui->addressBookButton->setVisible(false);
         ui->deleteButton->setVisible(false);
         ui->sendButton->setVisible(true);
         ui->sendZButton->setVisible(false);
-        ui->frameCoinControl->setVisible(model->getOptionsModel()->getCoinControlFeatures());
+        ui->frameShieldedCoin->setVisible(false);
         coinControlUpdateLabels();
     }
     else
     {
-        ui->zAaddress->clear();
-        ui->zAaddress->setVisible(true);
+        ui->zAddress->clear();
+        ui->zAddress->setVisible(true);
         ui->addressBookButton->setVisible(true);
         ui->deleteButton->setVisible(true);
         ui->sendButton->setVisible(false);
         ui->sendZButton->setVisible(true);
-        ui->frameCoinControl->setVisible(false);
+        ui->frameShieldedCoin->setVisible(true);
     }
 }
 
@@ -871,4 +880,24 @@ void SendConfirmationDialog::updateYesButton()
         yesButton->setEnabled(true);
         yesButton->setText(tr("Yes"));
     }
+}
+
+void SendCoinsDialog::on_addressBookButton_clicked()
+{
+    if(!model)
+        return;
+
+    ZUnspentDialog dlg(platformStyle, ZUnspentDialog::ForSelection, this);
+    dlg.setModel(model->getZUnspentTableModel());
+    if(dlg.exec())
+    {
+        ui->zAddress->setText(dlg.getReturnValue());
+        ui->zAddress->setToolTip(dlg.getReturnValue());
+    }
+}
+
+void SendCoinsDialog::on_deleteButton_clicked()
+{
+    ui->zAddress->clear();
+    ui->zAddress->setToolTip("");
 }

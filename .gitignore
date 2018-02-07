@@ -1,6 +1,8 @@
 *.tar.gz
 *.deb
 *.exe
+src/LitecoinzSwingWalletUI.jar
+
 src/litecoinzd
 src/litecoinz-cli
 src/litecoinz-gtest

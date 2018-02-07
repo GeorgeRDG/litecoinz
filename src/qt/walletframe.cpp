@@ -150,6 +150,20 @@ void WalletFrame::gotoVerifyMessageTab(QString addr)
         walletView->gotoVerifyMessageTab(addr);
 }
 
+void WalletFrame::listUnspent()
+{
+    WalletView *walletView = currentWalletView();
+    if (walletView)
+        walletView->listUnspent();
+}
+
+void WalletFrame::listZUnspent()
+{
+    WalletView *walletView = currentWalletView();
+    if (walletView)
+        walletView->listZUnspent();
+}
+
 void WalletFrame::encryptWallet(bool status)
 {
     WalletView *walletView = currentWalletView();

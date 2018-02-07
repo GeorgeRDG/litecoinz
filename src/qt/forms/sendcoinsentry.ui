@@ -163,9 +163,16 @@
      </widget>
     </item>
     <item row="2" column="1">
-     <layout class="QHBoxLayout" name="horizontalLayoutAmount" stretch="0,1">
+     <layout class="QHBoxLayout" name="horizontalLayoutAmount" stretch="0,0,1">
       <item>
        <widget class="BitcoinAmountField" name="payAmount"/>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkboxSendToZAddress">
+        <property name="text">
+         <string>Send to a z-Address</string>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="checkboxSubtractFeeFromAmount">

@@ -5,6 +5,7 @@
 #include "guiutil.h"
 
 #include "bitcoinaddressvalidator.h"
+#include "litecoinzaddressvalidator.h"
 #include "bitcoinunits.h"
 #include "qvalidatedlineedit.h"
 #include "walletmodel.h"
@@ -137,6 +138,20 @@ void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent)
 #endif
     widget->setValidator(new BitcoinAddressEntryValidator(parent));
     widget->setCheckValidator(new BitcoinAddressCheckValidator(parent));
+}
+
+void setupZAddressWidget(QValidatedLineEdit *widget, QWidget *parent)
+{
+    parent->setFocusProxy(widget);
+
+    widget->setFont(fixedPitchFont());
+#if QT_VERSION >= 0x040700
+    // We don't want translators to use own addresses in translations
+    // and this is the only place, where this address is supplied.
+    widget->setPlaceholderText(QObject::tr("Enter a LitecoinZ address (e.g. zmrfiKJzgE1AmVXCqyf6RoR1SgyL4FxgwHiNPwJoBYiUQEMDMqwdNVxi6NE25xws3JuxbqWKHhSJ6Gp1r8MZ4osBbQy5Txw)"));
+#endif
+    widget->setValidator(new LitecoinZAddressEntryValidator(parent));
+    widget->setCheckValidator(new LitecoinZAddressCheckValidator(parent));
 }
 
 void setupAmountWidget(QLineEdit *widget, QWidget *parent)

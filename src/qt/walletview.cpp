@@ -6,6 +6,8 @@
 
 #include "addressbookpage.h"
 #include "askpassphrasedialog.h"
+#include "unspentdialog.h"
+#include "zunspentdialog.h"
 #include "bitcoingui.h"
 #include "clientmodel.h"
 #include "guiutil.h"
@@ -224,6 +226,24 @@ void WalletView::showOutOfSyncWarning(bool fShow)
 void WalletView::updateEncryptionStatus()
 {
     Q_EMIT encryptionStatusChanged(walletModel->getEncryptionStatus());
+}
+
+void WalletView::listUnspent()
+{
+    if(!walletModel)
+        return;
+    UnspentDialog dlg(platformStyle, UnspentDialog::ForEditing, this);
+    dlg.setModel(walletModel->getUnspentTableModel());
+    dlg.exec();
+}
+
+void WalletView::listZUnspent()
+{
+    if(!walletModel)
+        return;
+    ZUnspentDialog dlg(platformStyle, ZUnspentDialog::ForEditing, this);
+    dlg.setModel(walletModel->getZUnspentTableModel());
+    dlg.exec();
 }
 
 void WalletView::encryptWallet(bool status)
