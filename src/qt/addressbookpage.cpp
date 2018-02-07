@@ -33,13 +33,13 @@ AddressBookPage::AddressBookPage(const PlatformStyle *platformStyle, Mode mode, 
 
     if (!platformStyle->getImagesOnButtons()) {
         ui->newAddress->setIcon(QIcon());
-        ui->newAddressZ->setIcon(QIcon());
+        ui->newZAddress->setIcon(QIcon());
         ui->copyAddress->setIcon(QIcon());
         ui->deleteAddress->setIcon(QIcon());
         ui->exportButton->setIcon(QIcon());
     } else {
         ui->newAddress->setIcon(platformStyle->SingleColorIcon(":/icons/add"));
-        ui->newAddressZ->setIcon(platformStyle->SingleColorIcon(":/icons/add"));
+        ui->newZAddress->setIcon(platformStyle->SingleColorIcon(":/icons/add"));
         ui->copyAddress->setIcon(platformStyle->SingleColorIcon(":/icons/editcopy"));
         ui->deleteAddress->setIcon(platformStyle->SingleColorIcon(":/icons/remove"));
         ui->exportButton->setIcon(platformStyle->SingleColorIcon(":/icons/export"));
@@ -58,8 +58,8 @@ AddressBookPage::AddressBookPage(const PlatformStyle *platformStyle, Mode mode, 
         ui->tableView->setFocus();
         ui->closeButton->setText(tr("C&hoose"));
         ui->exportButton->hide();
-        ui->tableViewZ->setVisible(false);
-        ui->labelExplanationZ->setVisible(false);
+        ui->tableZView->setVisible(false);
+        ui->labelZExplanation->setVisible(false);
         resize(sizeHint());
         break;
     case ForZSelection:
@@ -68,9 +68,9 @@ AddressBookPage::AddressBookPage(const PlatformStyle *platformStyle, Mode mode, 
         case SendingTab: setWindowTitle(tr("Choose the private address to send coins to")); break;
         case ReceivingTab: setWindowTitle(tr("Choose the private address to receive coins with")); break;
         }
-        connect(ui->tableViewZ, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(accept()));
-        ui->tableViewZ->setEditTriggers(QAbstractItemView::NoEditTriggers);
-        ui->tableViewZ->setFocus();
+        connect(ui->tableZView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(accept()));
+        ui->tableZView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        ui->tableZView->setFocus();
         ui->closeButton->setText(tr("C&hoose"));
         ui->exportButton->hide();
         ui->tableView->setVisible(false);
@@ -92,13 +92,13 @@ AddressBookPage::AddressBookPage(const PlatformStyle *platformStyle, Mode mode, 
     case SendingTab:
         ui->labelExplanation->setText(tr("These are your LitecoinZ addresses for sending payments. Always check the amount and the receiving address before sending coins."));
         ui->deleteAddress->setVisible(true);
-        ui->newAddressZ->setVisible(false);
-        ui->tableViewZ->setVisible(false);
+        ui->newZAddress->setVisible(false);
+        ui->tableZView->setVisible(false);
         resize(sizeHint());
         break;
     case ReceivingTab:
         ui->labelExplanation->setText(tr("These are your LitecoinZ transparent addresses for receiving payments. It is recommended to use a new receiving address for each transaction."));
-        ui->labelExplanationZ->setText(tr("These are your LitecoinZ private addresses for shielding coins."));
+        ui->labelZExplanation->setText(tr("These are your LitecoinZ private addresses for shielding coins."));
         ui->deleteAddress->setVisible(false);
         break;
     }
@@ -192,17 +192,17 @@ void AddressBookPage::setZModel(ZAddressTableModel *zmodel)
     proxyZModel->setSortCaseSensitivity(Qt::CaseInsensitive);
     proxyZModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
 
-    ui->tableViewZ->setModel(proxyZModel);
-    ui->tableViewZ->sortByColumn(0, Qt::AscendingOrder);
+    ui->tableZView->setModel(proxyZModel);
+    ui->tableZView->sortByColumn(0, Qt::AscendingOrder);
 
     // Set column widths
 #if QT_VERSION < 0x050000
-    ui->tableViewZ->horizontalHeader()->setResizeMode(ZAddressTableModel::Address, QHeaderView::Stretch);
+    ui->tableZView->horizontalHeader()->setResizeMode(ZAddressTableModel::Address, QHeaderView::Stretch);
 #else
-    ui->tableViewZ->horizontalHeader()->setSectionResizeMode(ZAddressTableModel::Address, QHeaderView::Stretch);
+    ui->tableZView->horizontalHeader()->setSectionResizeMode(ZAddressTableModel::Address, QHeaderView::Stretch);
 #endif
 
-    connect(ui->tableViewZ->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+    connect(ui->tableZView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
         this, SLOT(selectionZChanged()));
 
     // Select row for newly created z-address
@@ -280,7 +280,7 @@ void AddressBookPage::selectionChanged()
 
     if(table->selectionModel()->hasSelection())
     {
-        ui->tableViewZ->selectionModel()->clear();
+        ui->tableZView->selectionModel()->clear();
 
         switch(tab)
         {
@@ -309,7 +309,7 @@ void AddressBookPage::selectionChanged()
 void AddressBookPage::selectionZChanged()
 {
     // Set button states based on selected tab and selection
-    QTableView *table = ui->tableViewZ;
+    QTableView *table = ui->tableZView;
     if(!table->selectionModel())
         return;
 
@@ -334,7 +334,7 @@ void AddressBookPage::done(int retval)
         indexes = table->selectionModel()->selectedRows(AddressTableModel::Address);
         break;
     case ForZSelection:
-        table = ui->tableViewZ;
+        table = ui->tableZView;
         if(!table->selectionModel() || !table->model()) {
             return;
         }
@@ -407,8 +407,8 @@ void AddressBookPage::selectNewZAddress(const QModelIndex &parent, int begin, in
     if(idx.isValid() && (idx.data(Qt::EditRole).toString() == newZAddressToSelect))
     {
         // Select row of newly created address, once
-        ui->tableViewZ->setFocus();
-        ui->tableViewZ->selectRow(idx.row());
+        ui->tableZView->setFocus();
+        ui->tableZView->selectRow(idx.row());
         newZAddressToSelect.clear();
     }
 }

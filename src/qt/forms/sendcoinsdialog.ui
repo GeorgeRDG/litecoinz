@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>850</width>
-    <height>526</height>
+    <height>554</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Send Coins</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0,0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0,0,0">
    <property name="bottomMargin">
     <number>8</number>
    </property>
@@ -588,7 +588,7 @@
         <x>0</x>
         <y>0</y>
         <width>830</width>
-        <height>104</height>
+        <height>68</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1">
@@ -629,6 +629,75 @@
     </widget>
    </item>
    <item>
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QCheckBox" name="checkBoxZaddress">
+        <property name="text">
+         <string>Send from shielded address</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="zAaddress">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="addressBookButton">
+        <property name="toolTip">
+         <string>Choose shielded address to use</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../bitcoin.qrc">
+          <normaloff>:/icons/address-book</normaloff>:/icons/address-book</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>22</width>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="shortcut">
+         <string>Alt+A</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="deleteButton">
+        <property name="toolTip">
+         <string>Remove this entry</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../bitcoin.qrc">
+          <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>22</width>
+          <height>22</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QFrame" name="frameFee">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -665,7 +734,7 @@
        <number>0</number>
       </property>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayoutFee2" stretch="0,0,0">
+       <layout class="QVBoxLayout" name="verticalLayoutFee2" stretch="0,0,0,0">
         <property name="spacing">
          <number>0</number>
         </property>
@@ -675,6 +744,9 @@
         <property name="topMargin">
          <number>0</number>
         </property>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3"/>
+        </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayoutFee1">
           <property name="bottomMargin">
@@ -1188,6 +1260,32 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="sendZButton">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Confirm the send action</string>
+       </property>
+       <property name="text">
+        <string>S&amp;end</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../bitcoin.qrc">
+         <normaloff>:/icons/send</normaloff>:/icons/send</iconset>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="clearButton">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -1301,7 +1399,7 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="groupFee"/>
   <buttongroup name="groupCustomFee"/>
+  <buttongroup name="groupFee"/>
  </buttongroups>
 </ui>

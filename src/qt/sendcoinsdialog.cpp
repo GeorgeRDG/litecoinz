@@ -63,6 +63,8 @@ SendCoinsDialog::SendCoinsDialog(const PlatformStyle *platformStyle, QWidget *pa
     connect(ui->checkBoxCoinControlChange, SIGNAL(stateChanged(int)), this, SLOT(coinControlChangeChecked(int)));
     connect(ui->lineEditCoinControlChange, SIGNAL(textEdited(const QString &)), this, SLOT(coinControlChangeEdited(const QString &)));
 
+    connect(ui->checkBoxZaddress, SIGNAL(stateChanged(int)), this, SLOT(shieldControlChangeChecked(int)));
+
     // Coin Control: clipboard actions
     QAction *clipboardQuantityAction = new QAction(tr("Copy quantity"), this);
     QAction *clipboardAmountAction = new QAction(tr("Copy amount"), this);
@@ -114,6 +116,12 @@ SendCoinsDialog::SendCoinsDialog(const PlatformStyle *platformStyle, QWidget *pa
     ui->customFee->setValue(settings.value("nTransactionFee").toLongLong());
     ui->checkBoxMinimumFee->setChecked(settings.value("fPayOnlyMinFee").toBool());
     minimizeFeeSection(settings.value("fFeeSectionMinimized").toBool());
+
+    // LitecoinZ
+    ui->zAaddress->setVisible(false);
+    ui->addressBookButton->setVisible(false);
+    ui->deleteButton->setVisible(false);
+    ui->sendZButton->setVisible(false);
 }
 
 void SendCoinsDialog::setClientModel(ClientModel *clientModel)
@@ -697,6 +705,32 @@ void SendCoinsDialog::coinControlButtonClicked()
     dlg.setModel(model);
     dlg.exec();
     coinControlUpdateLabels();
+}
+
+// LitecoinZ
+void SendCoinsDialog::shieldControlChangeChecked(int state)
+{
+    if (state == Qt::Unchecked)
+    {
+        ui->zAaddress->clear();
+        ui->zAaddress->setVisible(false);
+        ui->addressBookButton->setVisible(false);
+        ui->deleteButton->setVisible(false);
+        ui->sendButton->setVisible(true);
+        ui->sendZButton->setVisible(false);
+        ui->frameCoinControl->setVisible(model->getOptionsModel()->getCoinControlFeatures());
+        coinControlUpdateLabels();
+    }
+    else
+    {
+        ui->zAaddress->clear();
+        ui->zAaddress->setVisible(true);
+        ui->addressBookButton->setVisible(true);
+        ui->deleteButton->setVisible(true);
+        ui->sendButton->setVisible(false);
+        ui->sendZButton->setVisible(true);
+        ui->frameCoinControl->setVisible(false);
+    }
 }
 
 // Coin Control: checkbox custom change address

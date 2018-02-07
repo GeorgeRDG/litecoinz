@@ -9,9 +9,11 @@
 #include "zshieldcoinsdialog.h"
 #include "ui_zshieldcoinsdialog.h"
 
+#include "bitcoinunits.h"
 #include "addressbookpage.h"
-#include "resultsdialog.h"
 #include "zaddresstablemodel.h"
+#include "resultsdialog.h"
+
 #include "guiutil.h"
 #include "optionsmodel.h"
 #include "platformstyle.h"
@@ -58,9 +60,11 @@ void ZShieldCoinsDialog::on_shieldButton_clicked()
     UniValue ret = z_shieldcoinbase(params, false);
 
     QString remainingUTXOs = QString("%1").arg(ret[0].get_int());
-    QString remainingValue = QString("%1").arg(ret[1].get_real());
+    //QString remainingValue = QString("%1").arg(ret[1].get_real());
+    QString remainingValue = BitcoinUnits::format(BitcoinUnits::LTZ, ret[1].get_real());
     QString shieldingUTXOs = QString("%1").arg(ret[2].get_int());
-    QString shieldingValue = QString("%1").arg(ret[3].get_real());
+    //QString shieldingValue = QString("%1").arg(ret[3].get_real());
+    QString shieldingValue = BitcoinUnits::format(BitcoinUnits::LTZ, ret[3].get_real());
     QString opid = QString::fromStdString(ret[4].get_str());
 
     QString label1 = "Operation was submitted in background.";
@@ -74,6 +78,12 @@ void ZShieldCoinsDialog::on_shieldButton_clicked()
     dlg.exec();
 
     this->close();
+}
+
+void ZShieldCoinsDialog::on_deleteButton_clicked()
+{
+    ui->reqShieldAddress->clear();
+    ui->shieldButton->setEnabled(false);
 }
 
 void ZShieldCoinsDialog::on_AddressBookButton_clicked()

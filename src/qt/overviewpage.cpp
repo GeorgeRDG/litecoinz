@@ -13,6 +13,8 @@
 #include "platformstyle.h"
 #include "transactionfilterproxy.h"
 #include "transactiontablemodel.h"
+#include "unspentdialog.h"
+#include "zunspentdialog.h"
 #include "walletmodel.h"
 #include "zshieldcoinsdialog.h"
 
@@ -300,3 +302,16 @@ void OverviewPage::on_shieldCoinsButton_clicked()
     dlg.exec();
 }
 
+void OverviewPage::on_pushTUnspentButton_clicked()
+{
+    UnspentDialog dlg(platformStyle, UnspentDialog::ForEditing, this);
+    dlg.setModel(walletModel->getUnspentTableModel());
+    dlg.exec();
+}
+
+void OverviewPage::on_pushZUnspentButton_clicked()
+{
+    ZUnspentDialog dlg(platformStyle, ZUnspentDialog::ForEditing, this);
+    dlg.setModel(walletModel->getZUnspentTableModel());
+    dlg.exec();
+}

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>998</width>
-    <height>156</height>
+    <height>160</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,6 +27,12 @@
        <property name="icon">
         <iconset resource="../bitcoin.qrc">
          <normaloff>:/icons/send</normaloff>:/icons/send</iconset>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+       <property name="default">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -86,16 +92,45 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="AddressBookButton">
+           <widget class="QToolButton" name="AddressBookButton">
             <property name="toolTip">
              <string>Choose new or previously used address</string>
             </property>
             <property name="text">
-             <string> &amp;Address Book</string>
+             <string/>
             </property>
             <property name="icon">
              <iconset resource="../bitcoin.qrc">
               <normaloff>:/icons/address-book</normaloff>:/icons/address-book</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>22</width>
+              <height>22</height>
+             </size>
+            </property>
+            <property name="shortcut">
+             <string>Alt+A</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="deleteButton">
+            <property name="toolTip">
+             <string>Remove this entry</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../bitcoin.qrc">
+              <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>22</width>
+              <height>22</height>
+             </size>
             </property>
            </widget>
           </item>

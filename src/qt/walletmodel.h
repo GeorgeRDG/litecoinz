@@ -21,6 +21,8 @@ class OptionsModel;
 class PlatformStyle;
 class RecentRequestsTableModel;
 class TransactionTableModel;
+class UnspentTableModel;
+class ZUnspentTableModel;
 class WalletModelTransaction;
 
 class CCoinControl;
@@ -130,6 +132,8 @@ public:
     AddressTableModel *getAddressTableModel();
     ZAddressTableModel *getZAddressTableModel();
     TransactionTableModel *getTransactionTableModel();
+    UnspentTableModel *getUnspentTableModel();
+    ZUnspentTableModel *getZUnspentTableModel();
     RecentRequestsTableModel *getRecentRequestsTableModel();
 
     CAmount getBalance(const CCoinControl *coinControl = NULL) const;
@@ -216,6 +220,8 @@ private:
 
     AddressTableModel *addressTableModel;
     ZAddressTableModel *zaddressTableModel;
+    UnspentTableModel *unspentTableModel;
+    ZUnspentTableModel *zunspentTableModel;
     TransactionTableModel *transactionTableModel;
     RecentRequestsTableModel *recentRequestsTableModel;
 

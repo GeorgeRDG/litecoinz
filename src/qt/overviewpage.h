@@ -74,6 +74,8 @@ private Q_SLOTS:
     void handleOutOfSyncWarningClicks();
 
     void on_shieldCoinsButton_clicked();
+    void on_pushTUnspentButton_clicked();
+    void on_pushZUnspentButton_clicked();
 };
 
 #endif // BITCOIN_QT_OVERVIEWPAGE_H
