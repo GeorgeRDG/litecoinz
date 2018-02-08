@@ -64,8 +64,6 @@ SendCoinsDialog::SendCoinsDialog(const PlatformStyle *platformStyle, QWidget *pa
     connect(ui->checkBoxCoinControlChange, SIGNAL(stateChanged(int)), this, SLOT(coinControlChangeChecked(int)));
     connect(ui->lineEditCoinControlChange, SIGNAL(textEdited(const QString &)), this, SLOT(coinControlChangeEdited(const QString &)));
 
-    connect(ui->checkboxSenFromZAddress, SIGNAL(stateChanged(int)), this, SLOT(shieldControlChangeChecked(int)));
-
     // Coin Control: clipboard actions
     QAction *clipboardQuantityAction = new QAction(tr("Copy quantity"), this);
     QAction *clipboardAmountAction = new QAction(tr("Copy amount"), this);
@@ -117,14 +115,6 @@ SendCoinsDialog::SendCoinsDialog(const PlatformStyle *platformStyle, QWidget *pa
     ui->customFee->setValue(settings.value("nTransactionFee").toLongLong());
     ui->checkBoxMinimumFee->setChecked(settings.value("fPayOnlyMinFee").toBool());
     minimizeFeeSection(settings.value("fFeeSectionMinimized").toBool());
-
-    // LitecoinZ
-    ui->zAddress->setVisible(false);
-    ui->addressBookButton->setVisible(false);
-    ui->deleteButton->setVisible(false);
-    ui->sendZButton->setVisible(false);
-    ui->frameShielded->setVisible(false);
-    ui->frameShieldedCoin->setVisible(false);
 }
 
 void SendCoinsDialog::setClientModel(ClientModel *clientModel)
@@ -160,10 +150,6 @@ void SendCoinsDialog::setModel(WalletModel *model)
         // Coin Control
         connect(model->getOptionsModel(), SIGNAL(displayUnitChanged(int)), this, SLOT(coinControlUpdateLabels()));
         connect(model->getOptionsModel(), SIGNAL(coinControlFeaturesChanged(bool)), this, SLOT(coinControlFeatureChanged(bool)));
-        ui->frameCoinControl->setVisible(model->getOptionsModel()->getCoinControlFeatures());
-        ui->frameShielded->setVisible(!model->getOptionsModel()->getCoinControlFeatures());
-        if (model->getOptionsModel()->getCoinControlFeatures())
-            ui->frameShieldedCoin->setVisible(false);
         coinControlUpdateLabels();
 
         // fee section
@@ -243,10 +229,7 @@ void SendCoinsDialog::on_sendButton_clicked()
     // prepare transaction for getting txFee earlier
     WalletModelTransaction currentTransaction(recipients);
     WalletModel::SendCoinsReturn prepareStatus;
-    if (model->getOptionsModel()->getCoinControlFeatures()) // coin control enabled
-        prepareStatus = model->prepareTransaction(currentTransaction, CoinControlDialog::coinControl);
-    else
-        prepareStatus = model->prepareTransaction(currentTransaction);
+    prepareStatus = model->prepareTransaction(currentTransaction, CoinControlDialog::coinControl);
 
     // process prepareStatus and on error generate message shown to user
     processSendCoinsReturn(prepareStatus,
@@ -693,12 +676,9 @@ void SendCoinsDialog::coinControlClipboardChange()
 }
 
 // Coin Control: settings menu - coin control enabled/disabled by user
-void SendCoinsDialog::coinControlFeatureChanged(bool checked)
+void SendCoinsDialog::coinControlFeatureChanged(bool checked = true)
 {
     ui->frameCoinControl->setVisible(checked);
-    ui->frameShielded->setVisible(!checked);
-    if (checked)
-        ui->frameShieldedCoin->setVisible(false);
 
     if (!checked && model) // coin control features disabled
         CoinControlDialog::coinControl->SetNull();
@@ -714,32 +694,6 @@ void SendCoinsDialog::coinControlButtonClicked()
     dlg.setModel(model);
     dlg.exec();
     coinControlUpdateLabels();
-}
-
-// LitecoinZ
-void SendCoinsDialog::shieldControlChangeChecked(int state)
-{
-    if (state == Qt::Unchecked)
-    {
-        ui->zAddress->clear();
-        ui->zAddress->setVisible(false);
-        ui->addressBookButton->setVisible(false);
-        ui->deleteButton->setVisible(false);
-        ui->sendButton->setVisible(true);
-        ui->sendZButton->setVisible(false);
-        ui->frameShieldedCoin->setVisible(false);
-        coinControlUpdateLabels();
-    }
-    else
-    {
-        ui->zAddress->clear();
-        ui->zAddress->setVisible(true);
-        ui->addressBookButton->setVisible(true);
-        ui->deleteButton->setVisible(true);
-        ui->sendButton->setVisible(false);
-        ui->sendZButton->setVisible(true);
-        ui->frameShieldedCoin->setVisible(true);
-    }
 }
 
 // Coin Control: checkbox custom change address
@@ -804,7 +758,7 @@ void SendCoinsDialog::coinControlChangeEdited(const QString& text)
 // Coin Control: update labels
 void SendCoinsDialog::coinControlUpdateLabels()
 {
-    if (!model || !model->getOptionsModel() || !model->getOptionsModel()->getCoinControlFeatures())
+    if (!model || !model->getOptionsModel())
         return;
 
     // set pay amounts
@@ -880,24 +834,4 @@ void SendConfirmationDialog::updateYesButton()
         yesButton->setEnabled(true);
         yesButton->setText(tr("Yes"));
     }
-}
-
-void SendCoinsDialog::on_addressBookButton_clicked()
-{
-    if(!model)
-        return;
-
-    ZUnspentDialog dlg(platformStyle, ZUnspentDialog::ForSelection, this);
-    dlg.setModel(model->getZUnspentTableModel());
-    if(dlg.exec())
-    {
-        ui->zAddress->setText(dlg.getReturnValue());
-        ui->zAddress->setToolTip(dlg.getReturnValue());
-    }
-}
-
-void SendCoinsDialog::on_deleteButton_clicked()
-{
-    ui->zAddress->clear();
-    ui->zAddress->setToolTip("");
 }

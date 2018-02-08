@@ -81,7 +81,6 @@ private Q_SLOTS:
     void coinControlFeatureChanged(bool);
     void coinControlButtonClicked();
     void coinControlChangeChecked(int);
-    void shieldControlChangeChecked(int);
     void coinControlChangeEdited(const QString &);
     void coinControlUpdateLabels();
     void coinControlClipboardQuantity();
@@ -96,8 +95,6 @@ private Q_SLOTS:
     void updateMinFeeLabel();
     void updateSmartFeeLabel();
     void updateGlobalFeeVariables();
-    void on_addressBookButton_clicked();
-    void on_deleteButton_clicked();
 
 Q_SIGNALS:
     // Fired when a message should be reported to the user

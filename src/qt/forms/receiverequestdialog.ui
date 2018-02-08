@@ -7,10 +7,23 @@
     <x>0</x>
     <y>0</y>
     <width>487</width>
-    <height>597</height>
+    <height>602</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
+   <item>
+    <widget class="QLabel" name="labelLogo">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../bitcoin.qrc">:/images/res/images/logo.png</pixmap>
+     </property>
+     <property name="margin">
+      <number>10</number>
+     </property>
+    </widget>
+   </item>
    <item>
     <widget class="QRImageWidget" name="lblQRCode">
      <property name="sizePolicy">
@@ -130,7 +143,9 @@
    <header>receiverequestdialog.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../bitcoin.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>
