@@ -38,11 +38,11 @@ AddressBookPage::AddressBookPage(const PlatformStyle *platformStyle, Mode mode, 
         ui->deleteAddress->setIcon(QIcon());
         ui->exportButton->setIcon(QIcon());
     } else {
-        ui->newAddress->setIcon(platformStyle->SingleColorIcon(":/icons/add"));
-        ui->newZAddress->setIcon(platformStyle->SingleColorIcon(":/icons/add"));
-        ui->copyAddress->setIcon(platformStyle->SingleColorIcon(":/icons/editcopy"));
-        ui->deleteAddress->setIcon(platformStyle->SingleColorIcon(":/icons/remove"));
-        ui->exportButton->setIcon(platformStyle->SingleColorIcon(":/icons/export"));
+        ui->newAddress->setIcon(QIcon(":/images/res/images/add1.png"));
+        ui->newZAddress->setIcon(QIcon(":/images/res/images/add2.png"));
+        ui->copyAddress->setIcon(QIcon(":/images/res/images/copy.png"));
+        ui->deleteAddress->setIcon(QIcon(":/images/res/images/remove1.png"));
+        ui->exportButton->setIcon(QIcon(":/images/res/images/export.png"));
     }
 
     switch(mode)

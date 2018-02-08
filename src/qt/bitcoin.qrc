@@ -51,6 +51,8 @@
     <file alias="prompticon">res/icons/chevron.png</file>
   </qresource>
   <qresource prefix="/images">
+    <file>res/images/locked.png</file>
+    <file>res/images/send2.png</file>
     <file>res/images/show.png</file>
     <file>res/images/save.png</file>
     <file>res/images/open.png</file>

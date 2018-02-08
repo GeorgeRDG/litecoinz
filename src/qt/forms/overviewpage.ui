@@ -619,9 +619,14 @@
                <string>&amp;Shield coinbase</string>
               </property>
               <property name="icon">
-               <iconset>
-                <normalon>:/images/res/images/shield.png</normalon>
-               </iconset>
+               <iconset resource="../bitcoin.qrc">
+                <normaloff>:/images/res/images/unshield.png</normaloff>:/images/res/images/unshield.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>16</width>
+                <height>16</height>
+               </size>
               </property>
               <property name="checkable">
                <bool>false</bool>
