@@ -20,7 +20,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabMain">
       <attribute name="title">
@@ -681,6 +681,10 @@
          <property name="text">
           <string>Open Configuration File</string>
          </property>
+         <property name="icon">
+          <iconset resource="../bitcoin.qrc">
+           <normaloff>:/images/res/images/open.png</normaloff>:/images/res/images/open.png</iconset>
+         </property>
          <property name="autoDefault">
           <bool>false</bool>
          </property>
@@ -693,6 +697,10 @@
          </property>
          <property name="text">
           <string>&amp;Reset Options</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../bitcoin.qrc">
+           <normaloff>:/images/res/images/reset.png</normaloff>:/images/res/images/reset.png</iconset>
          </property>
          <property name="autoDefault">
           <bool>false</bool>
@@ -812,6 +820,8 @@
    <header>qvaluecombobox.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../bitcoin.qrc"/>
+ </resources>
  <connections/>
 </ui>

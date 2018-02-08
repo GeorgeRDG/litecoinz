@@ -120,7 +120,7 @@
              <string notr="true"/>
             </property>
             <property name="text">
-             <string>Inputs...</string>
+             <string>Select coins...</string>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
@@ -1193,33 +1193,7 @@
        </property>
        <property name="icon">
         <iconset resource="../bitcoin.qrc">
-         <normaloff>:/icons/send</normaloff>:/icons/send</iconset>
-       </property>
-       <property name="autoDefault">
-        <bool>false</bool>
-       </property>
-       <property name="default">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="sendZButton">
-       <property name="minimumSize">
-        <size>
-         <width>150</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="toolTip">
-        <string>Confirm the send action</string>
-       </property>
-       <property name="text">
-        <string>S&amp;end</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../bitcoin.qrc">
-         <normaloff>:/icons/send</normaloff>:/icons/send</iconset>
+         <normaloff>:/images/res/images/send.png</normaloff>:/images/res/images/send.png</iconset>
        </property>
        <property name="autoDefault">
         <bool>false</bool>
@@ -1245,7 +1219,7 @@
        </property>
        <property name="icon">
         <iconset resource="../bitcoin.qrc">
-         <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
+         <normaloff>:/images/res/images/clear.png</normaloff>:/images/res/images/clear.png</iconset>
        </property>
        <property name="autoDefault">
         <bool>false</bool>
@@ -1262,7 +1236,7 @@
        </property>
        <property name="icon">
         <iconset resource="../bitcoin.qrc">
-         <normaloff>:/icons/add</normaloff>:/icons/add</iconset>
+         <normaloff>:/images/res/images/add3.png</normaloff>:/images/res/images/add3.png</iconset>
        </property>
        <property name="autoDefault">
         <bool>false</bool>
@@ -1296,7 +1270,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Balance (T+Z):</string>
+          <string>Spendable balance (T+Z-U):</string>
          </property>
         </widget>
        </item>
@@ -1343,7 +1317,7 @@
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="groupFee"/>
   <buttongroup name="groupCustomFee"/>
+  <buttongroup name="groupFee"/>
  </buttongroups>
 </ui>

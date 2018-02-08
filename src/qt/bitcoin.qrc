@@ -51,7 +51,45 @@
     <file alias="prompticon">res/icons/chevron.png</file>
   </qresource>
   <qresource prefix="/images">
+    <file>res/images/show.png</file>
+    <file>res/images/save.png</file>
+    <file>res/images/open.png</file>
+    <file>res/images/info.png</file>
+    <file>res/images/addressbook1.png</file>
+    <file>res/images/addressbook2.png</file>
+    <file>res/images/debug.png</file>
+    <file>res/images/qt.png</file>
+    <file>res/images/backup.png</file>
+    <file>res/images/about.png</file>
+    <file>res/images/encrypt.png</file>
+    <file>res/images/encrypt-off.png</file>
+    <file>res/images/encrypt-on.png</file>
+    <file>res/images/overview.png</file>
+    <file>res/images/receive.png</file>
+    <file>res/images/send.png</file>
+    <file>res/images/exit.png</file>
+    <file>res/images/settings.png</file>
+    <file>res/images/shield.png</file>
+    <file>res/images/transactions.png</file>
+    <file>res/images/unshield.png</file>
     <file>res/images/logo.png</file>
+    <file>res/images/wallet.png</file>
+    <file>res/images/error.png</file>
+    <file>res/images/shield-error.png</file>
+    <file>res/images/warning.png</file>
+    <file>res/images/shield-warning.png</file>
+    <file>res/images/paste.png</file>
+    <file>res/images/copy.png</file>
+    <file>res/images/confirmed.png</file>
+    <file>res/images/clear.png</file>
+    <file>res/images/export.png</file>
+    <file>res/images/add1.png</file>
+    <file>res/images/add2.png</file>
+    <file>res/images/remove1.png</file>
+    <file>res/images/remove2.png</file>
+    <file>res/images/add3.png</file>
+    <file>res/images/reload.png</file>
+    <file>res/images/reset.png</file>
   </qresource>
   <qresource prefix="/movies">
     <file alias="spinner-000">res/movies/spinner-000.png</file>

@@ -87,6 +87,10 @@
        <property name="text">
         <string>Copy &amp;URI</string>
        </property>
+       <property name="icon">
+        <iconset resource="../bitcoin.qrc">
+         <normaloff>:/images/res/images/copy.png</normaloff>:/images/res/images/copy.png</iconset>
+       </property>
        <property name="autoDefault">
         <bool>false</bool>
        </property>
@@ -97,6 +101,10 @@
        <property name="text">
         <string>Copy &amp;Address</string>
        </property>
+       <property name="icon">
+        <iconset resource="../bitcoin.qrc">
+         <normaloff>:/images/res/images/copy.png</normaloff>:/images/res/images/copy.png</iconset>
+       </property>
        <property name="autoDefault">
         <bool>false</bool>
        </property>
@@ -106,6 +114,10 @@
       <widget class="QPushButton" name="btnSaveAs">
        <property name="text">
         <string>&amp;Save Image...</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../bitcoin.qrc">
+         <normaloff>:/images/res/images/save.png</normaloff>:/images/res/images/save.png</iconset>
        </property>
        <property name="autoDefault">
         <bool>false</bool>

@@ -93,8 +93,9 @@
               </property>
               <property name="icon">
                <iconset resource="../bitcoin.qrc">
-                <normaloff>:/icons/warning</normaloff>
-                <disabledoff>:/icons/warning</disabledoff>:/icons/warning</iconset>
+                <normaloff>:/images/res/images/warning.png</normaloff>
+                <normalon>:/images/res/images/warning.png</normalon>
+                <disabledoff>:/images/res/images/warning.png</disabledoff>:/images/res/images/warning.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -619,7 +620,7 @@
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/icons/send</normalon>
+                <normalon>:/images/res/images/shield.png</normalon>
                </iconset>
               </property>
               <property name="checkable">
@@ -704,8 +705,8 @@
               </property>
               <property name="icon">
                <iconset resource="../bitcoin.qrc">
-                <normaloff>:/icons/warning</normaloff>
-                <disabledoff>:/icons/warning</disabledoff>:/icons/warning</iconset>
+                <normaloff>:/images/res/images/warning.png</normaloff>
+                <disabledoff>:/images/res/images/warning.png</disabledoff>:/images/res/images/warning.png</iconset>
               </property>
               <property name="iconSize">
                <size>

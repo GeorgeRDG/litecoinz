@@ -108,7 +108,7 @@
           </property>
           <property name="icon">
            <iconset resource="../bitcoin.qrc">
-            <normaloff>:/icons/add</normaloff>:/icons/add</iconset>
+            <normaloff>:/images/res/images/add1.png</normaloff>:/images/res/images/add1.png</iconset>
           </property>
           <property name="autoDefault">
            <bool>false</bool>
@@ -125,7 +125,7 @@
           </property>
           <property name="icon">
            <iconset resource="../bitcoin.qrc">
-            <normaloff>:/icons/add</normaloff>:/icons/add</iconset>
+            <normaloff>:/images/res/images/add2.png</normaloff>:/images/res/images/add2.png</iconset>
           </property>
           <property name="autoDefault">
            <bool>false</bool>
@@ -142,7 +142,7 @@
           </property>
           <property name="icon">
            <iconset resource="../bitcoin.qrc">
-            <normaloff>:/icons/editcopy</normaloff>:/icons/editcopy</iconset>
+            <normaloff>:/images/res/images/copy.png</normaloff>:/images/res/images/copy.png</iconset>
           </property>
           <property name="autoDefault">
            <bool>false</bool>
@@ -159,7 +159,7 @@
           </property>
           <property name="icon">
            <iconset resource="../bitcoin.qrc">
-            <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
+            <normaloff>:/images/res/images/remove1.png</normaloff>:/images/res/images/remove1.png</iconset>
           </property>
           <property name="autoDefault">
            <bool>false</bool>
@@ -189,7 +189,7 @@
           </property>
           <property name="icon">
            <iconset resource="../bitcoin.qrc">
-            <normaloff>:/icons/export</normaloff>:/icons/export</iconset>
+            <normaloff>:/images/res/images/export.png</normaloff>:/images/res/images/export.png</iconset>
           </property>
           <property name="autoDefault">
            <bool>false</bool>
