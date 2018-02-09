@@ -7,7 +7,7 @@
 
 #include <QDialog>
 
-class AddressTableModel;
+class AddressTableNewModel;
 
 namespace Ui {
     class EditAddressDialog;
@@ -34,7 +34,7 @@ public:
     explicit EditAddressDialog(Mode mode, QWidget *parent);
     ~EditAddressDialog();
 
-    void setModel(AddressTableModel *model);
+    void setModel(AddressTableNewModel *model);
     void loadRow(int row);
 
     QString getAddress() const;
@@ -49,7 +49,7 @@ private:
     Ui::EditAddressDialog *ui;
     QDataWidgetMapper *mapper;
     Mode mode;
-    AddressTableModel *model;
+    AddressTableNewModel *model;
 
     QString address;
 };

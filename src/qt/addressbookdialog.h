@@ -39,26 +39,55 @@ public Q_SLOTS:
 private:
     Ui::AddressBookDialog *ui;
     AddressTableNewModel *model;
-    QSortFilterProxyModel *proxyModelTSending;
-    QSortFilterProxyModel *proxyModelTReceiving;
-    QSortFilterProxyModel *proxyModelZReceiving;
+    QSortFilterProxyModel *proxyModelReceivingZ;
+    QSortFilterProxyModel *proxyModelReceivingT;
+    QSortFilterProxyModel *proxyModelSendingT;
+
+    QMenu *contextReceivingZMenu;
+    QMenu *contextReceivingTMenu;
+    QMenu *contextSendingTMenu;
+
+    QAction *deleteSendingTAction; // to be able to explicitly disable it
+
+    QString newReceivingZAddressToSelect;
+    QString newReceivingTAddressToSelect;
+    QString newSendingTAddressToSelect;
 
     const PlatformStyle *platformStyle;
 
 private Q_SLOTS:
     // Receiving Addresses Tab
     void on_newReceivingZAddress_clicked();
+    void on_newReceivingTAddress_clicked();
     void on_copyReceivingZAddress_clicked();
+    void on_copyReceivingTAddress_clicked();
     void on_exportReceivingZAddress_clicked();
-    void on_newReceivingAddress_clicked();
-    void on_copyReceivingAddress_clicked();
-    void on_exportReceivingAddress_clicked();
+    void on_exportReceivingTAddress_clicked();
 
     // Sending Addresses Tab
-    void on_newSendingAddress_clicked();
-    void on_copySendingAddress_clicked();
-    void on_deleteSendingAddress_clicked();
-    void on_exportSendingAddress_clicked();
+    void on_newSendingTAddress_clicked();
+    void on_copySendingTAddress_clicked();
+    void on_deleteSendingTAddress_clicked();
+    void on_exportSendingTAddress_clicked();
+
+    /** Set button states based on selection */
+    void selectionReceivingZChanged();
+    void selectionReceivingTChanged();
+    void selectionSendingTChanged();
+
+    /** Spawn contextual menu (right mouse menu) for address book entry */
+    void contextualReceivingZMenu(const QPoint &point);
+    void contextualReceivingTMenu(const QPoint &point);
+    void contextualSendingTMenu(const QPoint &point);
+
+    /** Copy label of currently selected address entry to clipboard (no button) */
+    void onCopyLabelReceivingZAction();
+    void onCopyLabelReceivingTAction();
+    void onCopyLabelSendingTAction();
+
+    /** Edit currently selected address entry (no button) */
+    void onEditReceivingTAction();
+    void onEditSendingTAction();
 
 Q_SIGNALS:
 

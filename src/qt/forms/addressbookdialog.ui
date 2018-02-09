@@ -33,7 +33,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabReceivingAddress">
       <attribute name="title">
@@ -63,7 +63,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QTableView" name="tableViewZReceiving">
+           <widget class="QTableView" name="tableViewReceivingZ">
             <property name="contextMenuPolicy">
              <enum>Qt::CustomContextMenu</enum>
             </property>
@@ -184,7 +184,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QTableView" name="tableViewReceiving">
+           <widget class="QTableView" name="tableViewReceivingT">
             <property name="contextMenuPolicy">
              <enum>Qt::CustomContextMenu</enum>
             </property>
@@ -214,7 +214,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_2">
             <item>
-             <widget class="QPushButton" name="newReceivingAddress">
+             <widget class="QPushButton" name="newReceivingTAddress">
               <property name="toolTip">
                <string>Create a new address</string>
               </property>
@@ -231,7 +231,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="copyReceivingAddress">
+             <widget class="QPushButton" name="copyReceivingTAddress">
               <property name="toolTip">
                <string>Copy the currently selected address to the system clipboard</string>
               </property>
@@ -261,7 +261,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="exportReceivingAddress">
+             <widget class="QPushButton" name="exportReceivingTAddress">
               <property name="toolTip">
                <string>Export the data in the current tab to a file</string>
               </property>
@@ -312,7 +312,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QTableView" name="tableViewSending">
+           <widget class="QTableView" name="tableViewSendingT">
             <property name="contextMenuPolicy">
              <enum>Qt::CustomContextMenu</enum>
             </property>
@@ -342,7 +342,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
-             <widget class="QPushButton" name="newSendingAddress">
+             <widget class="QPushButton" name="newSendingTAddress">
               <property name="toolTip">
                <string>Create a new address</string>
               </property>
@@ -359,7 +359,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="copySendingAddress">
+             <widget class="QPushButton" name="copySendingTAddress">
               <property name="toolTip">
                <string>Copy the currently selected address to the system clipboard</string>
               </property>
@@ -376,7 +376,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="deleteSendingAddress">
+             <widget class="QPushButton" name="deleteSendingTAddress">
               <property name="toolTip">
                <string>Delete the currently selected address from the list</string>
               </property>
@@ -406,7 +406,7 @@
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="exportSendingAddress">
+             <widget class="QPushButton" name="exportSendingTAddress">
               <property name="toolTip">
                <string>Export the data in the current tab to a file</string>
               </property>

@@ -416,6 +416,9 @@ void TransactionView::editLabel()
         // Is address in address book? Address book can miss address when a transaction is
         // sent from outside the UI.
         int idx = addressBook->lookupAddress(address);
+/*
+ * TODO
+ *
         if(idx != -1)
         {
             // Edit sending / receiving address
@@ -440,6 +443,7 @@ void TransactionView::editLabel()
             dlg.setAddress(address);
             dlg.exec();
         }
+*/
     }
 }
 

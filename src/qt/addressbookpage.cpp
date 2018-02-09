@@ -225,6 +225,7 @@ void AddressBookPage::onCopyLabelAction()
 
 void AddressBookPage::onEditAction()
 {
+/*
     if(!model)
         return;
 
@@ -242,10 +243,12 @@ void AddressBookPage::onEditAction()
     QModelIndex origIndex = proxyModel->mapToSource(indexes.at(0));
     dlg.loadRow(origIndex.row());
     dlg.exec();
+*/
 }
 
 void AddressBookPage::on_newAddress_clicked()
 {
+/*
     if(!model)
         return;
 
@@ -258,6 +261,7 @@ void AddressBookPage::on_newAddress_clicked()
     {
         newAddressToSelect = dlg.getAddress();
     }
+*/
 }
 
 void AddressBookPage::on_deleteAddress_clicked()

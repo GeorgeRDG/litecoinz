@@ -5,7 +5,7 @@
 #include "editaddressdialog.h"
 #include "ui_editaddressdialog.h"
 
-#include "addresstablemodel.h"
+#include "addresstablemodelnew.h"
 #include "guiutil.h"
 
 #include <QDataWidgetMapper>
@@ -49,15 +49,15 @@ EditAddressDialog::~EditAddressDialog()
     delete ui;
 }
 
-void EditAddressDialog::setModel(AddressTableModel *model)
+void EditAddressDialog::setModel(AddressTableNewModel *model)
 {
     this->model = model;
     if(!model)
         return;
 
     mapper->setModel(model);
-    mapper->addMapping(ui->labelEdit, AddressTableModel::Label);
-    mapper->addMapping(ui->addressEdit, AddressTableModel::Address);
+    mapper->addMapping(ui->labelEdit, AddressTableNewModel::Label);
+    mapper->addMapping(ui->addressEdit, AddressTableNewModel::Address);
 }
 
 void EditAddressDialog::loadRow(int row)
@@ -75,7 +75,7 @@ bool EditAddressDialog::saveCurrentRow()
     case NewReceivingAddress:
     case NewSendingAddress:
         address = model->addRow(
-                mode == NewSendingAddress ? AddressTableModel::Send : AddressTableModel::Receive,
+                mode == NewSendingAddress ? AddressTableNewModel::Send : AddressTableNewModel::Receive,
                 ui->labelEdit->text(),
                 ui->addressEdit->text());
         break;
@@ -99,28 +99,28 @@ void EditAddressDialog::accept()
     {
         switch(model->getEditStatus())
         {
-        case AddressTableModel::OK:
+        case AddressTableNewModel::OK:
             // Failed with unknown reason. Just reject.
             break;
-        case AddressTableModel::NO_CHANGES:
+        case AddressTableNewModel::NO_CHANGES:
             // No changes were made during edit operation. Just reject.
             break;
-        case AddressTableModel::INVALID_ADDRESS:
+        case AddressTableNewModel::INVALID_ADDRESS:
             QMessageBox::warning(this, windowTitle(),
                 tr("The entered address \"%1\" is not a valid LitecoinZ address.").arg(ui->addressEdit->text()),
                 QMessageBox::Ok, QMessageBox::Ok);
             break;
-        case AddressTableModel::DUPLICATE_ADDRESS:
+        case AddressTableNewModel::DUPLICATE_ADDRESS:
             QMessageBox::warning(this, windowTitle(),
                 tr("The entered address \"%1\" is already in the address book.").arg(ui->addressEdit->text()),
                 QMessageBox::Ok, QMessageBox::Ok);
             break;
-        case AddressTableModel::WALLET_UNLOCK_FAILURE:
+        case AddressTableNewModel::WALLET_UNLOCK_FAILURE:
             QMessageBox::critical(this, windowTitle(),
                 tr("Could not unlock wallet."),
                 QMessageBox::Ok, QMessageBox::Ok);
             break;
-        case AddressTableModel::KEY_GENERATION_FAILURE:
+        case AddressTableNewModel::KEY_GENERATION_FAILURE:
             QMessageBox::critical(this, windowTitle(),
                 tr("New key generation failed."),
                 QMessageBox::Ok, QMessageBox::Ok);
