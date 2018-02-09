@@ -93,6 +93,8 @@ private:
     QAction *overviewAction;
     QAction *historyAction;
     QAction *quitAction;
+    QAction *addressBookAction;
+    QAction *addressBookMenuAction;
     QAction *sendCoinsAction;
     QAction *sendCoinsMenuAction;
     QAction *usedSendingAddressesAction;
@@ -181,6 +183,8 @@ private Q_SLOTS:
 #ifdef ENABLE_WALLET
     /** Switch to overview (home) page */
     void gotoOverviewPage();
+    /** Switch to address book page */
+    void gotoAddressBookPage();
     /** Switch to history (transactions) page */
     void gotoHistoryPage();
     /** Switch to receive coins page */
