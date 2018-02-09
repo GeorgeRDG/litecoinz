@@ -2,16 +2,23 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
+#if defined(HAVE_CONFIG_H)
+#include "config/bitcoin-config.h"
+#endif
+
 #include "addressbookdialog.h"
 #include "ui_addressbookdialog.h"
 
 #include "addresstablemodelnew.h"
+#include "bitcoingui.h"
+#include "csvmodelwriter.h"
 #include "guiutil.h"
 #include "editaddressdialog.h"
 #include "platformstyle.h"
 
 #include <QIcon>
 #include <QMenu>
+#include <QMessageBox>
 #include <QSortFilterProxyModel>
 
 AddressBookDialog::AddressBookDialog(const PlatformStyle *platformStyle, QWidget *parent) :
@@ -51,6 +58,13 @@ AddressBookDialog::AddressBookDialog(const PlatformStyle *platformStyle, QWidget
 
         ui->deleteSendingTAddress->setIcon(QIcon(":/images/res/images/remove1.png"));
     }
+
+    // Set "Receiving Addresses" as current tab 
+    ui->tabWidget->setCurrentIndex(0);
+
+    // Set "Receiving Addresses View" not editable
+    ui->tableViewReceivingZ->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableViewReceivingZ->setFocus();
 
     // Context menu actions
     QAction *copyReceivingZAddressAction = new QAction(tr("&Copy Address"), this);
@@ -98,7 +112,7 @@ AddressBookDialog::AddressBookDialog(const PlatformStyle *platformStyle, QWidget
     connect(editReceivingTAction, SIGNAL(triggered()), this, SLOT(onEditReceivingTAction()));
     connect(editSendingTAction, SIGNAL(triggered()), this, SLOT(onEditSendingTAction()));
 
-    connect(deleteSendingTAction, SIGNAL(triggered()), this, SLOT(on_deleteAddress_clicked()));
+    connect(deleteSendingTAction, SIGNAL(triggered()), this, SLOT(on_deleteSendingTAddress_clicked()));
 
     connect(ui->tableViewReceivingZ, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextualReceivingZMenu(QPoint)));
     connect(ui->tableViewReceivingT, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextualReceivingTMenu(QPoint)));
@@ -277,7 +291,25 @@ void AddressBookDialog::on_copyReceivingZAddress_clicked()
 
 void AddressBookDialog::on_exportReceivingZAddress_clicked()
 {
+    // CSV is currently the only supported format
+    QString filename = GUIUtil::getSaveFileName(this,
+        tr("Export Address List"), QString(),
+        tr("Comma separated file (*.csv)"), NULL);
 
+    if (filename.isNull())
+        return;
+
+    CSVModelWriter writer(filename);
+
+    // name, column, role
+    writer.setModel(proxyModelReceivingZ);
+    writer.addColumn("Label", AddressTableNewModel::Label, Qt::EditRole);
+    writer.addColumn("Address", AddressTableNewModel::Address, Qt::EditRole);
+
+    if(!writer.write()) {
+        QMessageBox::critical(this, tr("Exporting Failed"),
+            tr("There was an error trying to save the address list to %1. Please try again.").arg(filename));
+    }
 }
 
 void AddressBookDialog::on_newReceivingTAddress_clicked()
@@ -300,7 +332,25 @@ void AddressBookDialog::on_copyReceivingTAddress_clicked()
 
 void AddressBookDialog::on_exportReceivingTAddress_clicked()
 {
+    // CSV is currently the only supported format
+    QString filename = GUIUtil::getSaveFileName(this,
+        tr("Export Address List"), QString(),
+        tr("Comma separated file (*.csv)"), NULL);
 
+    if (filename.isNull())
+        return;
+
+    CSVModelWriter writer(filename);
+
+    // name, column, role
+    writer.setModel(proxyModelReceivingT);
+    writer.addColumn("Label", AddressTableNewModel::Label, Qt::EditRole);
+    writer.addColumn("Address", AddressTableNewModel::Address, Qt::EditRole);
+
+    if(!writer.write()) {
+        QMessageBox::critical(this, tr("Exporting Failed"),
+            tr("There was an error trying to save the address list to %1. Please try again.").arg(filename));
+    }
 }
 
 
@@ -338,7 +388,25 @@ void AddressBookDialog::on_deleteSendingTAddress_clicked()
 
 void AddressBookDialog::on_exportSendingTAddress_clicked()
 {
+    // CSV is currently the only supported format
+    QString filename = GUIUtil::getSaveFileName(this,
+        tr("Export Address List"), QString(),
+        tr("Comma separated file (*.csv)"), NULL);
 
+    if (filename.isNull())
+        return;
+
+    CSVModelWriter writer(filename);
+
+    // name, column, role
+    writer.setModel(proxyModelSendingT);
+    writer.addColumn("Label", AddressTableNewModel::Label, Qt::EditRole);
+    writer.addColumn("Address", AddressTableNewModel::Address, Qt::EditRole);
+
+    if(!writer.write()) {
+        QMessageBox::critical(this, tr("Exporting Failed"),
+            tr("There was an error trying to save the address list to %1. Please try again.").arg(filename));
+    }
 }
 
 void AddressBookDialog::selectionReceivingZChanged()
@@ -397,5 +465,36 @@ void AddressBookDialog::selectionSendingTChanged()
     {
         ui->copySendingTAddress->setEnabled(false);
         ui->deleteSendingTAddress->setEnabled(false);
+    }
+}
+
+void AddressBookDialog::selectNewAddress(const QModelIndex &parent, int begin, int /*end*/)
+{
+    QModelIndex idxReceivingZ = proxyModelReceivingZ->mapFromSource(model->index(begin, AddressTableNewModel::Address, parent));
+    QModelIndex idxReceivingT = proxyModelReceivingT->mapFromSource(model->index(begin, AddressTableNewModel::Address, parent));
+    QModelIndex idxSendingT = proxyModelSendingT->mapFromSource(model->index(begin, AddressTableNewModel::Address, parent));
+
+    if(idxReceivingZ.isValid() && (idxReceivingZ.data(Qt::EditRole).toString() == newReceivingZAddressToSelect))
+    {
+        // Select row of newly created address, once
+        ui->tableViewReceivingZ->setFocus();
+        ui->tableViewReceivingZ->selectRow(idxReceivingZ.row());
+        newReceivingZAddressToSelect.clear();
+    }
+
+    if(idxReceivingT.isValid() && (idxReceivingT.data(Qt::EditRole).toString() == newReceivingTAddressToSelect))
+    {
+        // Select row of newly created address, once
+        ui->tableViewReceivingT->setFocus();
+        ui->tableViewReceivingT->selectRow(idxReceivingT.row());
+        newReceivingTAddressToSelect.clear();
+    }
+
+    if(idxSendingT.isValid() && (idxSendingT.data(Qt::EditRole).toString() == newSendingTAddressToSelect))
+    {
+        // Select row of newly created address, once
+        ui->tableViewSendingT->setFocus();
+        ui->tableViewSendingT->selectRow(idxSendingT.row());
+        newSendingTAddressToSelect.clear();
     }
 }

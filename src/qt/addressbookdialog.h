@@ -34,8 +34,6 @@ public:
 
     void setModel(AddressTableNewModel *model);
 
-public Q_SLOTS:
-
 private:
     Ui::AddressBookDialog *ui;
     AddressTableNewModel *model;
@@ -56,18 +54,22 @@ private:
     const PlatformStyle *platformStyle;
 
 private Q_SLOTS:
-    // Receiving Addresses Tab
+    /** Delete currently selected address entry */
+    void on_deleteSendingTAddress_clicked();
+
+    /** Create a new address for receiving coins and / or add a new address book entry */
     void on_newReceivingZAddress_clicked();
     void on_newReceivingTAddress_clicked();
+    void on_newSendingTAddress_clicked();
+
+    /** Copy address of currently selected address entry to clipboard */
     void on_copyReceivingZAddress_clicked();
     void on_copyReceivingTAddress_clicked();
+    void on_copySendingTAddress_clicked();
+
+    /** Export button clicked */
     void on_exportReceivingZAddress_clicked();
     void on_exportReceivingTAddress_clicked();
-
-    // Sending Addresses Tab
-    void on_newSendingTAddress_clicked();
-    void on_copySendingTAddress_clicked();
-    void on_deleteSendingTAddress_clicked();
     void on_exportSendingTAddress_clicked();
 
     /** Set button states based on selection */
@@ -89,8 +91,8 @@ private Q_SLOTS:
     void onEditReceivingTAction();
     void onEditSendingTAction();
 
-Q_SIGNALS:
-
+    /** New entry/entries were added to address table */
+    void selectNewAddress(const QModelIndex &parent, int begin, int /*end*/);
 };
 
 #endif // BITCOIN_QT_ADDRESSBOOKDIALOG_H

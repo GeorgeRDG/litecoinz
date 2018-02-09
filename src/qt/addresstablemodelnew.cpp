@@ -185,7 +185,7 @@ public:
 AddressTableNewModel::AddressTableNewModel(CWallet *wallet, WalletModel *parent) :
     QAbstractTableModel(parent),walletModel(parent),wallet(wallet),priv(0)
 {
-    columns << tr("Label") << tr("Address");
+    columns << tr("Label") << tr("Address") << tr("AddressType");
     priv = new AddressTableNewPriv(wallet, this);
     priv->refreshAddressTableNew();
 }
@@ -229,6 +229,9 @@ QVariant AddressTableNewModel::data(const QModelIndex &index, int role) const
             }
         case Address:
             return rec->address;
+        case AddressType:
+            return rec->type;
+
         }
     }
     else if (role == Qt::FontRole)
