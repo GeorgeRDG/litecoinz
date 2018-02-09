@@ -5,6 +5,14 @@
 #include "addressbookdialog.h"
 #include "ui_addressbookdialog.h"
 
+#include "addresstablemodelnew.h"
+#include "guiutil.h"
+#include "platformstyle.h"
+
+#include <QIcon>
+#include <QMenu>
+#include <QSortFilterProxyModel>
+
 AddressBookDialog::AddressBookDialog(const PlatformStyle *platformStyle, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AddressBookDialog),
@@ -15,7 +23,7 @@ AddressBookDialog::AddressBookDialog(const PlatformStyle *platformStyle, QWidget
 
 }
 
-void AddressBookDialog::setModel(WalletModel *model)
+void AddressBookDialog::setModel(AddressTableNewModel *model)
 {
     this->model = model;
 
@@ -37,7 +45,7 @@ void AddressBookDialog::on_newReceivingZAddress_clicked()
 
 void AddressBookDialog::on_copyReceivingZAddress_clicked()
 {
-
+    GUIUtil::copyEntryData(ui->tableViewZReceiving, AddressTableNewModel::Address);
 }
 
 void AddressBookDialog::on_exportReceivingZAddress_clicked()
@@ -52,7 +60,7 @@ void AddressBookDialog::on_newReceivingAddress_clicked()
 
 void AddressBookDialog::on_copyReceivingAddress_clicked()
 {
-
+    GUIUtil::copyEntryData(ui->tableViewReceiving, AddressTableNewModel::Address);
 }
 
 void AddressBookDialog::on_exportReceivingAddress_clicked()
@@ -69,7 +77,7 @@ void AddressBookDialog::on_newSendingAddress_clicked()
 
 void AddressBookDialog::on_copySendingAddress_clicked()
 {
-
+    GUIUtil::copyEntryData(ui->tableViewSending, AddressTableNewModel::Address);
 }
 
 void AddressBookDialog::on_deleteSendingAddress_clicked()

@@ -197,9 +197,11 @@ void AddressBookPage::setZModel(ZAddressTableModel *zmodel)
 
     // Set column widths
 #if QT_VERSION < 0x050000
-    ui->tableZView->horizontalHeader()->setResizeMode(ZAddressTableModel::Address, QHeaderView::Stretch);
+    ui->tableZView->horizontalHeader()->setResizeMode(ZAddressTableModel::Label, QHeaderView::Stretch);
+    ui->tableZView->horizontalHeader()->setResizeMode(ZAddressTableModel::Address, QHeaderView::ResizeToContents);
 #else
-    ui->tableZView->horizontalHeader()->setSectionResizeMode(ZAddressTableModel::Address, QHeaderView::Stretch);
+    ui->tableZView->horizontalHeader()->setSectionResizeMode(ZAddressTableModel::Label, QHeaderView::Stretch);
+    ui->tableZView->horizontalHeader()->setSectionResizeMode(ZAddressTableModel::Address, QHeaderView::ResizeToContents);
 #endif
 
     connect(ui->tableZView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),

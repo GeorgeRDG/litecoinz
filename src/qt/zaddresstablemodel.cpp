@@ -17,11 +17,12 @@
 
 struct ZAddressTableEntry
 {
+    QString label;
     QString address;
 
     ZAddressTableEntry() {}
-    ZAddressTableEntry(const QString &address):
-        address(address) {}
+    ZAddressTableEntry(const QString &label, const QString &address):
+        label(label), address(address) {}
 };
 
 struct ZAddressTableEntryLessThan
@@ -61,8 +62,9 @@ public:
             wallet->GetPaymentAddresses(addresses);
 
             for (auto addr : addresses ) {
+                const std::string& strName = "";
                 if (wallet->HaveSpendingKey(addr)) {
-                    cachedAddressTable.append(ZAddressTableEntry(QString::fromStdString(CZCPaymentAddress(addr).ToString())));
+                    cachedAddressTable.append(ZAddressTableEntry(QString::fromStdString(strName), QString::fromStdString(CZCPaymentAddress(addr).ToString())));
                }
             }
         }
@@ -93,7 +95,7 @@ public:
 ZAddressTableModel::ZAddressTableModel(CWallet *wallet, WalletModel *parent) :
     QAbstractTableModel(parent),walletModel(parent),wallet(wallet),priv(0)
 {
-    columns << tr("Receiving Z-Address");
+    columns << tr("Label") << tr("Z-Address");
     priv = new ZAddressTablePriv(wallet, this);
     priv->refreshAddressTable();
 }
@@ -124,7 +126,13 @@ QVariant ZAddressTableModel::data(const QModelIndex &index, int role) const
 
     if(role == Qt::DisplayRole || role == Qt::EditRole)
     {
-        return rec->address;
+        switch(index.column())
+        {
+        case Label:
+            return tr("(no label)");
+        case Address:
+            return rec->address;
+        }
     }
     else if (role == Qt::FontRole)
     {
@@ -164,8 +172,9 @@ QModelIndex ZAddressTableModel::index(int row, int column, const QModelIndex &pa
     }
 }
 
-QString ZAddressTableModel::addRow(const QString &address)
+QString ZAddressTableModel::addRow(const QString &label, const QString &address)
 {
+    std::string strLabel = label.toStdString(); 
     std::string strAddress = address.toStdString();
 
 /*

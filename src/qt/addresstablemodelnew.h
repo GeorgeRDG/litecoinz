@@ -1,15 +1,15 @@
 // Copyright (c) 2011-2015 The Bitcoin Core developers
-// Copyright (c) 2017-2018 The LitecoinZ developers
+// Copyright (c) 2017-2018 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_QT_ADDRESSTABLEMODEL_H
-#define BITCOIN_QT_ADDRESSTABLEMODEL_H
+#ifndef BITCOIN_QT_ADDRESSTABLEMODELNEW_H
+#define BITCOIN_QT_ADDRESSTABLEMODELNEW_H
 
 #include <QAbstractTableModel>
 #include <QStringList>
 
-class AddressTablePriv;
+class AddressTableNewPriv;
 class WalletModel;
 
 class CWallet;
@@ -17,13 +17,13 @@ class CWallet;
 /**
    Qt model of the address book in the core. This allows views to access and modify the address book.
  */
-class AddressTableModel : public QAbstractTableModel
+class AddressTableNewModel : public QAbstractTableModel
 {
     Q_OBJECT
 
 public:
-    explicit AddressTableModel(CWallet *wallet, WalletModel *parent = 0);
-    ~AddressTableModel();
+    explicit AddressTableNewModel(CWallet *wallet, WalletModel *parent = 0);
+    ~AddressTableNewModel();
 
     enum ColumnIndex {
         Label = 0,   /**< User specified label */
@@ -46,6 +46,7 @@ public:
 
     static const QString Send;      /**< Specifies send address */
     static const QString Receive;   /**< Specifies receive address */
+    static const QString ZReceive;   /**< Specifies receive z-address */
 
     /** @name Methods overridden from QAbstractTableModel
         @{*/
@@ -78,7 +79,7 @@ public:
 private:
     WalletModel *walletModel;
     CWallet *wallet;
-    AddressTablePriv *priv;
+    AddressTableNewPriv *priv;
     QStringList columns;
     EditStatus editStatus;
 
@@ -90,7 +91,7 @@ public Q_SLOTS:
      */
     void updateEntry(const QString &address, const QString &label, bool isMine, const QString &purpose, int status);
 
-    friend class AddressTablePriv;
+    friend class AddressTableNewPriv;
 };
 
-#endif // BITCOIN_QT_ADDRESSTABLEMODEL_H
+#endif // BITCOIN_QT_ADDRESSTABLEMODELNEW_H

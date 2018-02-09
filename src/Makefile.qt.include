@@ -121,6 +121,7 @@ QT_MOC_CPP = \
   qt/moc_addressbookpage.cpp \
   qt/moc_addressbookdialog.cpp \
   qt/moc_addresstablemodel.cpp \
+  qt/moc_addresstablemodelnew.cpp \
   qt/moc_unspentdialog.cpp \
   qt/moc_unspenttablemodel.cpp \
   qt/moc_zunspentdialog.cpp \
@@ -196,6 +197,7 @@ BITCOIN_QT_H = \
   qt/addressbookpage.h \
   qt/addressbookdialog.h \
   qt/addresstablemodel.h \
+  qt/addresstablemodelnew.h \
   qt/unspentdialog.h \
   qt/unspenttablemodel.h \
   qt/zunspentdialog.h \
@@ -337,6 +339,7 @@ BITCOIN_QT_WALLET_CPP = \
   qt/addressbookpage.cpp \
   qt/addressbookdialog.cpp \
   qt/addresstablemodel.cpp \
+  qt/addresstablemodelnew.cpp \
   qt/unspentdialog.cpp \
   qt/unspenttablemodel.cpp \
   qt/zunspentdialog.cpp \

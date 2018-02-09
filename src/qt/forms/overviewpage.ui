@@ -620,7 +620,7 @@
               </property>
               <property name="icon">
                <iconset resource="../bitcoin.qrc">
-                <normaloff>:/images/res/images/unshield.png</normaloff>:/images/res/images/unshield.png</iconset>
+                <normaloff>:/images/res/images/shield-warning.png</normaloff>:/images/res/images/shield-warning.png</iconset>
               </property>
               <property name="iconSize">
                <size>

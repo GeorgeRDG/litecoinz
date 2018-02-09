@@ -5,15 +5,23 @@
 #ifndef BITCOIN_QT_ADDRESSBOOKDIALOG_H
 #define BITCOIN_QT_ADDRESSBOOKDIALOG_H
 
-#include "walletmodel.h"
-
 #include <QDialog>
 
+class AddressTableNewModel;
+class OptionsModel;
 class PlatformStyle;
 
 namespace Ui {
     class AddressBookDialog;
 }
+
+QT_BEGIN_NAMESPACE
+class QItemSelection;
+class QMenu;
+class QModelIndex;
+class QSortFilterProxyModel;
+class QTableView;
+QT_END_NAMESPACE
 
 /** Dialog for LitecoinZ Address Book */
 class AddressBookDialog : public QDialog
@@ -24,13 +32,17 @@ public:
     explicit AddressBookDialog(const PlatformStyle *platformStyle, QWidget *parent = 0);
     ~AddressBookDialog();
 
-    void setModel(WalletModel *model);
+    void setModel(AddressTableNewModel *model);
 
 public Q_SLOTS:
 
 private:
     Ui::AddressBookDialog *ui;
-    WalletModel *model;
+    AddressTableNewModel *model;
+    QSortFilterProxyModel *proxyModelTSending;
+    QSortFilterProxyModel *proxyModelTReceiving;
+    QSortFilterProxyModel *proxyModelZReceiving;
+
     const PlatformStyle *platformStyle;
 
 private Q_SLOTS:

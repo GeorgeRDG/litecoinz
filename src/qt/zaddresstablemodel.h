@@ -25,7 +25,8 @@ public:
     ~ZAddressTableModel();
 
     enum ColumnIndex {
-        Address = 0  /**< LitecoinZ z-address */
+        Label = 0,   /**< User specified label */
+        Address = 1  /**< LitecoinZ address */
     };
 
     /** Return status of insert operation */
@@ -49,7 +50,7 @@ public:
     /* Add an address to the model.
        Returns the added address on success, and an empty string otherwise.
      */
-    QString addRow(const QString &address);
+    QString addRow(const QString &label, const QString &address);
 
     /* Look up row index of an address in the model.
        Return -1 if not found.
