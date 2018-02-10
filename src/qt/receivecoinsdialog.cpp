@@ -5,7 +5,7 @@
 #include "receivecoinsdialog.h"
 #include "ui_receivecoinsdialog.h"
 
-#include "addressbookpage.h"
+//MARCO#include "addressbookpage.h"
 #include "addresstablemodel.h"
 #include "bitcoinunits.h"
 #include "guiutil.h"
@@ -135,18 +135,18 @@ void ReceiveCoinsDialog::on_receiveButton_clicked()
     if(ui->reuseAddress->isChecked())
     {
         /* Choose existing receiving address */
-        AddressBookPage dlg(platformStyle, AddressBookPage::ForTSelection, AddressBookPage::ReceivingTab, this);
-        dlg.setModel(model->getAddressTableModel());
-        if(dlg.exec())
-        {
-            address = dlg.getReturnValue();
-            if(label.isEmpty()) /* If no label provided, use the previously used label */
-            {
-                label = model->getAddressTableModel()->labelForAddress(address);
-            }
-        } else {
-            return;
-        }
+//        AddressBookPage dlg(platformStyle, AddressBookPage::ForTSelection, AddressBookPage::ReceivingTab, this);
+//        dlg.setModel(model->getAddressTableModel());
+//        if(dlg.exec())
+//        {
+//            address = dlg.getReturnValue();
+//            if(label.isEmpty()) /* If no label provided, use the previously used label */
+//            {
+//                label = model->getAddressTableModel()->labelForAddress(address);
+//            }
+//        } else {
+//            return;
+//        }
     } else {
         /* Generate new receiving address */
         address = model->getAddressTableModel()->addRow(AddressTableModel::Receive, label, "");

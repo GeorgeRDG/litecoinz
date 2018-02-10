@@ -7,7 +7,7 @@
 
 #include <QDialog>
 
-class AddressTableNewModel;
+class AddressTableModel;
 class OptionsModel;
 class PlatformStyle;
 
@@ -32,11 +32,11 @@ public:
     explicit AddressBookDialog(const PlatformStyle *platformStyle, QWidget *parent = 0);
     ~AddressBookDialog();
 
-    void setModel(AddressTableNewModel *model);
+    void setModel(AddressTableModel *model);
 
 private:
     Ui::AddressBookDialog *ui;
-    AddressTableNewModel *model;
+    AddressTableModel *model;
     QSortFilterProxyModel *proxyModelReceivingZ;
     QSortFilterProxyModel *proxyModelReceivingT;
     QSortFilterProxyModel *proxyModelSendingT;

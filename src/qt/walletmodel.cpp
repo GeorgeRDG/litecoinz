@@ -5,8 +5,6 @@
 #include "walletmodel.h"
 
 #include "addresstablemodel.h"
-#include "addresstablemodelnew.h"
-#include "zaddresstablemodel.h"
 #include "unspenttablemodel.h"
 #include "zunspenttablemodel.h"
 #include "recentrequeststablemodel.h"
@@ -33,7 +31,7 @@
 #include <boost/foreach.hpp>
 
 WalletModel::WalletModel(const PlatformStyle *platformStyle, CWallet *wallet, OptionsModel *optionsModel, QObject *parent) :
-    QObject(parent), wallet(wallet), optionsModel(optionsModel), addressTableModel(0), addressTableNewModel(0), zaddressTableModel(0), unspentTableModel(0), zunspentTableModel(0),
+    QObject(parent), wallet(wallet), optionsModel(optionsModel), addressTableModel(0), unspentTableModel(0), zunspentTableModel(0),
     transactionTableModel(0),
     recentRequestsTableModel(0),
     cachedBalance(0), cachedUnconfirmedBalance(0), cachedImmatureBalance(0),
@@ -45,8 +43,6 @@ WalletModel::WalletModel(const PlatformStyle *platformStyle, CWallet *wallet, Op
     fForceCheckBalanceChanged = false;
 
     addressTableModel = new AddressTableModel(wallet, this);
-    addressTableNewModel = new AddressTableNewModel(wallet, this);
-    zaddressTableModel = new ZAddressTableModel(wallet, this);
     unspentTableModel = new UnspentTableModel(wallet, this);
     zunspentTableModel = new ZUnspentTableModel(wallet, this);
     transactionTableModel = new TransactionTableModel(platformStyle, wallet, this);
@@ -451,16 +447,6 @@ UnspentTableModel *WalletModel::getUnspentTableModel()
 AddressTableModel *WalletModel::getAddressTableModel()
 {
     return addressTableModel;
-}
-
-AddressTableNewModel *WalletModel::getAddressTableNewModel()
-{
-    return addressTableNewModel;
-}
-
-ZAddressTableModel *WalletModel::getZAddressTableModel()
-{
-    return zaddressTableModel;
 }
 
 TransactionTableModel *WalletModel::getTransactionTableModel()

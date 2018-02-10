@@ -5,7 +5,7 @@
 #include "sendcoinsentry.h"
 #include "ui_sendcoinsentry.h"
 
-#include "addressbookpage.h"
+//MARCO#include "addressbookpage.h"
 #include "addresstablemodel.h"
 #include "guiutil.h"
 #include "optionsmodel.h"
@@ -67,13 +67,13 @@ void SendCoinsEntry::on_addressBookButton_clicked()
 {
     if(!model)
         return;
-    AddressBookPage dlg(platformStyle, AddressBookPage::ForTSelection, AddressBookPage::SendingTab, this);
-    dlg.setModel(model->getAddressTableModel());
-    if(dlg.exec())
-    {
-        ui->payTo->setText(dlg.getReturnValue());
-        ui->payAmount->setFocus();
-    }
+//    AddressBookPage dlg(platformStyle, AddressBookPage::ForTSelection, AddressBookPage::SendingTab, this);
+//    dlg.setModel(model->getAddressTableModel());
+//    if(dlg.exec())
+//    {
+//        ui->payTo->setText(dlg.getReturnValue());
+//        ui->payAmount->setFocus();
+//    }
 }
 
 void SendCoinsEntry::on_payTo_textChanged(const QString &address)

@@ -16,8 +16,6 @@
 #include <QObject>
 
 class AddressTableModel;
-class AddressTableNewModel;
-class ZAddressTableModel;
 class OptionsModel;
 class PlatformStyle;
 class RecentRequestsTableModel;
@@ -131,8 +129,6 @@ public:
 
     OptionsModel *getOptionsModel();
     AddressTableModel *getAddressTableModel();
-    AddressTableNewModel *getAddressTableNewModel();
-    ZAddressTableModel *getZAddressTableModel();
     TransactionTableModel *getTransactionTableModel();
     UnspentTableModel *getUnspentTableModel();
     ZUnspentTableModel *getZUnspentTableModel();
@@ -221,8 +217,6 @@ private:
     OptionsModel *optionsModel;
 
     AddressTableModel *addressTableModel;
-    AddressTableNewModel *addressTableNewModel;
-    ZAddressTableModel *zaddressTableModel;
     UnspentTableModel *unspentTableModel;
     ZUnspentTableModel *zunspentTableModel;
     TransactionTableModel *transactionTableModel;

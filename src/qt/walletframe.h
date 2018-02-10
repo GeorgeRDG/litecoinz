@@ -83,10 +83,6 @@ public Q_SLOTS:
     /** Ask for passphrase to unlock wallet temporarily */
     void unlockWallet();
 
-    /** Show used sending addresses */
-    void usedSendingAddresses();
-    /** Show used receiving addresses */
-    void usedReceivingAddresses();
     /** Pass on signal over requested out-of-sync-warning information */
     void outOfSyncWarningClicked();
 };

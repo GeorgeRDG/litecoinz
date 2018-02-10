@@ -199,20 +199,6 @@ void WalletFrame::unlockWallet()
         walletView->unlockWallet();
 }
 
-void WalletFrame::usedSendingAddresses()
-{
-    WalletView *walletView = currentWalletView();
-    if (walletView)
-        walletView->usedSendingAddresses();
-}
-
-void WalletFrame::usedReceivingAddresses()
-{
-    WalletView *walletView = currentWalletView();
-    if (walletView)
-        walletView->usedReceivingAddresses();
-}
-
 WalletView *WalletFrame::currentWalletView()
 {
     return qobject_cast<WalletView*>(walletStack->currentWidget());

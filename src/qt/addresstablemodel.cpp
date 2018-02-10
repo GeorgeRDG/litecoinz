@@ -1,5 +1,5 @@
 // Copyright (c) 2011-2015 The Bitcoin Core developers
-// Copyright (c) 2017-2018 The LitecoinZ developers
+// Copyright (c) 2017-2018 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -18,12 +18,14 @@
 
 const QString AddressTableModel::Send = "S";
 const QString AddressTableModel::Receive = "R";
+const QString AddressTableModel::ZReceive = "Z";
 
 struct AddressTableEntry
 {
     enum Type {
         Sending,
         Receiving,
+        ZReceiving,
         Hidden /* QSortFilterProxyModel will filter these out */
     };
 
@@ -82,6 +84,8 @@ public:
         cachedAddressTable.clear();
         {
             LOCK(wallet->cs_wallet);
+
+            // Transparent address
             BOOST_FOREACH(const PAIRTYPE(CTxDestination, CAddressBookData)& item, wallet->mapAddressBook)
             {
                 const CBitcoinAddress& address = item.first;
@@ -92,6 +96,19 @@ public:
                 cachedAddressTable.append(AddressTableEntry(addressType,
                                   QString::fromStdString(strName),
                                   QString::fromStdString(address.ToString())));
+            }
+
+            // Shielded address
+            std::set<libzcash::PaymentAddress> addresses;
+            wallet->GetPaymentAddresses(addresses);
+            for (auto addr : addresses ) {
+                AddressTableEntry::Type addressType = AddressTableEntry::ZReceiving;
+                const std::string& strName = "";
+                if (wallet->HaveSpendingKey(addr)) {
+                    cachedAddressTable.append(AddressTableEntry(addressType,
+                                      QString::fromStdString(strName),
+                                      QString::fromStdString(CZCPaymentAddress(addr).ToString())));
+               }
             }
         }
         // qLowerBound() and qUpperBound() require our cachedAddressTable list to be sorted in asc order
@@ -168,7 +185,7 @@ public:
 AddressTableModel::AddressTableModel(CWallet *wallet, WalletModel *parent) :
     QAbstractTableModel(parent),walletModel(parent),wallet(wallet),priv(0)
 {
-    columns << tr("Label") << tr("Address");
+    columns << tr("Label") << tr("Address") << tr("AddressType");
     priv = new AddressTablePriv(wallet, this);
     priv->refreshAddressTable();
 }
@@ -212,6 +229,9 @@ QVariant AddressTableModel::data(const QModelIndex &index, int role) const
             }
         case Address:
             return rec->address;
+        case AddressType:
+            return rec->type;
+
         }
     }
     else if (role == Qt::FontRole)
@@ -231,6 +251,8 @@ QVariant AddressTableModel::data(const QModelIndex &index, int role) const
             return Send;
         case AddressTableEntry::Receiving:
             return Receive;
+        case AddressTableEntry::ZReceiving:
+            return ZReceive;
         default: break;
         }
     }
@@ -387,6 +409,11 @@ QString AddressTableModel::addRow(const QString &type, const QString &label, con
             }
         }
         strAddress = CBitcoinAddress(newKey.GetID()).ToString();
+    }
+    else if(type == ZReceive)
+    {
+        // Generate a new z-address
+        // TODO
     }
     else
     {

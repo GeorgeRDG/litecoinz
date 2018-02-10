@@ -1,3 +1,4 @@
+// Copyright (c) 2011-2015 The Bitcoin Core developers
 // Copyright (c) 2017-2018 The LitecoinZ developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -9,7 +10,7 @@
 #include "addressbookdialog.h"
 #include "ui_addressbookdialog.h"
 
-#include "addresstablemodelnew.h"
+#include "addresstablemodel.h"
 #include "bitcoingui.h"
 #include "csvmodelwriter.h"
 #include "guiutil.h"
@@ -121,17 +122,17 @@ AddressBookDialog::AddressBookDialog(const PlatformStyle *platformStyle, QWidget
 
 void AddressBookDialog::onCopyLabelReceivingZAction()
 {
-    GUIUtil::copyEntryData(ui->tableViewReceivingZ, AddressTableNewModel::Label);
+    GUIUtil::copyEntryData(ui->tableViewReceivingZ, AddressTableModel::Label);
 }
 
 void AddressBookDialog::onCopyLabelReceivingTAction()
 {
-    GUIUtil::copyEntryData(ui->tableViewReceivingT, AddressTableNewModel::Label);
+    GUIUtil::copyEntryData(ui->tableViewReceivingT, AddressTableModel::Label);
 }
 
 void AddressBookDialog::onCopyLabelSendingTAction()
 {
-    GUIUtil::copyEntryData(ui->tableViewSendingT, AddressTableNewModel::Label);
+    GUIUtil::copyEntryData(ui->tableViewSendingT, AddressTableModel::Label);
 }
 
 void AddressBookDialog::onEditReceivingTAction()
@@ -197,7 +198,7 @@ void AddressBookDialog::contextualSendingTMenu(const QPoint &point)
     }
 }
 
-void AddressBookDialog::setModel(AddressTableNewModel *model)
+void AddressBookDialog::setModel(AddressTableModel *model)
 {
     this->model = model;
 
@@ -223,38 +224,38 @@ void AddressBookDialog::setModel(AddressTableNewModel *model)
     proxyModelSendingT->setFilterCaseSensitivity(Qt::CaseInsensitive);
 
     // Receive filter (z-addresses)
-    proxyModelReceivingZ->setFilterRole(AddressTableNewModel::TypeRole);
-    proxyModelReceivingZ->setFilterFixedString(AddressTableNewModel::ZReceive);
+    proxyModelReceivingZ->setFilterRole(AddressTableModel::TypeRole);
+    proxyModelReceivingZ->setFilterFixedString(AddressTableModel::ZReceive);
     ui->tableViewReceivingZ->setModel(proxyModelReceivingZ);
     ui->tableViewReceivingZ->sortByColumn(0, Qt::AscendingOrder);
 
     // Receive filter (t-addresses)
-    proxyModelReceivingT->setFilterRole(AddressTableNewModel::TypeRole);
-    proxyModelReceivingT->setFilterFixedString(AddressTableNewModel::Receive);
+    proxyModelReceivingT->setFilterRole(AddressTableModel::TypeRole);
+    proxyModelReceivingT->setFilterFixedString(AddressTableModel::Receive);
     ui->tableViewReceivingT->setModel(proxyModelReceivingT);
     ui->tableViewReceivingT->sortByColumn(0, Qt::AscendingOrder);
 
     // Send filter
-    proxyModelSendingT->setFilterRole(AddressTableNewModel::TypeRole);
-    proxyModelSendingT->setFilterFixedString(AddressTableNewModel::Send);
+    proxyModelSendingT->setFilterRole(AddressTableModel::TypeRole);
+    proxyModelSendingT->setFilterFixedString(AddressTableModel::Send);
     ui->tableViewSendingT->setModel(proxyModelSendingT);
     ui->tableViewSendingT->sortByColumn(0, Qt::AscendingOrder);
 
     // Set column widths
 #if QT_VERSION < 0x050000
-    ui->tableViewReceivingZ->horizontalHeader()->setResizeMode(AddressTableNewModel::Label, QHeaderView::Stretch);
-    ui->tableViewReceivingZ->horizontalHeader()->setResizeMode(AddressTableNewModel::Address, QHeaderView::ResizeToContents);
-    ui->tableViewReceivingT->horizontalHeader()->setResizeMode(AddressTableNewModel::Label, QHeaderView::Stretch);
-    ui->tableViewReceivingT->horizontalHeader()->setResizeMode(AddressTableNewModel::Address, QHeaderView::ResizeToContents);
-    ui->tableViewSendingT->horizontalHeader()->setResizeMode(AddressTableNewModel::Label, QHeaderView::Stretch);
-    ui->tableViewSendingT->horizontalHeader()->setResizeMode(AddressTableNewModel::Address, QHeaderView::ResizeToContents);
+    ui->tableViewReceivingZ->horizontalHeader()->setResizeMode(AddressTableModel::Label, QHeaderView::Stretch);
+    ui->tableViewReceivingZ->horizontalHeader()->setResizeMode(AddressTableModel::Address, QHeaderView::ResizeToContents);
+    ui->tableViewReceivingT->horizontalHeader()->setResizeMode(AddressTableModel::Label, QHeaderView::Stretch);
+    ui->tableViewReceivingT->horizontalHeader()->setResizeMode(AddressTableModel::Address, QHeaderView::ResizeToContents);
+    ui->tableViewSendingT->horizontalHeader()->setResizeMode(AddressTableModel::Label, QHeaderView::Stretch);
+    ui->tableViewSendingT->horizontalHeader()->setResizeMode(AddressTableModel::Address, QHeaderView::ResizeToContents);
 #else
-    ui->tableViewReceivingZ->horizontalHeader()->setSectionResizeMode(AddressTableNewModel::Label, QHeaderView::Stretch);
-    ui->tableViewReceivingZ->horizontalHeader()->setSectionResizeMode(AddressTableNewModel::Address, QHeaderView::ResizeToContents);
-    ui->tableViewReceivingT->horizontalHeader()->setSectionResizeMode(AddressTableNewModel::Label, QHeaderView::Stretch);
-    ui->tableViewReceivingT->horizontalHeader()->setSectionResizeMode(AddressTableNewModel::Address, QHeaderView::ResizeToContents);
-    ui->tableViewSendingT->horizontalHeader()->setSectionResizeMode(AddressTableNewModel::Label, QHeaderView::Stretch);
-    ui->tableViewSendingT->horizontalHeader()->setSectionResizeMode(AddressTableNewModel::Address, QHeaderView::ResizeToContents);
+    ui->tableViewReceivingZ->horizontalHeader()->setSectionResizeMode(AddressTableModel::Label, QHeaderView::Stretch);
+    ui->tableViewReceivingZ->horizontalHeader()->setSectionResizeMode(AddressTableModel::Address, QHeaderView::ResizeToContents);
+    ui->tableViewReceivingT->horizontalHeader()->setSectionResizeMode(AddressTableModel::Label, QHeaderView::Stretch);
+    ui->tableViewReceivingT->horizontalHeader()->setSectionResizeMode(AddressTableModel::Address, QHeaderView::ResizeToContents);
+    ui->tableViewSendingT->horizontalHeader()->setSectionResizeMode(AddressTableModel::Label, QHeaderView::Stretch);
+    ui->tableViewSendingT->horizontalHeader()->setSectionResizeMode(AddressTableModel::Address, QHeaderView::ResizeToContents);
 #endif
 
     connect(ui->tableViewReceivingZ->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
@@ -286,7 +287,7 @@ void AddressBookDialog::on_newReceivingZAddress_clicked()
 
 void AddressBookDialog::on_copyReceivingZAddress_clicked()
 {
-    GUIUtil::copyEntryData(ui->tableViewReceivingZ, AddressTableNewModel::Address);
+    GUIUtil::copyEntryData(ui->tableViewReceivingZ, AddressTableModel::Address);
 }
 
 void AddressBookDialog::on_exportReceivingZAddress_clicked()
@@ -303,8 +304,8 @@ void AddressBookDialog::on_exportReceivingZAddress_clicked()
 
     // name, column, role
     writer.setModel(proxyModelReceivingZ);
-    writer.addColumn("Label", AddressTableNewModel::Label, Qt::EditRole);
-    writer.addColumn("Address", AddressTableNewModel::Address, Qt::EditRole);
+    writer.addColumn("Label", AddressTableModel::Label, Qt::EditRole);
+    writer.addColumn("Address", AddressTableModel::Address, Qt::EditRole);
 
     if(!writer.write()) {
         QMessageBox::critical(this, tr("Exporting Failed"),
@@ -327,7 +328,7 @@ void AddressBookDialog::on_newReceivingTAddress_clicked()
 
 void AddressBookDialog::on_copyReceivingTAddress_clicked()
 {
-    GUIUtil::copyEntryData(ui->tableViewReceivingT, AddressTableNewModel::Address);
+    GUIUtil::copyEntryData(ui->tableViewReceivingT, AddressTableModel::Address);
 }
 
 void AddressBookDialog::on_exportReceivingTAddress_clicked()
@@ -344,8 +345,8 @@ void AddressBookDialog::on_exportReceivingTAddress_clicked()
 
     // name, column, role
     writer.setModel(proxyModelReceivingT);
-    writer.addColumn("Label", AddressTableNewModel::Label, Qt::EditRole);
-    writer.addColumn("Address", AddressTableNewModel::Address, Qt::EditRole);
+    writer.addColumn("Label", AddressTableModel::Label, Qt::EditRole);
+    writer.addColumn("Address", AddressTableModel::Address, Qt::EditRole);
 
     if(!writer.write()) {
         QMessageBox::critical(this, tr("Exporting Failed"),
@@ -370,7 +371,7 @@ void AddressBookDialog::on_newSendingTAddress_clicked()
 
 void AddressBookDialog::on_copySendingTAddress_clicked()
 {
-    GUIUtil::copyEntryData(ui->tableViewSendingT, AddressTableNewModel::Address);
+    GUIUtil::copyEntryData(ui->tableViewSendingT, AddressTableModel::Address);
 }
 
 void AddressBookDialog::on_deleteSendingTAddress_clicked()
@@ -400,8 +401,8 @@ void AddressBookDialog::on_exportSendingTAddress_clicked()
 
     // name, column, role
     writer.setModel(proxyModelSendingT);
-    writer.addColumn("Label", AddressTableNewModel::Label, Qt::EditRole);
-    writer.addColumn("Address", AddressTableNewModel::Address, Qt::EditRole);
+    writer.addColumn("Label", AddressTableModel::Label, Qt::EditRole);
+    writer.addColumn("Address", AddressTableModel::Address, Qt::EditRole);
 
     if(!writer.write()) {
         QMessageBox::critical(this, tr("Exporting Failed"),
@@ -470,9 +471,9 @@ void AddressBookDialog::selectionSendingTChanged()
 
 void AddressBookDialog::selectNewAddress(const QModelIndex &parent, int begin, int /*end*/)
 {
-    QModelIndex idxReceivingZ = proxyModelReceivingZ->mapFromSource(model->index(begin, AddressTableNewModel::Address, parent));
-    QModelIndex idxReceivingT = proxyModelReceivingT->mapFromSource(model->index(begin, AddressTableNewModel::Address, parent));
-    QModelIndex idxSendingT = proxyModelSendingT->mapFromSource(model->index(begin, AddressTableNewModel::Address, parent));
+    QModelIndex idxReceivingZ = proxyModelReceivingZ->mapFromSource(model->index(begin, AddressTableModel::Address, parent));
+    QModelIndex idxReceivingT = proxyModelReceivingT->mapFromSource(model->index(begin, AddressTableModel::Address, parent));
+    QModelIndex idxSendingT = proxyModelSendingT->mapFromSource(model->index(begin, AddressTableModel::Address, parent));
 
     if(idxReceivingZ.isValid() && (idxReceivingZ.data(Qt::EditRole).toString() == newReceivingZAddressToSelect))
     {

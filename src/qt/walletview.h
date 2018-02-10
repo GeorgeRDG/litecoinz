@@ -64,8 +64,6 @@ private:
     QWidget *transactionsPage;
     ReceiveCoinsDialog *receiveCoinsPage;
     SendCoinsDialog *sendCoinsPage;
-    AddressBookPage *usedSendingAddressesPage;
-    AddressBookPage *usedReceivingAddressesPage;
 
     TransactionView *transactionView;
 
@@ -105,11 +103,6 @@ public Q_SLOTS:
     void changePassphrase();
     /** Ask for passphrase to unlock wallet temporarily */
     void unlockWallet();
-
-    /** Show used sending addresses */
-    void usedSendingAddresses();
-    /** Show used receiving addresses */
-    void usedReceivingAddresses();
 
     /** Re-emit encryption status signal */
     void updateEncryptionStatus();

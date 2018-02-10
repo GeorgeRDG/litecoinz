@@ -4,7 +4,6 @@
 
 #include "walletview.h"
 
-#include "addressbookpage.h"
 #include "addressbookdialog.h"
 #include "askpassphrasedialog.h"
 #include "unspentdialog.h"
@@ -67,9 +66,6 @@ WalletView::WalletView(const PlatformStyle *platformStyle, QWidget *parent):
     receiveCoinsPage = new ReceiveCoinsDialog(platformStyle);
     sendCoinsPage = new SendCoinsDialog(platformStyle);
 
-    usedSendingAddressesPage = new AddressBookPage(platformStyle, AddressBookPage::ForEditing, AddressBookPage::SendingTab, this);
-    usedReceivingAddressesPage = new AddressBookPage(platformStyle, AddressBookPage::ForEditing, AddressBookPage::ReceivingTab, this);
-
     addWidget(overviewPage);
     addWidget(addressBookPage);
     addWidget(transactionsPage);
@@ -129,12 +125,9 @@ void WalletView::setWalletModel(WalletModel *walletModel)
     // Put transaction list in tabs
     transactionView->setModel(walletModel);
     overviewPage->setWalletModel(walletModel);
-    addressBookPage->setModel(walletModel->getAddressTableNewModel());
+    addressBookPage->setModel(walletModel->getAddressTableModel());
     receiveCoinsPage->setModel(walletModel);
     sendCoinsPage->setModel(walletModel);
-    usedReceivingAddressesPage->setModel(walletModel->getAddressTableModel());
-    usedReceivingAddressesPage->setZModel(walletModel->getZAddressTableModel());
-    usedSendingAddressesPage->setModel(walletModel->getAddressTableModel());
 
     if (walletModel)
     {
@@ -310,26 +303,6 @@ void WalletView::unlockWallet()
         dlg.setModel(walletModel);
         dlg.exec();
     }
-}
-
-void WalletView::usedSendingAddresses()
-{
-    if(!walletModel)
-        return;
-
-    usedSendingAddressesPage->show();
-    usedSendingAddressesPage->raise();
-    usedSendingAddressesPage->activateWindow();
-}
-
-void WalletView::usedReceivingAddresses()
-{
-    if(!walletModel)
-        return;
-
-    usedReceivingAddressesPage->show();
-    usedReceivingAddressesPage->raise();
-    usedReceivingAddressesPage->activateWindow();
 }
 
 void WalletView::showProgress(const QString &title, int nProgress)

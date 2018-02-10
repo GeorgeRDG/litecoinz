@@ -10,7 +10,7 @@
 
 #include <QDialog>
 
-class ZAddressTableModel;
+class AddressTableModel;
 class WalletModel;
 class PlatformStyle;
 
