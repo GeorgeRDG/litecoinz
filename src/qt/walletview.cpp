@@ -4,7 +4,7 @@
 
 #include "walletview.h"
 
-#include "addressbookdialog.h"
+#include "addressbookpage.h"
 #include "askpassphrasedialog.h"
 #include "unspentdialog.h"
 #include "zunspentdialog.h"
@@ -39,7 +39,7 @@ WalletView::WalletView(const PlatformStyle *platformStyle, QWidget *parent):
 {
     // Create tabs
     overviewPage = new OverviewPage(platformStyle);
-    addressBookPage = new AddressBookDialog(platformStyle);
+    addressBookPage = new AddressBookPage(platformStyle);
 
     transactionsPage = new QWidget(this);
     QVBoxLayout *vbox = new QVBoxLayout();

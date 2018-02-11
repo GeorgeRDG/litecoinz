@@ -7,8 +7,8 @@
 #include "config/bitcoin-config.h"
 #endif
 
-#include "addressbookdialog.h"
-#include "ui_addressbookdialog.h"
+#include "addressbookpage.h"
+#include "ui_addressbookpage.h"
 
 #include "addresstablemodel.h"
 #include "bitcoingui.h"
@@ -22,9 +22,9 @@
 #include <QMessageBox>
 #include <QSortFilterProxyModel>
 
-AddressBookDialog::AddressBookDialog(const PlatformStyle *platformStyle, QWidget *parent) :
+AddressBookPage::AddressBookPage(const PlatformStyle *platformStyle, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::AddressBookDialog),
+    ui(new Ui::AddressBookPage),
     model(0),
     platformStyle(platformStyle)
 {
@@ -120,22 +120,22 @@ AddressBookDialog::AddressBookDialog(const PlatformStyle *platformStyle, QWidget
     connect(ui->tableViewSendingT, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextualSendingTMenu(QPoint)));
 }
 
-void AddressBookDialog::onCopyLabelReceivingZAction()
+void AddressBookPage::onCopyLabelReceivingZAction()
 {
     GUIUtil::copyEntryData(ui->tableViewReceivingZ, AddressTableModel::Label);
 }
 
-void AddressBookDialog::onCopyLabelReceivingTAction()
+void AddressBookPage::onCopyLabelReceivingTAction()
 {
     GUIUtil::copyEntryData(ui->tableViewReceivingT, AddressTableModel::Label);
 }
 
-void AddressBookDialog::onCopyLabelSendingTAction()
+void AddressBookPage::onCopyLabelSendingTAction()
 {
     GUIUtil::copyEntryData(ui->tableViewSendingT, AddressTableModel::Label);
 }
 
-void AddressBookDialog::onEditReceivingTAction()
+void AddressBookPage::onEditReceivingTAction()
 {
     if(!model)
         return;
@@ -153,7 +153,7 @@ void AddressBookDialog::onEditReceivingTAction()
     dlg.exec();
 }
 
-void AddressBookDialog::onEditSendingTAction()
+void AddressBookPage::onEditSendingTAction()
 {
     if(!model)
         return;
@@ -171,7 +171,7 @@ void AddressBookDialog::onEditSendingTAction()
     dlg.exec();
 }
 
-void AddressBookDialog::contextualReceivingZMenu(const QPoint &point)
+void AddressBookPage::contextualReceivingZMenu(const QPoint &point)
 {
     QModelIndex index = ui->tableViewReceivingZ->indexAt(point);
     if(index.isValid())
@@ -180,7 +180,7 @@ void AddressBookDialog::contextualReceivingZMenu(const QPoint &point)
     }
 }
 
-void AddressBookDialog::contextualReceivingTMenu(const QPoint &point)
+void AddressBookPage::contextualReceivingTMenu(const QPoint &point)
 {
     QModelIndex index = ui->tableViewReceivingT->indexAt(point);
     if(index.isValid())
@@ -189,7 +189,7 @@ void AddressBookDialog::contextualReceivingTMenu(const QPoint &point)
     }
 }
 
-void AddressBookDialog::contextualSendingTMenu(const QPoint &point)
+void AddressBookPage::contextualSendingTMenu(const QPoint &point)
 {
     QModelIndex index = ui->tableViewSendingT->indexAt(point);
     if(index.isValid())
@@ -198,7 +198,7 @@ void AddressBookDialog::contextualSendingTMenu(const QPoint &point)
     }
 }
 
-void AddressBookDialog::setModel(AddressTableModel *model)
+void AddressBookPage::setModel(AddressTableModel *model)
 {
     this->model = model;
 
@@ -273,24 +273,24 @@ void AddressBookDialog::setModel(AddressTableModel *model)
     selectionSendingTChanged();
 }
 
-AddressBookDialog::~AddressBookDialog()
+AddressBookPage::~AddressBookPage()
 {
     delete ui;
 }
 
 
 // Receiving Addresses Tab
-void AddressBookDialog::on_newReceivingZAddress_clicked()
+void AddressBookPage::on_newReceivingZAddress_clicked()
 {
 
 }
 
-void AddressBookDialog::on_copyReceivingZAddress_clicked()
+void AddressBookPage::on_copyReceivingZAddress_clicked()
 {
     GUIUtil::copyEntryData(ui->tableViewReceivingZ, AddressTableModel::Address);
 }
 
-void AddressBookDialog::on_exportReceivingZAddress_clicked()
+void AddressBookPage::on_exportReceivingZAddress_clicked()
 {
     // CSV is currently the only supported format
     QString filename = GUIUtil::getSaveFileName(this,
@@ -313,7 +313,7 @@ void AddressBookDialog::on_exportReceivingZAddress_clicked()
     }
 }
 
-void AddressBookDialog::on_newReceivingTAddress_clicked()
+void AddressBookPage::on_newReceivingTAddress_clicked()
 {
     if(!model)
         return;
@@ -326,12 +326,12 @@ void AddressBookDialog::on_newReceivingTAddress_clicked()
     }
 }
 
-void AddressBookDialog::on_copyReceivingTAddress_clicked()
+void AddressBookPage::on_copyReceivingTAddress_clicked()
 {
     GUIUtil::copyEntryData(ui->tableViewReceivingT, AddressTableModel::Address);
 }
 
-void AddressBookDialog::on_exportReceivingTAddress_clicked()
+void AddressBookPage::on_exportReceivingTAddress_clicked()
 {
     // CSV is currently the only supported format
     QString filename = GUIUtil::getSaveFileName(this,
@@ -356,7 +356,7 @@ void AddressBookDialog::on_exportReceivingTAddress_clicked()
 
 
 // Sending Addresses Tab
-void AddressBookDialog::on_newSendingTAddress_clicked()
+void AddressBookPage::on_newSendingTAddress_clicked()
 {
     if(!model)
         return;
@@ -369,12 +369,12 @@ void AddressBookDialog::on_newSendingTAddress_clicked()
     }
 }
 
-void AddressBookDialog::on_copySendingTAddress_clicked()
+void AddressBookPage::on_copySendingTAddress_clicked()
 {
     GUIUtil::copyEntryData(ui->tableViewSendingT, AddressTableModel::Address);
 }
 
-void AddressBookDialog::on_deleteSendingTAddress_clicked()
+void AddressBookPage::on_deleteSendingTAddress_clicked()
 {
     QTableView *table = ui->tableViewSendingT;
     if(!table->selectionModel())
@@ -387,7 +387,7 @@ void AddressBookDialog::on_deleteSendingTAddress_clicked()
     }
 }
 
-void AddressBookDialog::on_exportSendingTAddress_clicked()
+void AddressBookPage::on_exportSendingTAddress_clicked()
 {
     // CSV is currently the only supported format
     QString filename = GUIUtil::getSaveFileName(this,
@@ -410,7 +410,7 @@ void AddressBookDialog::on_exportSendingTAddress_clicked()
     }
 }
 
-void AddressBookDialog::selectionReceivingZChanged()
+void AddressBookPage::selectionReceivingZChanged()
 {
     // Set button states based on selection
     QTableView *table = ui->tableViewReceivingZ;
@@ -429,7 +429,7 @@ void AddressBookDialog::selectionReceivingZChanged()
     }
 }
 
-void AddressBookDialog::selectionReceivingTChanged()
+void AddressBookPage::selectionReceivingTChanged()
 {
     // Set button states based on selection
     QTableView *table = ui->tableViewReceivingT;
@@ -448,7 +448,7 @@ void AddressBookDialog::selectionReceivingTChanged()
     }
 }
 
-void AddressBookDialog::selectionSendingTChanged()
+void AddressBookPage::selectionSendingTChanged()
 {
     // Set button states based on selection
     QTableView *table = ui->tableViewSendingT;
@@ -469,7 +469,7 @@ void AddressBookDialog::selectionSendingTChanged()
     }
 }
 
-void AddressBookDialog::selectNewAddress(const QModelIndex &parent, int begin, int /*end*/)
+void AddressBookPage::selectNewAddress(const QModelIndex &parent, int begin, int /*end*/)
 {
     QModelIndex idxReceivingZ = proxyModelReceivingZ->mapFromSource(model->index(begin, AddressTableModel::Address, parent));
     QModelIndex idxReceivingT = proxyModelReceivingT->mapFromSource(model->index(begin, AddressTableModel::Address, parent));

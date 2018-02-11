@@ -19,7 +19,7 @@ class SendCoinsRecipient;
 class TransactionView;
 class WalletModel;
 class AddressBookPage;
-class AddressBookDialog;
+class AddressBookPage;
 
 QT_BEGIN_NAMESPACE
 class QModelIndex;
@@ -60,7 +60,7 @@ private:
     WalletModel *walletModel;
 
     OverviewPage *overviewPage;
-    AddressBookDialog *addressBookPage;
+    AddressBookPage *addressBookPage;
     QWidget *transactionsPage;
     ReceiveCoinsDialog *receiveCoinsPage;
     SendCoinsDialog *sendCoinsPage;

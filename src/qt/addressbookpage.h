@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_QT_ADDRESSBOOKDIALOG_H
-#define BITCOIN_QT_ADDRESSBOOKDIALOG_H
+#ifndef BITCOIN_QT_ADDRESSBOOKPAGE_H
+#define BITCOIN_QT_ADDRESSBOOKPAGE_H
 
 #include <QDialog>
 
@@ -12,7 +12,7 @@ class OptionsModel;
 class PlatformStyle;
 
 namespace Ui {
-    class AddressBookDialog;
+    class AddressBookPage;
 }
 
 QT_BEGIN_NAMESPACE
@@ -24,18 +24,18 @@ class QTableView;
 QT_END_NAMESPACE
 
 /** Dialog for LitecoinZ Address Book */
-class AddressBookDialog : public QDialog
+class AddressBookPage : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit AddressBookDialog(const PlatformStyle *platformStyle, QWidget *parent = 0);
-    ~AddressBookDialog();
+    explicit AddressBookPage(const PlatformStyle *platformStyle, QWidget *parent = 0);
+    ~AddressBookPage();
 
     void setModel(AddressTableModel *model);
 
 private:
-    Ui::AddressBookDialog *ui;
+    Ui::AddressBookPage *ui;
     AddressTableModel *model;
     QSortFilterProxyModel *proxyModelReceivingZ;
     QSortFilterProxyModel *proxyModelReceivingT;
@@ -95,4 +95,4 @@ private Q_SLOTS:
     void selectNewAddress(const QModelIndex &parent, int begin, int /*end*/);
 };
 
-#endif // BITCOIN_QT_ADDRESSBOOKDIALOG_H
+#endif // BITCOIN_QT_ADDRESSBOOKPAGE_H
