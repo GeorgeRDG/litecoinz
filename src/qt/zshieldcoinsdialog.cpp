@@ -10,7 +10,7 @@
 #include "ui_zshieldcoinsdialog.h"
 
 #include "bitcoinunits.h"
-//MARCO#include "addressbookpage.h"
+#include "addressbookdialog.h"
 #include "addresstablemodel.h"
 #include "resultsdialog.h"
 
@@ -91,14 +91,14 @@ void ZShieldCoinsDialog::on_AddressBookButton_clicked()
     if(!model)
         return;
 
-//    AddressBookPage dlg(platformStyle, AddressBookPage::ForZSelection, AddressBookPage::ReceivingTab, this);
-//    dlg.setModel(model->getAddressTableModel());
-//    if(dlg.exec())
-//    {
-//        ui->reqShieldAddress->setText(dlg.getReturnValue());
-//        ui->shieldButton->setEnabled(true);
-//        ui->shieldButton->setFocus();
-//    }
+    AddressBookDialog dlg(platformStyle, AddressBookDialog::ForZSelection, AddressBookDialog::ReceivingTab, this);
+    dlg.setModel(model->getAddressTableModel());
+    if(dlg.exec())
+    {
+        ui->reqShieldAddress->setText(dlg.getReturnValue());
+        ui->shieldButton->setEnabled(true);
+        ui->shieldButton->setFocus();
+    }
 }
 
 void ZShieldCoinsDialog::setModel(WalletModel *model)

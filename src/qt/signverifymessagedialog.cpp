@@ -5,7 +5,7 @@
 #include "signverifymessagedialog.h"
 #include "ui_signverifymessagedialog.h"
 
-//MARCO#include "addressbookpage.h"
+#include "addressbookdialog.h"
 #include "guiutil.h"
 #include "platformstyle.h"
 #include "walletmodel.h"
@@ -95,12 +95,12 @@ void SignVerifyMessageDialog::on_addressBookButton_SM_clicked()
 {
     if (model && model->getAddressTableModel())
     {
-//        AddressBookPage dlg(platformStyle, AddressBookPage::ForTSelection, AddressBookPage::ReceivingTab, this);
-//        dlg.setModel(model->getAddressTableModel());
-//        if (dlg.exec())
-//        {
-//            setAddress_SM(dlg.getReturnValue());
-//        }
+        AddressBookDialog dlg(platformStyle, AddressBookDialog::ForTSelection, AddressBookDialog::ReceivingTab, this);
+        dlg.setModel(model->getAddressTableModel());
+        if (dlg.exec())
+        {
+            setAddress_SM(dlg.getReturnValue());
+        }
     }
 }
 
@@ -186,12 +186,12 @@ void SignVerifyMessageDialog::on_addressBookButton_VM_clicked()
 {
     if (model && model->getAddressTableModel())
     {
-//        AddressBookPage dlg(platformStyle, AddressBookPage::ForTSelection, AddressBookPage::SendingTab, this);
-//        dlg.setModel(model->getAddressTableModel());
-//        if (dlg.exec())
-//        {
-//            setAddress_VM(dlg.getReturnValue());
-//        }
+        AddressBookDialog dlg(platformStyle, AddressBookDialog::ForTSelection, AddressBookDialog::SendingTab, this);
+        dlg.setModel(model->getAddressTableModel());
+        if (dlg.exec())
+        {
+            setAddress_VM(dlg.getReturnValue());
+        }
     }
 }
 
