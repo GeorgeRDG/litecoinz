@@ -63,6 +63,8 @@ static AddressTableEntry::Type translateTransactionType(const QString &strPurpos
         addressType = AddressTableEntry::Sending;
     else if (strPurpose == "receive")
         addressType = AddressTableEntry::Receiving;
+    else if (strPurpose == "zreceive")
+        addressType = AddressTableEntry::ZReceiving;
     else if (strPurpose == "unknown" || strPurpose == "") // if purpose not set, guess
         addressType = (isMine ? AddressTableEntry::Receiving : AddressTableEntry::Sending);
     return addressType;
@@ -102,7 +104,8 @@ public:
             std::set<libzcash::PaymentAddress> addresses;
             wallet->GetPaymentAddresses(addresses);
             for (auto addr : addresses ) {
-                AddressTableEntry::Type addressType = AddressTableEntry::ZReceiving;
+                AddressTableEntry::Type addressType = translateTransactionType(
+                        QString::fromStdString("zreceive"), true);
                 const std::string& strName = "";
                 if (wallet->HaveSpendingKey(addr)) {
                     cachedAddressTable.append(AddressTableEntry(addressType,
@@ -410,19 +413,29 @@ QString AddressTableModel::addRow(const QString &type, const QString &label, con
     else if(type == ZReceive)
     {
         // Generate a new z-address
-        // TODO
+        LOCK(wallet->cs_wallet);
+
+        CZCPaymentAddress pubaddr = wallet->GenerateNewZKey();
+        strAddress = pubaddr.ToString();
     }
     else
     {
         return QString();
     }
 
-    // Add entry
+    // Add entry (at the moment only for transparent addresses)
+    if ((type == Send) || (type == Receive))
     {
         LOCK(wallet->cs_wallet);
         wallet->SetAddressBook(CBitcoinAddress(strAddress).Get(), strLabel,
                                (type == Send ? "send" : "receive"));
     }
+    else if (type == ZReceive)
+    {
+        LOCK(wallet->cs_wallet);
+        wallet->SetZAddressBook(CZCPaymentAddress(strAddress).Get(), strLabel, "zreceive");
+    }
+
     return QString::fromStdString(strAddress);
 }
 

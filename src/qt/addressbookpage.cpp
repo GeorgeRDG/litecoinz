@@ -282,7 +282,7 @@ AddressBookPage::~AddressBookPage()
 // Receiving Addresses Tab
 void AddressBookPage::on_newReceivingZAddress_clicked()
 {
-
+    newReceivingZAddressToSelect = model->addRow(AddressTableModel::ZReceive, "", "");
 }
 
 void AddressBookPage::on_copyReceivingZAddress_clicked()
