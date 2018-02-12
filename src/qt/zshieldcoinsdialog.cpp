@@ -19,10 +19,12 @@
 #include "platformstyle.h"
 #include "walletmodel.h"
 #include <univalue.h>
+#include "rpc/server.h"
 
 #include "wallet/asyncrpcoperation_shieldcoinbase.h"
 
 #include <QApplication>
+#include <QSettings>
 #include <QMessageBox>
 
 ZShieldCoinsDialog::ZShieldCoinsDialog(const PlatformStyle *platformStyle, QWidget *parent) :
@@ -33,15 +35,28 @@ ZShieldCoinsDialog::ZShieldCoinsDialog(const PlatformStyle *platformStyle, QWidg
 {
     ui->setupUi(this);
 
+    // init transaction fee section
+    QSettings settings;
+    if (!settings.contains("nTransactionFee"))
+        settings.setValue("nTransactionFee", (qint64)DEFAULT_TRANSACTION_FEE);
+
     ui->shieldButton->setEnabled(false);
     ui->reqShieldAddress->setEnabled(false);
 
-    ui->reqFee->setInputMask("9.9999");
-    ui->reqFee->setValidator(new QDoubleValidator(0, 1, 4, this));
+    ui->customFee->setValue(settings.value("nTransactionFee").toLongLong());
 
-    ui->reqLimit->setInputMask("9999");
-    ui->reqLimit->setValidator(new QIntValidator(50, 9999, this));
+    ui->operationLimit->setMinimum(50);
+    ui->operationLimit->setMaximum(5000);
+    ui->operationLimit->setSingleStep(10);
+    ui->operationLimit->setSuffix(" utxos");
+
     connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(accept()));
+}
+
+void ZShieldCoinsDialog::done(int retval)
+{
+    clear();
+    QDialog::done(retval);
 }
 
 ZShieldCoinsDialog::~ZShieldCoinsDialog()
@@ -54,17 +69,17 @@ void ZShieldCoinsDialog::on_shieldButton_clicked()
     UniValue params(UniValue::VARR);
     params.push_back("*");
     params.push_back(ui->reqShieldAddress->text().toStdString());
-    params.push_back(ui->reqFee->text().toULong());
-    params.push_back(ui->reqLimit->text().toInt());
+    params.push_back(ValueFromAmount(payTxFee.GetFeePerK()));
+    params.push_back(ui->operationLimit->value());
 
     UniValue ret = z_shieldcoinbase(params, false);
 
     QString remainingUTXOs = QString("%1").arg(ret[0].get_int());
     //QString remainingValue = QString("%1").arg(ret[1].get_real());
-    QString remainingValue = BitcoinUnits::format(BitcoinUnits::LTZ, ret[1].get_real());
+    QString remainingValue = BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), AmountFromValue(ret[1].get_real()));
     QString shieldingUTXOs = QString("%1").arg(ret[2].get_int());
     //QString shieldingValue = QString("%1").arg(ret[3].get_real());
-    QString shieldingValue = BitcoinUnits::format(BitcoinUnits::LTZ, ret[3].get_real());
+    QString shieldingValue = BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), AmountFromValue(ret[3].get_real()));
     QString opid = QString::fromStdString(ret[4].get_str());
 
     QString label1 = "Operation was submitted in background.";
@@ -104,7 +119,32 @@ void ZShieldCoinsDialog::on_AddressBookButton_clicked()
 void ZShieldCoinsDialog::setModel(WalletModel *model)
 {
     this->model = model;
-    clear();
+    if(model && model->getOptionsModel())
+    {
+        connect(model->getOptionsModel(), SIGNAL(displayUnitChanged(int)), this, SLOT(updateDisplayUnit()));
+        updateDisplayUnit();
+
+        // fee section
+        connect(ui->customFee, SIGNAL(valueChanged()), this, SLOT(updateGlobalFeeVariables()));
+
+        ui->customFee->setSingleStep(CWallet::minTxFee.GetFeePerK());
+        updateGlobalFeeVariables();
+    }
+}
+
+void ZShieldCoinsDialog::updateDisplayUnit()
+{
+    ui->customFee->setDisplayUnit(model->getOptionsModel()->getDisplayUnit());
+}
+
+void ZShieldCoinsDialog::setMinimumFee()
+{
+    ui->customFee->setValue(CWallet::minTxFee.GetFeePerK());
+}
+
+void ZShieldCoinsDialog::updateGlobalFeeVariables()
+{
+    payTxFee = CFeeRate(ui->customFee->value());
 }
 
 void ZShieldCoinsDialog::setAddress(const QString &address)

@@ -158,27 +158,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="reqFee">
-       <property name="inputMethodHints">
-        <set>Qt::ImhNone</set>
-       </property>
-       <property name="text">
-        <string>0.0001</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
+      <widget class="BitcoinAmountField" name="customFee"/>
      </item>
      <item>
       <widget class="QLabel" name="label_3">
@@ -188,12 +168,21 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="reqLimit">
-       <property name="inputMethodHints">
-        <set>Qt::ImhNone</set>
+      <widget class="QSpinBox" name="operationLimit">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
-       <property name="text">
-        <string>50</string>
+       <property name="suffix">
+        <string> utxos</string>
+       </property>
+       <property name="minimum">
+        <number>50</number>
+       </property>
+       <property name="maximum">
+        <number>5000</number>
+       </property>
+       <property name="singleStep">
+        <number>10</number>
        </property>
       </widget>
      </item>
@@ -214,6 +203,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>BitcoinAmountField</class>
+   <extends>QLineEdit</extends>
+   <header>bitcoinamountfield.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../bitcoin.qrc"/>
  </resources>

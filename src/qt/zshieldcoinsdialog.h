@@ -37,6 +37,7 @@ public:
 
 public Q_SLOTS:
     void clear();
+    void done(int retval);
 
 private Q_SLOTS:
     /** Create a new address for receiving coins and / or add a new address book entry */
@@ -45,6 +46,10 @@ private Q_SLOTS:
     void on_deleteButton_clicked();
     /** Shield coins in coinbase from t-address to z-address */
     void on_shieldButton_clicked();
+
+    void updateDisplayUnit();
+    void setMinimumFee();
+    void updateGlobalFeeVariables();
 
 private:
     Ui::ZShieldCoinsDialog *ui;
