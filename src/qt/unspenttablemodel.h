@@ -29,6 +29,13 @@ public:
         Balance = 1
     };
 
+    enum RoleIndex {
+        TypeRole = Qt::UserRole
+    };
+
+    static const QString ZUnspent;
+    static const QString TUnspent;
+
     /** @name Methods overridden from QAbstractTableModel
         @{*/
     int rowCount(const QModelIndex &parent) const;

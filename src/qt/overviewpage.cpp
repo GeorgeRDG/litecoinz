@@ -13,8 +13,7 @@
 #include "platformstyle.h"
 #include "transactionfilterproxy.h"
 #include "transactiontablemodel.h"
-#include "unspentdialog.h"
-#include "zunspentdialog.h"
+#include "unspentpage.h"
 #include "walletmodel.h"
 #include "zshieldcoinsdialog.h"
 

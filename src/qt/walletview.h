@@ -19,7 +19,7 @@ class SendCoinsRecipient;
 class TransactionView;
 class WalletModel;
 class AddressBookPage;
-class AddressBookPage;
+class UnspentPage;
 
 QT_BEGIN_NAMESPACE
 class QModelIndex;
@@ -61,6 +61,7 @@ private:
 
     OverviewPage *overviewPage;
     AddressBookPage *addressBookPage;
+    UnspentPage *unspentPage;
     QWidget *transactionsPage;
     ReceiveCoinsDialog *receiveCoinsPage;
     SendCoinsDialog *sendCoinsPage;
@@ -75,6 +76,8 @@ public Q_SLOTS:
     void gotoOverviewPage();
     /** Switch to address book page */
     void gotoAddressBookPage();
+    /** Switch to unspent page */
+    void gotoUnspentPage();
     /** Switch to history (transactions) page */
     void gotoHistoryPage();
     /** Switch to receive coins page */
@@ -92,9 +95,6 @@ public Q_SLOTS:
         The new items are those between start and end inclusive, under the given parent item.
     */
     void processNewTransaction(const QModelIndex& parent, int start, int /*end*/);
-    /** List unspent transactions */
-    void listUnspent();
-    void listZUnspent();
     /** Encrypt the wallet */
     void encryptWallet(bool status);
     /** Backup the wallet */

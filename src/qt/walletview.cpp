@@ -6,8 +6,7 @@
 
 #include "addressbookpage.h"
 #include "askpassphrasedialog.h"
-#include "unspentdialog.h"
-#include "zunspentdialog.h"
+#include "unspentpage.h"
 #include "bitcoingui.h"
 #include "clientmodel.h"
 #include "guiutil.h"
@@ -40,6 +39,7 @@ WalletView::WalletView(const PlatformStyle *platformStyle, QWidget *parent):
     // Create tabs
     overviewPage = new OverviewPage(platformStyle);
     addressBookPage = new AddressBookPage(platformStyle);
+    unspentPage = new UnspentPage(platformStyle);
 
     transactionsPage = new QWidget(this);
     QVBoxLayout *vbox = new QVBoxLayout();
@@ -68,6 +68,7 @@ WalletView::WalletView(const PlatformStyle *platformStyle, QWidget *parent):
 
     addWidget(overviewPage);
     addWidget(addressBookPage);
+    addWidget(unspentPage);
     addWidget(transactionsPage);
     addWidget(receiveCoinsPage);
     addWidget(sendCoinsPage);
@@ -126,6 +127,7 @@ void WalletView::setWalletModel(WalletModel *walletModel)
     transactionView->setModel(walletModel);
     overviewPage->setWalletModel(walletModel);
     addressBookPage->setModel(walletModel->getAddressTableModel());
+    unspentPage->setModel(walletModel->getUnspentTableModel());
     receiveCoinsPage->setModel(walletModel);
     sendCoinsPage->setModel(walletModel);
 
@@ -178,6 +180,11 @@ void WalletView::gotoOverviewPage()
 void WalletView::gotoAddressBookPage()
 {
     setCurrentWidget(addressBookPage);
+}
+
+void WalletView::gotoUnspentPage()
+{
+    setCurrentWidget(unspentPage);
 }
 
 void WalletView::gotoHistoryPage()
@@ -235,24 +242,6 @@ void WalletView::showOutOfSyncWarning(bool fShow)
 void WalletView::updateEncryptionStatus()
 {
     Q_EMIT encryptionStatusChanged(walletModel->getEncryptionStatus());
-}
-
-void WalletView::listUnspent()
-{
-    if(!walletModel)
-        return;
-    UnspentDialog dlg(platformStyle, UnspentDialog::ForEditing, this);
-    dlg.setModel(walletModel->getUnspentTableModel());
-    dlg.exec();
-}
-
-void WalletView::listZUnspent()
-{
-    if(!walletModel)
-        return;
-    ZUnspentDialog dlg(platformStyle, ZUnspentDialog::ForEditing, this);
-    dlg.setModel(walletModel->getZUnspentTableModel());
-    dlg.exec();
 }
 
 void WalletView::encryptWallet(bool status)

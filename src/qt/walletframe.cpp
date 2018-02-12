@@ -122,6 +122,13 @@ void WalletFrame::gotoAddressBookPage()
         i.value()->gotoAddressBookPage();
 }
 
+void WalletFrame::gotoUnspentPage()
+{
+    QMap<QString, WalletView*>::const_iterator i;
+    for (i = mapWalletViews.constBegin(); i != mapWalletViews.constEnd(); ++i)
+        i.value()->gotoUnspentPage();
+}
+
 void WalletFrame::gotoHistoryPage()
 {
     QMap<QString, WalletView*>::const_iterator i;
@@ -155,20 +162,6 @@ void WalletFrame::gotoVerifyMessageTab(QString addr)
     WalletView *walletView = currentWalletView();
     if (walletView)
         walletView->gotoVerifyMessageTab(addr);
-}
-
-void WalletFrame::listUnspent()
-{
-    WalletView *walletView = currentWalletView();
-    if (walletView)
-        walletView->listUnspent();
-}
-
-void WalletFrame::listZUnspent()
-{
-    WalletView *walletView = currentWalletView();
-    if (walletView)
-        walletView->listZUnspent();
 }
 
 void WalletFrame::encryptWallet(bool status)

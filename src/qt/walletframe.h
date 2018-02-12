@@ -59,6 +59,8 @@ public Q_SLOTS:
     void gotoOverviewPage();
     /** Switch to address book page */
     void gotoAddressBookPage();
+    /** Switch to unspent page */
+    void gotoUnspentPage();
     /** Switch to history (transactions) page */
     void gotoHistoryPage();
     /** Switch to receive coins page */
@@ -71,9 +73,6 @@ public Q_SLOTS:
     /** Show Sign/Verify Message dialog and switch to verify message tab */
     void gotoVerifyMessageTab(QString addr = "");
 
-    /** Unspent Transactions */
-    void listUnspent();
-    void listZUnspent();
     /** Encrypt the wallet */
     void encryptWallet(bool status);
     /** Backup the wallet */

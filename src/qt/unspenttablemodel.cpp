@@ -16,14 +16,24 @@
 #include <QFont>
 #include <QDebug>
 
+const QString UnspentTableModel::ZUnspent = "Z";
+const QString UnspentTableModel::TUnspent = "T";
+
 struct UnspentTableEntry
 {
+    enum Type {
+        ZUnspent,
+        TUnspent,
+        Hidden
+    };
+
+    Type type;
     QString address;
     QString balance;
 
     UnspentTableEntry() {}
-    UnspentTableEntry(const QString &address, const QString &balance):
-        address(address), balance(balance) {}
+    UnspentTableEntry(Type type, const QString &address, const QString &balance):
+        type(type), address(address), balance(balance) {}
 };
 
 struct UnspentTableEntryLessThan
@@ -42,6 +52,17 @@ struct UnspentTableEntryLessThan
     }
 };
 
+/* Determine unspent type from unspent purpose */
+static UnspentTableEntry::Type translateUnspentType(const QString &strPurpose)
+{
+    UnspentTableEntry::Type unspentType = UnspentTableEntry::Hidden;
+    if (strPurpose == "tunspent")
+        unspentType = UnspentTableEntry::TUnspent;
+    else if (strPurpose == "zunspent")
+        unspentType = UnspentTableEntry::ZUnspent;
+    return unspentType;
+}
+
 // Private implementation
 class UnspentTablePriv
 {
@@ -57,6 +78,7 @@ public:
     {
         cachedUnspentTable.clear();
         {
+            // T-Unspent
             std::vector<COutput> vecOutputs;
 
             LOCK(wallet->cs_wallet);
@@ -71,13 +93,41 @@ public:
 
                 CTxDestination address;
                 if (ExtractDestination(out.tx->vout[out.i].scriptPubKey, address)) {
-                    cachedUnspentTable.append(UnspentTableEntry(
+                    UnspentTableEntry::Type unspentType = translateUnspentType(QString::fromStdString("tunspent"));
+                    cachedUnspentTable.append(UnspentTableEntry(unspentType,
                                                   QString::fromStdString(CBitcoinAddress(address).ToString()),
                                                   BitcoinUnits::format(BitcoinUnits::LTZ, out.tx->vout[out.i].nValue)
                                              )
                     );
                 }
             }
+
+            // Z-Unspent
+            std::set<libzcash::PaymentAddress> zaddrs = {};
+            int nMinDepth = 1;
+            int nMaxDepth = 9999999;
+
+            std::set<libzcash::PaymentAddress> addresses;
+            wallet->GetPaymentAddresses(addresses);
+            for (auto addr : addresses ) {
+                if (wallet->HaveSpendingKey(addr)) {
+                    zaddrs.insert(addr);
+                }
+            }
+
+            if (zaddrs.size() > 0) {
+                std::vector<CUnspentNotePlaintextEntry> entries; 
+                wallet->GetUnspentFilteredNotes(entries, zaddrs, nMinDepth, nMaxDepth);
+                for (CUnspentNotePlaintextEntry & entry : entries) {
+                    UnspentTableEntry::Type unspentType = translateUnspentType(QString::fromStdString("zunspent"));
+                    cachedUnspentTable.append(UnspentTableEntry(unspentType,
+                                                  QString::fromStdString(CZCPaymentAddress(entry.address).ToString()),
+                                                  BitcoinUnits::format(BitcoinUnits::LTZ, CAmount(entry.plaintext.value))
+                                             )
+                    );
+                }
+            }
+
         }
         // qLowerBound() and qUpperBound() require our cachedUnspentTable list to be sorted in asc order
         // Even though the map is already sorted this re-sorting step is needed because the originating map
@@ -153,6 +203,17 @@ QVariant UnspentTableModel::data(const QModelIndex &index, int role) const
             font = GUIUtil::fixedPitchFont();
         }
         return font;
+    }
+    else if (role == TypeRole)
+    {
+        switch(rec->type)
+        {
+        case UnspentTableEntry::ZUnspent:
+            return ZUnspent;
+        case UnspentTableEntry::TUnspent:
+            return TUnspent;
+        default: break;
+        }
     }
     return QVariant();
 }

@@ -97,8 +97,7 @@ QT_TS = \
 QT_FORMS_UI = \
   qt/forms/addressbookpage.ui \
   qt/forms/addressbookdialog.ui \
-  qt/forms/unspentdialog.ui \
-  qt/forms/zunspentdialog.ui \
+  qt/forms/unspentpage.ui \
   qt/forms/askpassphrasedialog.ui \
   qt/forms/coincontroldialog.ui \
   qt/forms/debugwindow.ui \
@@ -121,10 +120,8 @@ QT_MOC_CPP = \
   qt/moc_addressbookpage.cpp \
   qt/moc_addressbookdialog.cpp \
   qt/moc_addresstablemodel.cpp \
-  qt/moc_unspentdialog.cpp \
+  qt/moc_unspentpage.cpp \
   qt/moc_unspenttablemodel.cpp \
-  qt/moc_zunspentdialog.cpp \
-  qt/moc_zunspenttablemodel.cpp \
   qt/moc_askpassphrasedialog.cpp \
   qt/moc_bantablemodel.cpp \
   qt/moc_bitcoinaddressvalidator.cpp \
@@ -195,10 +192,8 @@ BITCOIN_QT_H = \
   qt/addressbookpage.h \
   qt/addressbookdialog.h \
   qt/addresstablemodel.h \
-  qt/unspentdialog.h \
+  qt/unspentpage.h \
   qt/unspenttablemodel.h \
-  qt/zunspentdialog.h \
-  qt/zunspenttablemodel.h \
   qt/askpassphrasedialog.h \
   qt/bantablemodel.h \
   qt/bitcoinaddressvalidator.h \
@@ -335,10 +330,8 @@ BITCOIN_QT_WALLET_CPP = \
   qt/addressbookpage.cpp \
   qt/addressbookdialog.cpp \
   qt/addresstablemodel.cpp \
-  qt/unspentdialog.cpp \
+  qt/unspentpage.cpp \
   qt/unspenttablemodel.cpp \
-  qt/zunspentdialog.cpp \
-  qt/zunspenttablemodel.cpp \
   qt/askpassphrasedialog.cpp \
   qt/coincontroldialog.cpp \
   qt/coincontroltreewidget.cpp \
