@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>560</width>
+    <width>579</width>
     <height>440</height>
    </rect>
   </property>
@@ -673,6 +673,19 @@
     <layout class="QHBoxLayout" name="horizontalLayout_Buttons">
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_Buttons">
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item>
         <widget class="QPushButton" name="openBitcoinConfButton">
          <property name="toolTip">

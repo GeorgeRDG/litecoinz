@@ -375,9 +375,9 @@ void BitcoinGUI::createActions()
     changePassphraseAction = new QAction(platformStyle->TextColorIcon(":/icons/key"), tr("&Change Passphrase..."), this);
     changePassphraseAction->setStatusTip(tr("Change the passphrase used for wallet encryption"));
     changePassphraseAction->setVisible(false); //TODO
-    signMessageAction = new QAction(platformStyle->TextColorIcon(":/icons/edit"), tr("Sign &message..."), this);
+    signMessageAction = new QAction(QIcon(":/images/res/images/encrypt.png"), tr("Sign &message..."), this);
     signMessageAction->setStatusTip(tr("Sign messages with your LitecoinZ addresses to prove you own them"));
-    verifyMessageAction = new QAction(platformStyle->TextColorIcon(":/icons/verify"), tr("&Verify message..."), this);
+    verifyMessageAction = new QAction(QIcon(":/images/res/images/verify.png"), tr("&Verify message..."), this);
     verifyMessageAction->setStatusTip(tr("Verify messages to ensure they were signed with specified LitecoinZ addresses"));
 
     openRPCConsoleAction = new QAction(QIcon(":/images/res/images/debug.png"), tr("&Debug window"), this);
