@@ -306,7 +306,6 @@ RES_ICONS = \
   qt/res/images/addressbook1.png \
   qt/res/images/addressbook2.png \
   qt/res/images/backup.png \
-  qt/res/images/blockchain-128.png \
   qt/res/images/clear.png \
   qt/res/images/confirmed.png \
   qt/res/images/copy.png \
