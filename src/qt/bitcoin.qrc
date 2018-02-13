@@ -51,6 +51,7 @@
     <file alias="prompticon">res/icons/chevron.png</file>
   </qresource>
   <qresource prefix="/images">
+    <file>res/images/prompt.png</file>
     <file>res/images/verify.png</file>
     <file>res/images/edit.png</file>
     <file>res/images/unspent.png</file>
