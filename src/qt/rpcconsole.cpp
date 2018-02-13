@@ -260,9 +260,9 @@ RPCConsole::RPCConsole(const PlatformStyle *platformStyle, QWidget *parent) :
     ui->openDebugLogfileButton->setToolTip(ui->openDebugLogfileButton->toolTip().arg(tr(PACKAGE_NAME)));
 
     if (platformStyle->getImagesOnButtons()) {
-        ui->openDebugLogfileButton->setIcon(QIcon(":/images/res/images/open.png"));
+        ui->openDebugLogfileButton->setIcon(QIcon(":/images/open"));
     }
-    ui->clearButton->setIcon(QIcon(":/images/res/images/clear.png"));
+    ui->clearButton->setIcon(QIcon(":/images/clear"));
     ui->fontBiggerButton->setIcon(platformStyle->SingleColorIcon(":/icons/fontbigger"));
     ui->fontSmallerButton->setIcon(platformStyle->SingleColorIcon(":/icons/fontsmaller"));
 

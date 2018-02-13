@@ -265,58 +265,58 @@ void BitcoinGUI::createActions()
 {
     QActionGroup *tabGroup = new QActionGroup(this);
 
-    overviewAction = new QAction(QIcon(":/images/res/images/overview.png"), tr("&Overview"), this);
+    overviewAction = new QAction(QIcon(":/images/overview"), tr("&Overview"), this);
     overviewAction->setStatusTip(tr("Show general overview of wallet"));
     overviewAction->setToolTip(overviewAction->statusTip());
     overviewAction->setCheckable(true);
     overviewAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
     tabGroup->addAction(overviewAction);
 
-    addressBookAction = new QAction(QIcon(":/images/res/images/addressbook1.png"), tr("&Addrress Book"), this);
+    addressBookAction = new QAction(QIcon(":/images/addressbook1"), tr("&Addrress Book"), this);
     addressBookAction->setStatusTip(tr("View and manage the LitecoinZ address book"));
     addressBookAction->setToolTip(addressBookAction->statusTip());
     addressBookAction->setCheckable(true);
     addressBookAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
     tabGroup->addAction(addressBookAction);
 
-    addressBookMenuAction = new QAction(QIcon(":/images/res/images/addressbook1.png"), addressBookAction->text(), this);
+    addressBookMenuAction = new QAction(QIcon(":/images/addressbook1"), addressBookAction->text(), this);
     addressBookMenuAction->setStatusTip(addressBookAction->statusTip());
     addressBookMenuAction->setToolTip(addressBookMenuAction->statusTip());
 
-    sendCoinsAction = new QAction(QIcon(":/images/res/images/send.png"), tr("&Send"), this);
+    sendCoinsAction = new QAction(QIcon(":/images/send"), tr("&Send"), this);
     sendCoinsAction->setStatusTip(tr("Send coins to a LitecoinZ address"));
     sendCoinsAction->setToolTip(sendCoinsAction->statusTip());
     sendCoinsAction->setCheckable(true);
     sendCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
     tabGroup->addAction(sendCoinsAction);
 
-    sendCoinsMenuAction = new QAction(QIcon(":/images/res/images/send.png"), sendCoinsAction->text(), this);
+    sendCoinsMenuAction = new QAction(QIcon(":/images/send"), sendCoinsAction->text(), this);
     sendCoinsMenuAction->setStatusTip(sendCoinsAction->statusTip());
     sendCoinsMenuAction->setToolTip(sendCoinsMenuAction->statusTip());
 
-    receiveCoinsAction = new QAction(QIcon(":/images/res/images/receive.png"), tr("&Receive"), this);
+    receiveCoinsAction = new QAction(QIcon(":/images/receive"), tr("&Receive"), this);
     receiveCoinsAction->setStatusTip(tr("Request payments (generates QR codes and litecoinz: URIs)"));
     receiveCoinsAction->setToolTip(receiveCoinsAction->statusTip());
     receiveCoinsAction->setCheckable(true);
     receiveCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
     tabGroup->addAction(receiveCoinsAction);
 
-    receiveCoinsMenuAction = new QAction(QIcon(":/images/res/images/receive.png"), receiveCoinsAction->text(), this);
+    receiveCoinsMenuAction = new QAction(QIcon(":/images/receive"), receiveCoinsAction->text(), this);
     receiveCoinsMenuAction->setStatusTip(receiveCoinsAction->statusTip());
     receiveCoinsMenuAction->setToolTip(receiveCoinsMenuAction->statusTip());
 
-    UnspentAction = new QAction(QIcon(":/images/res/images/unspent.png"), tr("&Unspent"), this);
+    UnspentAction = new QAction(QIcon(":/images/unspent"), tr("&Unspent"), this);
     UnspentAction->setStatusTip(tr("List unspent from transactions"));
     UnspentAction->setToolTip(UnspentAction->statusTip());
     UnspentAction->setCheckable(true);
     UnspentAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
     tabGroup->addAction(UnspentAction);
 
-    UnspentMenuAction = new QAction(QIcon(":/images/res/images/unspent.png"), UnspentAction->text(), this);
+    UnspentMenuAction = new QAction(QIcon(":/images/unspent"), UnspentAction->text(), this);
     UnspentMenuAction->setStatusTip(UnspentAction->statusTip());
     UnspentMenuAction->setToolTip(UnspentMenuAction->statusTip());
 
-    historyAction = new QAction(QIcon(":/images/res/images/transactions.png"), tr("&Transactions"), this);
+    historyAction = new QAction(QIcon(":/images/transactions"), tr("&Transactions"), this);
     historyAction->setStatusTip(tr("Browse transaction history"));
     historyAction->setToolTip(historyAction->statusTip());
     historyAction->setCheckable(true);
@@ -348,47 +348,47 @@ void BitcoinGUI::createActions()
     connect(historyAction, SIGNAL(triggered()), this, SLOT(gotoHistoryPage()));
 #endif // ENABLE_WALLET
 
-    quitAction = new QAction(QIcon(":/images/res/images/exit.png"), tr("E&xit"), this);
+    quitAction = new QAction(QIcon(":/images/exit"), tr("E&xit"), this);
     quitAction->setStatusTip(tr("Quit application"));
     quitAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
     quitAction->setMenuRole(QAction::QuitRole);
-    aboutAction = new QAction(QIcon(":/images/res/images/about.png"), tr("&About %1").arg(tr(PACKAGE_NAME)), this);
+    aboutAction = new QAction(QIcon(":/images/about"), tr("&About %1").arg(tr(PACKAGE_NAME)), this);
     aboutAction->setStatusTip(tr("Show information about %1").arg(tr(PACKAGE_NAME)));
     aboutAction->setMenuRole(QAction::AboutRole);
     aboutAction->setEnabled(false);
-    aboutQtAction = new QAction(QIcon(":/images/res/images/qt.png"), tr("About &Qt"), this);
+    aboutQtAction = new QAction(QIcon(":/images/qt"), tr("About &Qt"), this);
     aboutQtAction->setStatusTip(tr("Show information about Qt"));
     aboutQtAction->setMenuRole(QAction::AboutQtRole);
-    optionsAction = new QAction(QIcon(":/images/res/images/settings.png"), tr("&Options..."), this);
+    optionsAction = new QAction(QIcon(":/images/settings"), tr("&Options..."), this);
     optionsAction->setStatusTip(tr("Modify configuration options for %1").arg(tr(PACKAGE_NAME)));
     optionsAction->setMenuRole(QAction::PreferencesRole);
     optionsAction->setEnabled(false);
-    toggleHideAction = new QAction(QIcon(":/images/res/images/about.png"), tr("&Show / Hide"), this);
+    toggleHideAction = new QAction(QIcon(":/images/about"), tr("&Show / Hide"), this);
     toggleHideAction->setStatusTip(tr("Show or hide the main Window"));
 
     encryptWalletAction = new QAction(platformStyle->TextColorIcon(":/icons/lock_closed"), tr("&Encrypt Wallet..."), this);
     encryptWalletAction->setStatusTip(tr("Encrypt the private keys that belong to your wallet"));
     encryptWalletAction->setCheckable(true);
     encryptWalletAction->setVisible(false); //TODO
-    backupWalletAction = new QAction(QIcon(":/images/res/images/backup.png"), tr("&Backup Wallet..."), this);
+    backupWalletAction = new QAction(QIcon(":/images/backup"), tr("&Backup Wallet..."), this);
     backupWalletAction->setStatusTip(tr("Backup wallet to another location"));
     changePassphraseAction = new QAction(platformStyle->TextColorIcon(":/icons/key"), tr("&Change Passphrase..."), this);
     changePassphraseAction->setStatusTip(tr("Change the passphrase used for wallet encryption"));
     changePassphraseAction->setVisible(false); //TODO
-    signMessageAction = new QAction(QIcon(":/images/res/images/encrypt.png"), tr("Sign &message..."), this);
+    signMessageAction = new QAction(QIcon(":/images/encrypt"), tr("Sign &message..."), this);
     signMessageAction->setStatusTip(tr("Sign messages with your LitecoinZ addresses to prove you own them"));
-    verifyMessageAction = new QAction(QIcon(":/images/res/images/verify.png"), tr("&Verify message..."), this);
+    verifyMessageAction = new QAction(QIcon(":/images/verify"), tr("&Verify message..."), this);
     verifyMessageAction->setStatusTip(tr("Verify messages to ensure they were signed with specified LitecoinZ addresses"));
 
-    openRPCConsoleAction = new QAction(QIcon(":/images/res/images/debug.png"), tr("&Debug window"), this);
+    openRPCConsoleAction = new QAction(QIcon(":/images/debug"), tr("&Debug window"), this);
     openRPCConsoleAction->setStatusTip(tr("Open debugging and diagnostic console"));
     // initially disable the debug window menu item
     openRPCConsoleAction->setEnabled(false);
 
-    openAction = new QAction(QIcon(":/images/res/images/open.png"), tr("Open &URI..."), this);
+    openAction = new QAction(QIcon(":/images/open"), tr("Open &URI..."), this);
     openAction->setStatusTip(tr("Open a litecoinz: URI or payment request"));
 
-    showHelpMessageAction = new QAction(QIcon(":/images/res/images/info.png"), tr("&Command-line options"), this);
+    showHelpMessageAction = new QAction(QIcon(":/images/info"), tr("&Command-line options"), this);
     showHelpMessageAction->setMenuRole(QAction::NoRole);
     showHelpMessageAction->setStatusTip(tr("Show the %1 help message to get a list with possible LitecoinZ command-line options").arg(tr(PACKAGE_NAME)));
 

@@ -272,7 +272,7 @@ void CoinControlDialog::lockCoin()
     COutPoint outpt(uint256S(contextMenuItem->text(COLUMN_TXHASH).toStdString()), contextMenuItem->text(COLUMN_VOUT_INDEX).toUInt());
     model->lockCoin(outpt);
     contextMenuItem->setDisabled(true);
-    contextMenuItem->setIcon(COLUMN_CHECKBOX, QIcon(":/images/res/images/locked.png"));
+    contextMenuItem->setIcon(COLUMN_CHECKBOX, QIcon(":/images/locked"));
     updateLabelLocked();
 }
 
@@ -659,6 +659,10 @@ void CoinControlDialog::updateView()
         CAmount nSum = 0;
         int nChildren = 0;
         BOOST_FOREACH(const COutput& out, coins.second) {
+            // Skip coins still in coinbase
+            if (out.tx->IsCoinBase())
+                continue;
+
             nSum += out.tx->vout[out.i].nValue;
             nChildren++;
 
@@ -720,7 +724,7 @@ void CoinControlDialog::updateView()
                 COutPoint outpt(txhash, out.i);
                 coinControl->UnSelect(outpt); // just to be sure
                 itemOutput->setDisabled(true);
-                itemOutput->setIcon(COLUMN_CHECKBOX, QIcon(":/images/res/images/locked.png"));
+                itemOutput->setIcon(COLUMN_CHECKBOX, QIcon(":/images/locked"));
             }
 
             // set checkbox

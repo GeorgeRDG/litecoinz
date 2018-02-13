@@ -45,19 +45,19 @@ AddressBookPage::AddressBookPage(const PlatformStyle *platformStyle, QWidget *pa
 
         ui->deleteSendingTAddress->setIcon(QIcon());
     } else {
-        ui->newReceivingZAddress->setIcon(QIcon(":/images/res/images/add1.png"));
-        ui->newReceivingTAddress->setIcon(QIcon(":/images/res/images/add2.png"));
-        ui->newSendingTAddress->setIcon(QIcon(":/images/res/images/add1.png"));
+        ui->newReceivingZAddress->setIcon(QIcon(":/images/add1"));
+        ui->newReceivingTAddress->setIcon(QIcon(":/images/add2"));
+        ui->newSendingTAddress->setIcon(QIcon(":/images/add1"));
 
-        ui->copyReceivingZAddress->setIcon(QIcon(":/images/res/images/copy.png"));
-        ui->copyReceivingTAddress->setIcon(QIcon(":/images/res/images/copy.png"));
-        ui->copySendingTAddress->setIcon(QIcon(":/images/res/images/copy.png"));
+        ui->copyReceivingZAddress->setIcon(QIcon(":/images/copy"));
+        ui->copyReceivingTAddress->setIcon(QIcon(":/images/copy"));
+        ui->copySendingTAddress->setIcon(QIcon(":/images/copy"));
 
-        ui->exportReceivingZAddress->setIcon(QIcon(":/images/res/images/export.png"));
-        ui->exportReceivingTAddress->setIcon(QIcon(":/images/res/images/export.png"));
-        ui->exportSendingTAddress->setIcon(QIcon(":/images/res/images/export.png"));
+        ui->exportReceivingZAddress->setIcon(QIcon(":/images/export"));
+        ui->exportReceivingTAddress->setIcon(QIcon(":/images/export"));
+        ui->exportSendingTAddress->setIcon(QIcon(":/images/export"));
 
-        ui->deleteSendingTAddress->setIcon(QIcon(":/images/res/images/remove1.png"));
+        ui->deleteSendingTAddress->setIcon(QIcon(":/images/remove1"));
     }
 
     // Set "Receiving Addresses" as current tab 

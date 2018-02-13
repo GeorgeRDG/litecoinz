@@ -376,7 +376,7 @@
            </property>
            <property name="icon">
             <iconset resource="../bitcoin.qrc">
-             <normaloff>:/images/res/images/open.png</normaloff>:/images/res/images/open.png</iconset>
+             <normaloff>:/images/open</normaloff>:/images/open</iconset>
            </property>
            <property name="autoDefault">
             <bool>false</bool>
@@ -512,7 +512,7 @@
            </property>
            <property name="icon">
             <iconset resource="../bitcoin.qrc">
-             <normaloff>:/images/res/images/clear.png</normaloff>:/images/res/images/clear.png</iconset>
+             <normaloff>:/images/clear</normaloff>:/images/clear</iconset>
            </property>
            <property name="shortcut">
             <string notr="true">Ctrl+L</string>
@@ -567,7 +567,7 @@
            </property>
            <property name="icon">
             <iconset resource="../bitcoin.qrc">
-             <normaloff>:/images/res/images/prompt.png</normaloff>:/images/res/images/prompt.png</iconset>
+             <normaloff>:/images/prompt</normaloff>:/images/prompt</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -652,7 +652,7 @@
              </property>
              <property name="icon">
               <iconset resource="../bitcoin.qrc">
-               <normaloff>:/images/res/images/clear.png</normaloff>:/images/res/images/clear.png</iconset>
+               <normaloff>:/images/clear</normaloff>:/images/clear</iconset>
              </property>
              <property name="autoDefault">
               <bool>false</bool>

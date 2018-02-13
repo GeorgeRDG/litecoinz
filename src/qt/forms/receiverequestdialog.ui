@@ -17,7 +17,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../bitcoin.qrc">:/images/res/images/logo.png</pixmap>
+      <pixmap resource="../bitcoin.qrc">:/images/logo</pixmap>
      </property>
      <property name="margin">
       <number>10</number>
@@ -89,7 +89,7 @@
        </property>
        <property name="icon">
         <iconset resource="../bitcoin.qrc">
-         <normaloff>:/images/res/images/copy.png</normaloff>:/images/res/images/copy.png</iconset>
+         <normaloff>:/images/copy</normaloff>:/images/copy</iconset>
        </property>
        <property name="autoDefault">
         <bool>false</bool>
@@ -103,7 +103,7 @@
        </property>
        <property name="icon">
         <iconset resource="../bitcoin.qrc">
-         <normaloff>:/images/res/images/copy.png</normaloff>:/images/res/images/copy.png</iconset>
+         <normaloff>:/images/copy</normaloff>:/images/copy</iconset>
        </property>
        <property name="autoDefault">
         <bool>false</bool>
@@ -117,7 +117,7 @@
        </property>
        <property name="icon">
         <iconset resource="../bitcoin.qrc">
-         <normaloff>:/images/res/images/save.png</normaloff>:/images/res/images/save.png</iconset>
+         <normaloff>:/images/save</normaloff>:/images/save</iconset>
        </property>
        <property name="autoDefault">
         <bool>false</bool>

@@ -696,7 +696,7 @@
          </property>
          <property name="icon">
           <iconset resource="../bitcoin.qrc">
-           <normaloff>:/images/res/images/open.png</normaloff>:/images/res/images/open.png</iconset>
+           <normaloff>:/images/open</normaloff>:/images/open</iconset>
          </property>
          <property name="autoDefault">
           <bool>false</bool>
@@ -713,7 +713,7 @@
          </property>
          <property name="icon">
           <iconset resource="../bitcoin.qrc">
-           <normaloff>:/images/res/images/reset.png</normaloff>:/images/res/images/reset.png</iconset>
+           <normaloff>:/images/reset</normaloff>:/images/reset</iconset>
          </property>
          <property name="autoDefault">
           <bool>false</bool>

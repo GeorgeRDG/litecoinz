@@ -28,14 +28,14 @@ SignVerifyMessageDialog::SignVerifyMessageDialog(const PlatformStyle *platformSt
 {
     ui->setupUi(this);
 
-    ui->addressBookButton_SM->setIcon(QIcon(":/images/res/images/addressbook1.png"));
-    ui->pasteButton_SM->setIcon(QIcon(":/images/res/images/paste.png"));
-    ui->copySignatureButton_SM->setIcon(QIcon(":/images/res/images/copy.png"));
-    ui->signMessageButton_SM->setIcon(QIcon(":/images/res/images/encrypt.png"));
-    ui->clearButton_SM->setIcon(QIcon(":/images/res/images/clear.png"));
-    ui->addressBookButton_VM->setIcon(QIcon(":/images/res/images/addressbook1.png"));
-    ui->verifyMessageButton_VM->setIcon(QIcon(":/images/res/images/verify.png"));
-    ui->clearButton_VM->setIcon(QIcon(":/images/res/images/clear.png"));
+    ui->addressBookButton_SM->setIcon(QIcon(":/images/addressbook1"));
+    ui->pasteButton_SM->setIcon(QIcon(":/images/paste"));
+    ui->copySignatureButton_SM->setIcon(QIcon(":/images/copy"));
+    ui->signMessageButton_SM->setIcon(QIcon(":/images/encrypt"));
+    ui->clearButton_SM->setIcon(QIcon(":/images/clear"));
+    ui->addressBookButton_VM->setIcon(QIcon(":/images/addressbook1"));
+    ui->verifyMessageButton_VM->setIcon(QIcon(":/images/verify"));
+    ui->clearButton_VM->setIcon(QIcon(":/images/clear"));
 
 #if QT_VERSION >= 0x040700
     ui->signatureOut_SM->setPlaceholderText(tr("Click \"Sign Message\" to generate signature"));

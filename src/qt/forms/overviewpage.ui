@@ -20,7 +20,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../bitcoin.qrc">:/images/res/images/logo.png</pixmap>
+      <pixmap resource="../bitcoin.qrc">:/images/logo</pixmap>
      </property>
      <property name="margin">
       <number>10</number>
@@ -93,9 +93,9 @@
               </property>
               <property name="icon">
                <iconset resource="../bitcoin.qrc">
-                <normaloff>:/images/res/images/warning.png</normaloff>
-                <normalon>:/images/res/images/warning.png</normalon>
-                <disabledoff>:/images/res/images/warning.png</disabledoff>:/images/res/images/warning.png</iconset>
+                <normaloff>:/images/warning</normaloff>
+                <normalon>:/images/warning</normalon>
+                <disabledoff>:/images/warning</disabledoff>:/images/warning</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -620,7 +620,7 @@
               </property>
               <property name="icon">
                <iconset resource="../bitcoin.qrc">
-                <normaloff>:/images/res/images/shield-warning.png</normaloff>:/images/res/images/shield-warning.png</iconset>
+                <normaloff>:/images/shield-warning</normaloff>:/images/shield-warning</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -710,8 +710,8 @@
               </property>
               <property name="icon">
                <iconset resource="../bitcoin.qrc">
-                <normaloff>:/images/res/images/warning.png</normaloff>
-                <disabledoff>:/images/res/images/warning.png</disabledoff>:/images/res/images/warning.png</iconset>
+                <normaloff>:/images/warning</normaloff>
+                <disabledoff>:/images/warning</disabledoff>:/images/warning</iconset>
               </property>
               <property name="iconSize">
                <size>

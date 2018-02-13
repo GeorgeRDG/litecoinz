@@ -62,7 +62,7 @@
            </property>
            <property name="icon">
             <iconset resource="../bitcoin.qrc">
-             <normaloff>:/images/res/images/addressbook1.png</normaloff>:/images/res/images/addressbook1.png</iconset>
+             <normaloff>:/images/addressbook1</normaloff>:/images/addressbook1</iconset>
            </property>
            <property name="shortcut">
             <string>Alt+A</string>
@@ -82,7 +82,7 @@
            </property>
            <property name="icon">
             <iconset resource="../bitcoin.qrc">
-             <normaloff>:/images/res/images/paste.png</normaloff>:/images/res/images/paste.png</iconset>
+             <normaloff>:/images/paste</normaloff>:/images/paste</iconset>
            </property>
            <property name="shortcut">
             <string>Alt+P</string>
@@ -138,7 +138,7 @@
            </property>
            <property name="icon">
             <iconset resource="../bitcoin.qrc">
-             <normaloff>:/images/res/images/copy.png</normaloff>:/images/res/images/copy.png</iconset>
+             <normaloff>:/images/copy</normaloff>:/images/copy</iconset>
            </property>
            <property name="autoDefault">
             <bool>false</bool>
@@ -159,7 +159,7 @@
            </property>
            <property name="icon">
             <iconset resource="../bitcoin.qrc">
-             <normaloff>:/images/res/images/encrypt.png</normaloff>:/images/res/images/encrypt.png</iconset>
+             <normaloff>:/images/encrypt</normaloff>:/images/encrypt</iconset>
            </property>
            <property name="autoDefault">
             <bool>false</bool>
@@ -176,7 +176,7 @@
            </property>
            <property name="icon">
             <iconset resource="../bitcoin.qrc">
-             <normaloff>:/images/res/images/clear.png</normaloff>:/images/res/images/clear.png</iconset>
+             <normaloff>:/images/clear</normaloff>:/images/clear</iconset>
            </property>
            <property name="autoDefault">
             <bool>false</bool>
@@ -272,7 +272,7 @@
            </property>
            <property name="icon">
             <iconset resource="../bitcoin.qrc">
-             <normaloff>:/images/res/images/addressbook1.png</normaloff>:/images/res/images/addressbook1.png</iconset>
+             <normaloff>:/images/addressbook1</normaloff>:/images/addressbook1</iconset>
            </property>
            <property name="shortcut">
             <string>Alt+A</string>
@@ -302,7 +302,7 @@
            </property>
            <property name="icon">
             <iconset resource="../bitcoin.qrc">
-             <normaloff>:/images/res/images/verify.png</normaloff>:/images/res/images/verify.png</iconset>
+             <normaloff>:/images/verify</normaloff>:/images/verify</iconset>
            </property>
            <property name="autoDefault">
             <bool>false</bool>
@@ -319,7 +319,7 @@
            </property>
            <property name="icon">
             <iconset resource="../bitcoin.qrc">
-             <normaloff>:/images/res/images/clear.png</normaloff>:/images/res/images/clear.png</iconset>
+             <normaloff>:/images/clear</normaloff>:/images/clear</iconset>
            </property>
            <property name="autoDefault">
             <bool>false</bool>

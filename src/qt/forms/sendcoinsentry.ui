@@ -71,7 +71,7 @@
         </property>
         <property name="icon">
          <iconset resource="../bitcoin.qrc">
-          <normaloff>:/images/res/images/addressbook1.png</normaloff>:/images/res/images/addressbook1.png</iconset>
+          <normaloff>:/images/addressbook1</normaloff>:/images/addressbook1</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -94,7 +94,7 @@
         </property>
         <property name="icon">
          <iconset resource="../bitcoin.qrc">
-          <normaloff>:/images/res/images/paste.png</normaloff>:/images/res/images/paste.png</iconset>
+          <normaloff>:/images/paste</normaloff>:/images/paste</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -117,7 +117,7 @@
         </property>
         <property name="icon">
          <iconset resource="../bitcoin.qrc">
-          <normaloff>:/images/res/images/clear.png</normaloff>:/images/res/images/clear.png</iconset>
+          <normaloff>:/images/clear</normaloff>:/images/clear</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -685,7 +685,7 @@
         </property>
         <property name="icon">
          <iconset resource="../bitcoin.qrc">
-          <normaloff>:/images/res/images/clear.png</normaloff>:/images/res/images/clear.png</iconset>
+          <normaloff>:/images/clear</normaloff>:/images/clear</iconset>
         </property>
        </widget>
       </item>
@@ -1218,7 +1218,7 @@
         </property>
         <property name="icon">
          <iconset resource="../bitcoin.qrc">
-          <normaloff>:/images/res/images/clear.png</normaloff>:/images/res/images/clear.png</iconset>
+          <normaloff>:/images/clear</normaloff>:/images/clear</iconset>
         </property>
        </widget>
       </item>

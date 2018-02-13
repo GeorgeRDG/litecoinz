@@ -298,7 +298,54 @@ RES_ICONS = \
   qt/res/icons/tx_output.png \
   qt/res/icons/tx_mined.png \
   qt/res/icons/warning.png \
-  qt/res/icons/verify.png
+  qt/res/icons/verify.png \
+  qt/res/images/about.png \
+  qt/res/images/add1.png \
+  qt/res/images/add2.png \
+  qt/res/images/add3.png \
+  qt/res/images/addressbook1.png \
+  qt/res/images/addressbook2.png \
+  qt/res/images/backup.png \
+  qt/res/images/blockchain-128.png \
+  qt/res/images/clear.png \
+  qt/res/images/confirmed.png \
+  qt/res/images/copy.png \
+  qt/res/images/debug.png \
+  qt/res/images/edit.png \
+  qt/res/images/encrypt-off.png \
+  qt/res/images/encrypt-on.png \
+  qt/res/images/encrypt.png \
+  qt/res/images/error.png \
+  qt/res/images/exit.png \
+  qt/res/images/export.png \
+  qt/res/images/info.png \
+  qt/res/images/locked.png \
+  qt/res/images/logo.png \
+  qt/res/images/open.png \
+  qt/res/images/overview.png \
+  qt/res/images/paste.png \
+  qt/res/images/prompt.png \
+  qt/res/images/qt.png \
+  qt/res/images/receive.png \
+  qt/res/images/reload.png \
+  qt/res/images/remove1.png \
+  qt/res/images/remove2.png \
+  qt/res/images/remove3.png \
+  qt/res/images/reset.png \
+  qt/res/images/save.png \
+  qt/res/images/send2.png \
+  qt/res/images/send.png \
+  qt/res/images/settings.png \
+  qt/res/images/shield-error.png \
+  qt/res/images/shield.png \
+  qt/res/images/shield-warning.png \
+  qt/res/images/show.png \
+  qt/res/images/transactions.png \
+  qt/res/images/tx_mined.png \
+  qt/res/images/unspent.png \
+  qt/res/images/verify.png \
+  qt/res/images/wallet.png \
+  qt/res/images/warning.png
 
 BITCOIN_QT_BASE_CPP = \
   qt/bantablemodel.cpp \
