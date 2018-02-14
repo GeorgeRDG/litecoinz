@@ -99,7 +99,7 @@ QT_FORMS_UI = \
   qt/forms/addressbookdialog.ui \
   qt/forms/unspentpage.ui \
   qt/forms/askpassphrasedialog.ui \
-  qt/forms/coincontroldialog.ui \
+  qt/forms/coinselectiondialog.ui \
   qt/forms/debugwindow.ui \
   qt/forms/editaddressdialog.ui \
   qt/forms/helpmessagedialog.ui \
@@ -130,8 +130,7 @@ QT_MOC_CPP = \
   qt/moc_bitcoingui.cpp \
   qt/moc_bitcoinunits.cpp \
   qt/moc_clientmodel.cpp \
-  qt/moc_coincontroldialog.cpp \
-  qt/moc_coincontroltreewidget.cpp \
+  qt/moc_coinselectiondialog.cpp \
   qt/moc_csvmodelwriter.cpp \
   qt/moc_editaddressdialog.cpp \
   qt/moc_guiutil.cpp \
@@ -202,8 +201,7 @@ BITCOIN_QT_H = \
   qt/bitcoingui.h \
   qt/bitcoinunits.h \
   qt/clientmodel.h \
-  qt/coincontroldialog.h \
-  qt/coincontroltreewidget.h \
+  qt/coinselectiondialog.h \
   qt/csvmodelwriter.h \
   qt/editaddressdialog.h \
   qt/guiconstants.h \
@@ -379,8 +377,7 @@ BITCOIN_QT_WALLET_CPP = \
   qt/unspentpage.cpp \
   qt/unspenttablemodel.cpp \
   qt/askpassphrasedialog.cpp \
-  qt/coincontroldialog.cpp \
-  qt/coincontroltreewidget.cpp \
+  qt/coinselectiondialog.cpp \
   qt/editaddressdialog.cpp \
   qt/openuridialog.cpp \
   qt/overviewpage.cpp \
