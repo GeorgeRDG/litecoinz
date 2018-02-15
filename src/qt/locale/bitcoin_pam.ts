@@ -227,7 +227,7 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Amount:</source>
         <translation>Alaga:</translation>
@@ -523,7 +523,7 @@
     <name>RecentRequestsTableModel</name>
     </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Send Coins</source>
         <translation>Magpadalang Barya</translation>

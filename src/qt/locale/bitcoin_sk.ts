@@ -393,7 +393,7 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Coin Selection</source>
         <translation>Výber mince</translation>
@@ -722,7 +722,7 @@
     </message>
     <message>
         <source>Enable coin &amp;control features</source>
-        <translation>Povoliť možnosti "&amp;coin control"</translation>
+        <translation>Povoliť možnosti "&amp;coin selection"</translation>
     </message>
     <message>
         <source>If you disable the spending of unconfirmed change, the change from a transaction cannot be used until that transaction has at least one confirmation. This also affects how your balance is computed.</source>
@@ -833,8 +833,8 @@
         <translation>Zvoľte ako deliť litecoinz pri zobrazovaní pri platbách a užívateľskom rozhraní.</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
-        <translation>Či zobrazovať možnosti "Coin control" alebo nie.</translation>
+        <source>Whether to show coin selection features or not.</source>
+        <translation>Či zobrazovať možnosti "Coin selection" alebo nie.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -1398,14 +1398,14 @@
     </message>
     </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Send Coins</source>
         <translation>Poslať Litecoinzs</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
-        <translation>Možnosti "Coin Control"</translation>
+        <source>Coin Selection Features</source>
+        <translation>Možnosti "Coin Selection"</translation>
     </message>
     <message>
         <source>Inputs...</source>

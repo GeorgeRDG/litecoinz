@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SendCoinsDialog</class>
- <widget class="QDialog" name="SendCoinsDialog">
+ <class>SendCoinsPage</class>
+ <widget class="QDialog" name="SendCoinsPage">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -202,7 +202,7 @@
             <number>0</number>
            </property>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayoutCoinSelection3" stretch="0,0,0,1">
+            <layout class="QHBoxLayout" name="horizontalLayoutCoinSelection3" stretch="0,0,0,1,0">
              <property name="spacing">
               <number>20</number>
              </property>
@@ -520,7 +520,7 @@
         <x>0</x>
         <y>0</y>
         <width>830</width>
-        <height>157</height>
+        <height>188</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1">
@@ -1226,12 +1226,28 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>pushButtonCoinSelection</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>buttonChooseFee</tabstop>
+  <tabstop>buttonMinimizeFee</tabstop>
+  <tabstop>radioSmartFee</tabstop>
+  <tabstop>sliderSmartFee</tabstop>
+  <tabstop>radioCustomFee</tabstop>
+  <tabstop>radioCustomPerKilobyte</tabstop>
+  <tabstop>radioCustomAtLeast</tabstop>
+  <tabstop>customFee</tabstop>
+  <tabstop>checkBoxMinimumFee</tabstop>
+  <tabstop>sendButton</tabstop>
+  <tabstop>clearButton</tabstop>
+  <tabstop>addButton</tabstop>
+ </tabstops>
  <resources>
   <include location="../bitcoin.qrc"/>
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="groupFee"/>
   <buttongroup name="groupCustomFee"/>
+  <buttongroup name="groupFee"/>
  </buttongroups>
 </ui>

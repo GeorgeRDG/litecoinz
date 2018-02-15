@@ -465,7 +465,7 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Coin Selection</source>
         <translation>انتخاب سکه</translation>
@@ -1273,7 +1273,7 @@
     </message>
     </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Send Coins</source>
         <translation>ارسال سکه</translation>

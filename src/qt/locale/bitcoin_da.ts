@@ -545,7 +545,7 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Coin Selection</source>
         <translation>Coin-styring</translation>
@@ -1161,7 +1161,7 @@
         <translation>Vælg standard for underopdeling af enhed, som skal vises i brugergrænsefladen og ved afsendelse af litecoinzs.</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
+        <source>Whether to show coin selection features or not.</source>
         <translation>Hvorvidt egenskaber for coin-styring skal vises eller ej.</translation>
     </message>
     <message>
@@ -1901,13 +1901,13 @@
     </message>
 </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Send Coins</source>
         <translation>Send litecoinzs</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
+        <source>Coin Selection Features</source>
         <translation>Egenskaber for coin-styring</translation>
     </message>
     <message>

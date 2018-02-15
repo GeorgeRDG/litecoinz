@@ -545,10 +545,10 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Coin Selection</source>
-        <translation>Münzauswahl ("Coin Control")</translation>
+        <translation>Münzauswahl ("Coin Selection")</translation>
     </message>
     <message>
         <source>Quantity:</source>
@@ -1050,7 +1050,7 @@
     </message>
     <message>
         <source>Enable coin &amp;control features</source>
-        <translation>"&amp;Coin Control"-Funktionen aktivieren</translation>
+        <translation>"&amp;Coin Selection"-Funktionen aktivieren</translation>
     </message>
     <message>
         <source>If you disable the spending of unconfirmed change, the change from a transaction cannot be used until that transaction has at least one confirmation. This also affects how your balance is computed.</source>
@@ -1161,8 +1161,8 @@
         <translation>Wählen Sie die standardmäßige Untereinheit, die in der Benutzeroberfläche und beim Überweisen von Litecoinzs angezeigt werden soll.</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
-        <translation>Legt fest, ob die "Coin Control"-Funktionen angezeigt werden.</translation>
+        <source>Whether to show coin selection features or not.</source>
+        <translation>Legt fest, ob die "Coin Selection"-Funktionen angezeigt werden.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -1901,14 +1901,14 @@
     </message>
 </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Send Coins</source>
         <translation>Litecoinzs überweisen</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
-        <translation>"Coin Control"-Funktionen</translation>
+        <source>Coin Selection Features</source>
+        <translation>"Coin Selection"-Funktionen</translation>
     </message>
     <message>
         <source>Inputs...</source>

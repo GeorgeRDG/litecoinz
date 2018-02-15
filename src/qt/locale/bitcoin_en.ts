@@ -699,9 +699,9 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
-        <location filename="../forms/coincontroldialog.ui" line="+14"/>
+        <location filename="../forms/coinselectiondialog.ui" line="+14"/>
         <source>Coin Selection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -796,7 +796,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coincontroldialog.cpp" line="+54"/>
+        <location filename="../coinselectiondialog.cpp" line="+54"/>
         <source>Copy address</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1482,7 +1482,7 @@
     </message>
     <message>
         <location line="-450"/>
-        <source>Whether to show coin control features or not.</source>
+        <source>Whether to show coin selection features or not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2455,16 +2455,16 @@
     </message>
 </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
-        <location filename="../forms/sendcoinsdialog.ui" line="+14"/>
-        <location filename="../sendcoinsdialog.cpp" line="+543"/>
+        <location filename="../forms/sendcoinspage.ui" line="+14"/>
+        <location filename="../sendcoinspage.cpp" line="+543"/>
         <source>Send Coins</source>
         <translation>Send Coins</translation>
     </message>
     <message>
         <location line="+76"/>
-        <source>Coin Control Features</source>
+        <source>Coin Selection Features</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2645,7 +2645,7 @@
         <translation>S&amp;end</translation>
     </message>
     <message>
-        <location filename="../sendcoinsdialog.cpp" line="-476"/>
+        <location filename="../sendcoinspage.cpp" line="-476"/>
         <source>Copy quantity</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2903,7 +2903,7 @@
 <context>
     <name>SendConfirmationDialog</name>
     <message>
-        <location filename="../sendcoinsdialog.cpp" line="+95"/>
+        <location filename="../sendcoinspage.cpp" line="+95"/>
         <location line="+5"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>

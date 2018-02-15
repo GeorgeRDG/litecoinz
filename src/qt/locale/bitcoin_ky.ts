@@ -63,7 +63,7 @@
     </message>
     </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Date</source>
         <translation>Дата</translation>
@@ -195,7 +195,7 @@
     <name>RecentRequestsTableModel</name>
     </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Clear &amp;All</source>
         <translation>&amp;Бардыгын тазалоо</translation>

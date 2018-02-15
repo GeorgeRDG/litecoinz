@@ -357,7 +357,7 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Quantity:</source>
         <translation>Lượng:</translation>
@@ -805,13 +805,13 @@
     </message>
     </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Send Coins</source>
         <translation>Gửi Coins</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
+        <source>Coin Selection Features</source>
         <translation>Tính năng Control Coin</translation>
     </message>
     <message>

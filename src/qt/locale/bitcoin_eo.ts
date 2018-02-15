@@ -345,7 +345,7 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Quantity:</source>
         <translation>Kvanto:</translation>
@@ -637,7 +637,7 @@
         <translation>Elekti la defaŭltan manieron por montri bitmonajn sumojn en la interfaco, kaj kiam vi sendos bitmonon.</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
+        <source>Whether to show coin selection features or not.</source>
         <translation>Ĉu montri detalan adres-regilon, aŭ ne.</translation>
     </message>
     <message>
@@ -953,13 +953,13 @@
     <name>RecentRequestsTableModel</name>
     </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Send Coins</source>
         <translation>Sendi Bitmonon</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
+        <source>Coin Selection Features</source>
         <translation>Monregaj Opcioj</translation>
     </message>
     <message>

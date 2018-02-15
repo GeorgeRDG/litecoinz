@@ -545,7 +545,7 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Coin Selection</source>
         <translation>Sélection des pièces</translation>
@@ -1161,7 +1161,7 @@
         <translation>Choisir la sous-unité par défaut d'affichage dans l'interface et lors d'envoi de pièces.</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
+        <source>Whether to show coin selection features or not.</source>
         <translation>Afficher ou non les fonctions de contrôle des pièces.</translation>
     </message>
     <message>
@@ -1901,13 +1901,13 @@
     </message>
 </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Send Coins</source>
         <translation>Envoyer des pièces</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
+        <source>Coin Selection Features</source>
         <translation>Fonctions de contrôle des pièces</translation>
     </message>
     <message>

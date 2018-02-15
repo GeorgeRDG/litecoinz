@@ -541,7 +541,7 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Coin Selection</source>
         <translation>Selecionar Moeda</translation>
@@ -1157,7 +1157,7 @@
         <translation>Escolha a unidade padrão de subdivisão para interface mostrar quando enviar litecoinzs.</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
+        <source>Whether to show coin selection features or not.</source>
         <translation>Mostrar ou não opções de controle da moeda.</translation>
     </message>
     <message>
@@ -1897,13 +1897,13 @@
     </message>
 </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Send Coins</source>
         <translation>Enviar moedas</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
+        <source>Coin Selection Features</source>
         <translation>Opções de controle de moeda</translation>
     </message>
     <message>

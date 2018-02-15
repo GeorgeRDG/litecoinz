@@ -545,7 +545,7 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Coin Selection</source>
         <translation>Selección de la moneda</translation>
@@ -1046,7 +1046,7 @@
     </message>
     <message>
         <source>Enable coin &amp;control features</source>
-        <translation>Habilitar funcionalidad de &amp;coin control</translation>
+        <translation>Habilitar funcionalidad de &amp;coin selection</translation>
     </message>
     <message>
         <source>If you disable the spending of unconfirmed change, the change from a transaction cannot be used until that transaction has at least one confirmation. This also affects how your balance is computed.</source>
@@ -1157,8 +1157,8 @@
         <translation>Elegir la subdivisión predeterminada para mostrar cantidades en la interfaz y cuando se envían litecoinzs.</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
-        <translation>Mostrar o no funcionalidad de Coin Control</translation>
+        <source>Whether to show coin selection features or not.</source>
+        <translation>Mostrar o no funcionalidad de Coin Selection</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -1897,14 +1897,14 @@
     </message>
 </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Send Coins</source>
         <translation>Enviar litecoinzs</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
-        <translation>Características de Coin Control</translation>
+        <source>Coin Selection Features</source>
+        <translation>Características de Coin Selection</translation>
     </message>
     <message>
         <source>Inputs...</source>

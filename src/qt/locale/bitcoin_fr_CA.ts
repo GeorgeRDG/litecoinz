@@ -39,7 +39,7 @@
     <name>LitecoinzGUI</name>
     </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>(un)select all</source>
         <translation>Toute sélectionner </translation>
@@ -103,7 +103,7 @@
     <name>RecentRequestsTableModel</name>
     </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     </context>
 <context>
     <name>SendCoinsEntry</name>

@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_QT_ZSHIELDCOINSDIALOG_H
-#define BITCOIN_QT_ZSHIELDCOINSDIALOG_H
+#ifndef BITCOIN_QT_SHIELDCOINSDIALOG_H
+#define BITCOIN_QT_SHIELDCOINSDIALOG_H
 
 #include "walletmodel.h"
 #include <univalue.h>
@@ -15,20 +15,20 @@ class WalletModel;
 class PlatformStyle;
 
 namespace Ui {
-    class ZShieldCoinsDialog;
+    class ShieldCoinsDialog;
 }
 
 extern UniValue z_shieldcoinbase(const UniValue& params, bool fHelp); // in rpcwallet.cpp
 
 /** Widget that shows a list of sending or receiving addresses.
   */
-class ZShieldCoinsDialog : public QDialog
+class ShieldCoinsDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit ZShieldCoinsDialog(const PlatformStyle *platformStyle, QWidget *parent);
-    ~ZShieldCoinsDialog();
+    explicit ShieldCoinsDialog(const PlatformStyle *platformStyle, QWidget *parent);
+    ~ShieldCoinsDialog();
 
     void setModel(WalletModel *model);
     void setAddress(const QString &address);
@@ -52,9 +52,9 @@ private Q_SLOTS:
     void updateGlobalFeeVariables();
 
 private:
-    Ui::ZShieldCoinsDialog *ui;
+    Ui::ShieldCoinsDialog *ui;
     WalletModel *model;
     const PlatformStyle *platformStyle;
 };
 
-#endif // BITCOIN_QT_ZSHIELDCOINSDIALOG_H
+#endif // BITCOIN_QT_SHIELDCOINSDIALOG_H

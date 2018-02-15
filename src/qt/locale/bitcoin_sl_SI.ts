@@ -373,7 +373,7 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Coin Selection</source>
         <translation>Izbira vhodnih kovancev</translation>
@@ -741,7 +741,7 @@
         <translation>Izberite privzeto mersko enoto za prikaz v uporabniškem vmesniku in pri pošiljanju kovancev.</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
+        <source>Whether to show coin selection features or not.</source>
         <translation>Omogoči dodatno možnost podrobnega nadzora nad posameznimi kovanci v transakcijah.</translation>
     </message>
     <message>
@@ -1209,13 +1209,13 @@
     <name>RecentRequestsTableModel</name>
     </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Send Coins</source>
         <translation>Pošlji</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
+        <source>Coin Selection Features</source>
         <translation>Upravljanje s kovanci</translation>
     </message>
     <message>

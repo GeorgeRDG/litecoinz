@@ -401,7 +401,7 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Coin Selection</source>
         <translation>코인 선택</translation>
@@ -841,7 +841,7 @@
         <translation>인터페이스에 표시하고 코인을 보낼때 사용할 기본 최소화 단위를 선택하십시오.</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
+        <source>Whether to show coin selection features or not.</source>
         <translation>코인 상세 제어기능에 대한 표시 여부를 선택할 수 있습니다.</translation>
     </message>
     <message>
@@ -1405,13 +1405,13 @@
     <name>RecentRequestsTableModel</name>
     </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Send Coins</source>
         <translation>코인들 보내기</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
+        <source>Coin Selection Features</source>
         <translation>코인 컨트롤 기능들</translation>
     </message>
     <message>

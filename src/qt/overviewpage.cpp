@@ -15,7 +15,7 @@
 #include "transactiontablemodel.h"
 #include "unspentpage.h"
 #include "walletmodel.h"
-#include "zshieldcoinsdialog.h"
+#include "shieldcoinsdialog.h"
 
 #include <QAbstractItemDelegate>
 #include <QPainter>
@@ -296,7 +296,7 @@ void OverviewPage::showOutOfSyncWarning(bool fShow)
 
 void OverviewPage::on_shieldCoinsButton_clicked()
 {
-    ZShieldCoinsDialog dlg(platformStyle, this);
+    ShieldCoinsDialog dlg(platformStyle, this);
     dlg.setModel(walletModel);
     dlg.exec();
 }

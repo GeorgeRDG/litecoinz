@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_QT_SENDCOINSDIALOG_H
-#define BITCOIN_QT_SENDCOINSDIALOG_H
+#ifndef BITCOIN_QT_SENDCOINSPAGE_H
+#define BITCOIN_QT_SENDCOINSPAGE_H
 
 #include "walletmodel.h"
 
@@ -19,7 +19,7 @@ class SendCoinsEntry;
 class SendCoinsRecipient;
 
 namespace Ui {
-    class SendCoinsDialog;
+    class SendCoinsPage;
 }
 
 QT_BEGIN_NAMESPACE
@@ -29,13 +29,13 @@ QT_END_NAMESPACE
 const int defaultConfirmTarget = 25;
 
 /** Dialog for sending litecoinzs */
-class SendCoinsDialog : public QDialog
+class SendCoinsPage : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit SendCoinsDialog(const PlatformStyle *platformStyle, QWidget *parent = 0);
-    ~SendCoinsDialog();
+    explicit SendCoinsPage(const PlatformStyle *platformStyle, QWidget *parent = 0);
+    ~SendCoinsPage();
 
     void setClientModel(ClientModel *clientModel);
     void setModel(WalletModel *model);
@@ -59,7 +59,7 @@ public Q_SLOTS:
                     const CAmount& t_balance, const CAmount& z_balance, const CAmount& unshielded);
 
 private:
-    Ui::SendCoinsDialog *ui;
+    Ui::SendCoinsPage *ui;
     ClientModel *clientModel;
     WalletModel *model;
     bool fNewRecipientAllowed;
@@ -120,4 +120,4 @@ private:
     int secDelay;
 };
 
-#endif // BITCOIN_QT_SENDCOINSDIALOG_H
+#endif // BITCOIN_QT_SENDCOINSPAGE_H

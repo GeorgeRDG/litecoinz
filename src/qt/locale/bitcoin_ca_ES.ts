@@ -545,7 +545,7 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Coin Selection</source>
         <translation>Selecció de moneda</translation>
@@ -1153,7 +1153,7 @@
         <translation>Selecciona la unitat de subdivisió per defecte per mostrar en la interfície quan s'envien monedes.</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
+        <source>Whether to show coin selection features or not.</source>
         <translation>Si voleu mostrar les funcions de control de monedes o no.</translation>
     </message>
     <message>
@@ -1797,13 +1797,13 @@
     </message>
 </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Send Coins</source>
         <translation>Envia monedes</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
+        <source>Coin Selection Features</source>
         <translation>Característiques de control de les monedes</translation>
     </message>
     <message>

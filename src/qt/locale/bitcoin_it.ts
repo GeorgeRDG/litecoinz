@@ -389,7 +389,7 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Coin Selection</source>
         <translation>Selezione Input</translation>
@@ -822,8 +822,8 @@ Per specificare più URL separarli con una barra verticale "|".</translation>
         <translation>Scegli l'unità di suddivisione predefinita da utilizzare per l'interfaccia e per l'invio di litecoinz.</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
-        <translation>Specifica se le funzionalita di coin control saranno visualizzate.</translation>
+        <source>Whether to show coin selection features or not.</source>
+        <translation>Specifica se le funzionalita di coin selection saranno visualizzate.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -1382,14 +1382,14 @@ Per specificare più URL separarli con una barra verticale "|".</translation>
     <name>RecentRequestsTableModel</name>
     </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Send Coins</source>
         <translation>Invia LitecoinZ</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
-        <translation>Funzionalità di Coin Control</translation>
+        <source>Coin Selection Features</source>
+        <translation>Funzionalità di Coin Selection</translation>
     </message>
     <message>
         <source>Inputs...</source>

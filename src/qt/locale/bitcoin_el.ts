@@ -43,7 +43,7 @@
     </message>
     </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Date</source>
         <translation>Ημερομηνία</translation>
@@ -127,7 +127,7 @@
     <name>RecentRequestsTableModel</name>
     </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Insufficient funds!</source>
         <translation>Κεφάλαια μη επαρκή</translation>

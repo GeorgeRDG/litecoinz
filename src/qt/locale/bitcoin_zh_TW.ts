@@ -545,7 +545,7 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Coin Selection</source>
         <translation>選擇錢幣</translation>
@@ -1161,7 +1161,7 @@
         <translation>選擇操作界面和付款時，預設顯示金額的細分單位。</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
+        <source>Whether to show coin selection features or not.</source>
         <translation>是否要顯示錢幣控制功能。</translation>
     </message>
     <message>
@@ -1901,13 +1901,13 @@
     </message>
 </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Send Coins</source>
         <translation>付款</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
+        <source>Coin Selection Features</source>
         <translation>錢幣控制功能</translation>
     </message>
     <message>

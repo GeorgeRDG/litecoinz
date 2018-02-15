@@ -23,7 +23,7 @@
     </message>
     </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Date</source>
         <translation>日期</translation>
@@ -79,7 +79,7 @@
     <name>RecentRequestsTableModel</name>
     </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Insufficient funds!</source>
         <translation>余额不足</translation>

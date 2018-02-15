@@ -377,7 +377,7 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Coin Selection</source>
         <translation>Mynt Valg</translation>
@@ -785,7 +785,7 @@
         <translation>Velg standard delt enhet for visning i grensesnittet og for sending av litecoinzs.</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
+        <source>Whether to show coin selection features or not.</source>
         <translation>Skal myntkontroll funksjoner vises eller ikke.</translation>
     </message>
     <message>
@@ -1333,13 +1333,13 @@
     <name>RecentRequestsTableModel</name>
     </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Send Coins</source>
         <translation>Send Litecoinzs</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
+        <source>Coin Selection Features</source>
         <translation>Myntkontroll Funksjoner</translation>
     </message>
     <message>

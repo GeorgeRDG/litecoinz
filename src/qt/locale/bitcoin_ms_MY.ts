@@ -52,7 +52,7 @@ Alihkan fail data ke dalam tab semasa</translation>
     </message>
     </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     </context>
 <context>
     <name>EditAddressDialog</name>
@@ -112,7 +112,7 @@ Alihkan fail data ke dalam tab semasa</translation>
     <name>RecentRequestsTableModel</name>
     </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Balance (T+Z):</source>
         <translation>Baki</translation>

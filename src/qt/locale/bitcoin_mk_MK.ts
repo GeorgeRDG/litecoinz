@@ -249,7 +249,7 @@
     </message>
     </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Bytes:</source>
         <translation>Бајти:</translation>
@@ -509,7 +509,7 @@
     <name>RecentRequestsTableModel</name>
     </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Bytes:</source>
         <translation>Бајти:</translation>

@@ -283,7 +283,7 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Quantity:</source>
         <translation>Daudzums:</translation>
@@ -563,7 +563,7 @@
         <translation>Izvēlēties dalījuma vienību pēc noklusēšanas, ko izmantot interfeisā un nosūtot bitkoinus.</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
+        <source>Whether to show coin selection features or not.</source>
         <translation>Vai rādīt LitecoinZ kontroles funkcijas vai nē.</translation>
     </message>
     <message>
@@ -843,13 +843,13 @@
     <name>RecentRequestsTableModel</name>
     </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Send Coins</source>
         <translation>Sūtīt Bitkoinus</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
+        <source>Coin Selection Features</source>
         <translation>LitecoinZ Kontroles Funkcijas</translation>
     </message>
     <message>

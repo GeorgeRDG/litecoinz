@@ -6,8 +6,8 @@
 #include "config/bitcoin-config.h"
 #endif
 
-#include "zshieldcoinsdialog.h"
-#include "ui_zshieldcoinsdialog.h"
+#include "shieldcoinsdialog.h"
+#include "ui_shieldcoinsdialog.h"
 
 #include "bitcoinunits.h"
 #include "addressbookdialog.h"
@@ -27,9 +27,9 @@
 #include <QSettings>
 #include <QMessageBox>
 
-ZShieldCoinsDialog::ZShieldCoinsDialog(const PlatformStyle *platformStyle, QWidget *parent) :
+ShieldCoinsDialog::ShieldCoinsDialog(const PlatformStyle *platformStyle, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::ZShieldCoinsDialog),
+    ui(new Ui::ShieldCoinsDialog),
     model(0),
     platformStyle(platformStyle)
 {
@@ -53,18 +53,18 @@ ZShieldCoinsDialog::ZShieldCoinsDialog(const PlatformStyle *platformStyle, QWidg
     connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(accept()));
 }
 
-void ZShieldCoinsDialog::done(int retval)
+void ShieldCoinsDialog::done(int retval)
 {
     clear();
     QDialog::done(retval);
 }
 
-ZShieldCoinsDialog::~ZShieldCoinsDialog()
+ShieldCoinsDialog::~ShieldCoinsDialog()
 {
     delete ui;
 }
 
-void ZShieldCoinsDialog::on_shieldButton_clicked()
+void ShieldCoinsDialog::on_shieldButton_clicked()
 {
     UniValue params(UniValue::VARR);
     params.push_back("*");
@@ -95,13 +95,13 @@ void ZShieldCoinsDialog::on_shieldButton_clicked()
     this->close();
 }
 
-void ZShieldCoinsDialog::on_deleteButton_clicked()
+void ShieldCoinsDialog::on_deleteButton_clicked()
 {
     ui->reqShieldAddress->clear();
     ui->shieldButton->setEnabled(false);
 }
 
-void ZShieldCoinsDialog::on_AddressBookButton_clicked()
+void ShieldCoinsDialog::on_AddressBookButton_clicked()
 {
     if(!model)
         return;
@@ -116,7 +116,7 @@ void ZShieldCoinsDialog::on_AddressBookButton_clicked()
     }
 }
 
-void ZShieldCoinsDialog::setModel(WalletModel *model)
+void ShieldCoinsDialog::setModel(WalletModel *model)
 {
     this->model = model;
     if(model && model->getOptionsModel())
@@ -132,39 +132,39 @@ void ZShieldCoinsDialog::setModel(WalletModel *model)
     }
 }
 
-void ZShieldCoinsDialog::updateDisplayUnit()
+void ShieldCoinsDialog::updateDisplayUnit()
 {
     ui->customFee->setDisplayUnit(model->getOptionsModel()->getDisplayUnit());
 }
 
-void ZShieldCoinsDialog::setMinimumFee()
+void ShieldCoinsDialog::setMinimumFee()
 {
     ui->customFee->setValue(CWallet::minTxFee.GetFeePerK());
 }
 
-void ZShieldCoinsDialog::updateGlobalFeeVariables()
+void ShieldCoinsDialog::updateGlobalFeeVariables()
 {
     payTxFee = CFeeRate(ui->customFee->value());
 }
 
-void ZShieldCoinsDialog::setAddress(const QString &address)
+void ShieldCoinsDialog::setAddress(const QString &address)
 {
     ui->reqShieldAddress->setText(address);
     ui->shieldButton->setFocus();
 }
 
-void ZShieldCoinsDialog::setFocus()
+void ShieldCoinsDialog::setFocus()
 {
     ui->reqShieldAddress->setFocus();
 }
 
-void ZShieldCoinsDialog::clear()
+void ShieldCoinsDialog::clear()
 {
     // clear UI elements
     ui->reqShieldAddress->clear();
 }
 
-bool ZShieldCoinsDialog::isClear()
+bool ShieldCoinsDialog::isClear()
 {
     return ui->reqShieldAddress->text().isEmpty();
 }

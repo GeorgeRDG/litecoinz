@@ -14,7 +14,7 @@ class ClientModel;
 class OverviewPage;
 class PlatformStyle;
 class ReceiveCoinsDialog;
-class SendCoinsDialog;
+class SendCoinsPage;
 class SendCoinsRecipient;
 class TransactionView;
 class WalletModel;
@@ -64,7 +64,7 @@ private:
     UnspentPage *unspentPage;
     QWidget *transactionsPage;
     ReceiveCoinsDialog *receiveCoinsPage;
-    SendCoinsDialog *sendCoinsPage;
+    SendCoinsPage *sendCoinsPage;
 
     TransactionView *transactionView;
 

@@ -35,7 +35,7 @@
     <name>LitecoinzGUI</name>
     </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Amount:</source>
         <translation>Số lượng:</translation>
@@ -107,7 +107,7 @@
     <name>RecentRequestsTableModel</name>
     </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Amount:</source>
         <translation>Số lượng:</translation>

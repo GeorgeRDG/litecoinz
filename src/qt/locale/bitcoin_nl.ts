@@ -545,7 +545,7 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Coin Selection</source>
         <translation>Munt Selectie</translation>
@@ -1161,7 +1161,7 @@
         <translation>Kies de standaardonderverdelingseenheid om weer te geven in uw programma, en voor het versturen van munten</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
+        <source>Whether to show coin selection features or not.</source>
         <translation>Munt controle functies weergeven of niet.</translation>
     </message>
     <message>
@@ -1901,14 +1901,14 @@
     </message>
 </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Send Coins</source>
         <translation>Verstuurde munten</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
-        <translation>Coin controle opties</translation>
+        <source>Coin Selection Features</source>
+        <translation>Coin selectione opties</translation>
     </message>
     <message>
         <source>Inputs...</source>

@@ -29,6 +29,11 @@ SendCoinsEntry::SendCoinsEntry(const PlatformStyle *platformStyle, QWidget *pare
     ui->deleteButton_is->setIcon(QIcon(":/images/clear"));
     ui->deleteButton_s->setIcon(QIcon(":/images/clear"));
 
+    ui->addAsMemo->clear();
+    ui->addAsMemo->setEnabled(false);
+    ui->addAsMemo->setVisible(false);
+    ui->labellMemo->setVisible(false);
+
     setCurrentWidget(ui->SendCoins);
 
     if (platformStyle->getUseExtraSpacing())
@@ -277,6 +282,10 @@ void SendCoinsEntry::sendToZAddressChangeChecked(int state)
         ui->addAsLabel->setEnabled(false);
         ui->addAsLabel->setVisible(false);
         ui->labellLabel->setVisible(false);
+        ui->addAsMemo->clear();
+        ui->addAsMemo->setEnabled(true);
+        ui->addAsMemo->setVisible(true);
+        ui->labellMemo->setVisible(true);
         ui->addressBookButton->setVisible(false);
         ui->payTo->clear();
         GUIUtil::setupZAddressWidget(ui->payTo, this);
@@ -287,6 +296,10 @@ void SendCoinsEntry::sendToZAddressChangeChecked(int state)
         ui->addAsLabel->setEnabled(true);
         ui->addAsLabel->setVisible(true);
         ui->labellLabel->setVisible(true);
+        ui->addAsMemo->clear();
+        ui->addAsMemo->setEnabled(false);
+        ui->addAsMemo->setVisible(false);
+        ui->labellMemo->setVisible(false);
         ui->addressBookButton->setVisible(true);
         ui->payTo->clear();
         GUIUtil::setupAddressWidget(ui->payTo, this);

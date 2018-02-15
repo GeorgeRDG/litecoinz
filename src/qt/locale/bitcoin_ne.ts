@@ -187,7 +187,7 @@
     </message>
     </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Amount</source>
         <translation>रकम</translation>
@@ -307,7 +307,7 @@
     <name>RecentRequestsTableModel</name>
     </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     </context>
 <context>
     <name>SendCoinsEntry</name>

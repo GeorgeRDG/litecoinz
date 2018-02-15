@@ -541,7 +541,7 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Coin Selection</source>
         <translation>选择钱币</translation>
@@ -1158,7 +1158,7 @@
         <translation>选择比特币单位。</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
+        <source>Whether to show coin selection features or not.</source>
         <translation>是否需要交易源地址控制功能。</translation>
     </message>
     <message>
@@ -1835,13 +1835,13 @@
     </message>
     </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Send Coins</source>
         <translation>发送比特币</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
+        <source>Coin Selection Features</source>
         <translation>交易源地址控制功能</translation>
     </message>
     <message>

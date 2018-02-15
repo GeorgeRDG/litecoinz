@@ -295,7 +295,7 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Quantity:</source>
         <translation>რაოდენობა:</translation>
@@ -563,7 +563,7 @@
         <translation>აირჩიეთ გასაგზავნი თანხის ნაგულისხმევი ერთეული.</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
+        <source>Whether to show coin selection features or not.</source>
         <translation>ვაჩვენოთ თუ არა მონეტების მართვის პარამეტრები.</translation>
     </message>
     <message>
@@ -875,13 +875,13 @@
     <name>RecentRequestsTableModel</name>
     </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Send Coins</source>
         <translation>მონეტების გაგზავნა</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
+        <source>Coin Selection Features</source>
         <translation>მონეტების კონტროლის პარამეტრები</translation>
     </message>
     <message>

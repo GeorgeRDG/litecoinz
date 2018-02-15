@@ -545,7 +545,7 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Coin Selection</source>
         <translation>コイン選択</translation>
@@ -1161,7 +1161,7 @@
         <translation>インターフェース上の表示とコインの送信で使用する単位を選択します。</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
+        <source>Whether to show coin selection features or not.</source>
         <translation>コインコントロール機能を表示するかどうか。</translation>
     </message>
     <message>
@@ -1901,13 +1901,13 @@
     </message>
 </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Send Coins</source>
         <translation>コインを送る</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
+        <source>Coin Selection Features</source>
         <translation>コインコントロール機能</translation>
     </message>
     <message>

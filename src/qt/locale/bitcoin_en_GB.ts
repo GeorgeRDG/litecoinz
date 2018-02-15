@@ -449,7 +449,7 @@
     </message>
 </context>
 <context>
-    <name>CoinControlDialog</name>
+    <name>CoinSelectDialog</name>
     <message>
         <source>Coin Selection</source>
         <translation>Coin Selection</translation>
@@ -889,8 +889,8 @@
         <translation>Choose the default subdivision unit to show in the interface and when sending coins.</translation>
     </message>
     <message>
-        <source>Whether to show coin control features or not.</source>
-        <translation>Whether to show coin control features or not.</translation>
+        <source>Whether to show coin selection features or not.</source>
+        <translation>Whether to show coin selection features or not.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -1465,14 +1465,14 @@
     </message>
     </context>
 <context>
-    <name>SendCoinsDialog</name>
+    <name>SendCoinsPage</name>
     <message>
         <source>Send Coins</source>
         <translation>Send Coins</translation>
     </message>
     <message>
-        <source>Coin Control Features</source>
-        <translation>Coin Control Features</translation>
+        <source>Coin Selection Features</source>
+        <translation>Coin Selection Features</translation>
     </message>
     <message>
         <source>Inputs...</source>
