@@ -97,8 +97,8 @@ QT_TS = \
 QT_FORMS_UI = \
   qt/forms/addressbookpage.ui \
   qt/forms/addressbookdialog.ui \
-  qt/forms/unspentpage.ui \
   qt/forms/askpassphrasedialog.ui \
+  qt/forms/coincontroldialog.ui \
   qt/forms/coinselectiondialog.ui \
   qt/forms/debugwindow.ui \
   qt/forms/editaddressdialog.ui \
@@ -110,18 +110,17 @@ QT_FORMS_UI = \
   qt/forms/receivecoinsdialog.ui \
   qt/forms/receiverequestdialog.ui \
   qt/forms/resultsdialog.ui \
-  qt/forms/sendcoinspage.ui \
+  qt/forms/sendcoinsdialog.ui \
   qt/forms/sendcoinsentry.ui \
   qt/forms/signverifymessagedialog.ui \
+  qt/forms/shieldcoinsdialog.ui \
   qt/forms/transactiondescdialog.ui \
-  qt/forms/shieldcoinsdialog.ui
+  qt/forms/unspentpage.ui
 
 QT_MOC_CPP = \
   qt/moc_addressbookpage.cpp \
   qt/moc_addressbookdialog.cpp \
   qt/moc_addresstablemodel.cpp \
-  qt/moc_unspentpage.cpp \
-  qt/moc_unspenttablemodel.cpp \
   qt/moc_askpassphrasedialog.cpp \
   qt/moc_bantablemodel.cpp \
   qt/moc_bitcoinaddressvalidator.cpp \
@@ -130,6 +129,8 @@ QT_MOC_CPP = \
   qt/moc_bitcoingui.cpp \
   qt/moc_bitcoinunits.cpp \
   qt/moc_clientmodel.cpp \
+  qt/moc_coincontroldialog.cpp \
+  qt/moc_coincontroltreewidget.cpp \
   qt/moc_coinselectiondialog.cpp \
   qt/moc_csvmodelwriter.cpp \
   qt/moc_editaddressdialog.cpp \
@@ -151,10 +152,11 @@ QT_MOC_CPP = \
   qt/moc_recentrequeststablemodel.cpp \
   qt/moc_resultsdialog.cpp \
   qt/moc_rpcconsole.cpp \
-  qt/moc_sendcoinspage.cpp \
+  qt/moc_sendcoinsdialog.cpp \
   qt/moc_sendcoinsentry.cpp \
   qt/moc_signverifymessagedialog.cpp \
   qt/moc_splashscreen.cpp \
+  qt/moc_shieldcoinsdialog.cpp \
   qt/moc_trafficgraphwidget.cpp \
   qt/moc_transactiondesc.cpp \
   qt/moc_transactiondescdialog.cpp \
@@ -162,10 +164,11 @@ QT_MOC_CPP = \
   qt/moc_transactiontablemodel.cpp \
   qt/moc_transactionview.cpp \
   qt/moc_utilitydialog.cpp \
+  qt/moc_unspentpage.cpp \
+  qt/moc_unspenttablemodel.cpp \
   qt/moc_walletframe.cpp \
   qt/moc_walletmodel.cpp \
-  qt/moc_walletview.cpp \
-  qt/moc_shieldcoinsdialog.cpp
+  qt/moc_walletview.cpp
 
 BITCOIN_MM = \
   qt/macdockiconhandler.mm \
@@ -191,8 +194,6 @@ BITCOIN_QT_H = \
   qt/addressbookpage.h \
   qt/addressbookdialog.h \
   qt/addresstablemodel.h \
-  qt/unspentpage.h \
-  qt/unspenttablemodel.h \
   qt/askpassphrasedialog.h \
   qt/bantablemodel.h \
   qt/bitcoinaddressvalidator.h \
@@ -201,6 +202,8 @@ BITCOIN_QT_H = \
   qt/bitcoingui.h \
   qt/bitcoinunits.h \
   qt/clientmodel.h \
+  qt/coincontroldialog.h \
+  qt/coincontroltreewidget.h \
   qt/coinselectiondialog.h \
   qt/csvmodelwriter.h \
   qt/editaddressdialog.h \
@@ -226,9 +229,10 @@ BITCOIN_QT_H = \
   qt/receiverequestdialog.h \
   qt/recentrequeststablemodel.h \
   qt/rpcconsole.h \
-  qt/sendcoinspage.h \
+  qt/sendcoinsdialog.h \
   qt/sendcoinsentry.h \
   qt/signverifymessagedialog.h \
+  qt/shieldcoinsdialog.h \
   qt/splashscreen.h \
   qt/trafficgraphwidget.h \
   qt/transactiondesc.h \
@@ -238,12 +242,13 @@ BITCOIN_QT_H = \
   qt/transactiontablemodel.h \
   qt/transactionview.h \
   qt/utilitydialog.h \
+  qt/unspentpage.h \
+  qt/unspenttablemodel.h \
   qt/walletframe.h \
   qt/walletmodel.h \
   qt/walletmodeltransaction.h \
   qt/walletview.h \
-  qt/winshutdownmonitor.h \
-  qt/shieldcoinsdialog.h
+  qt/winshutdownmonitor.h
 
 RES_ICONS = \
   qt/res/icons/add.png \
@@ -374,9 +379,9 @@ BITCOIN_QT_WALLET_CPP = \
   qt/addressbookpage.cpp \
   qt/addressbookdialog.cpp \
   qt/addresstablemodel.cpp \
-  qt/unspentpage.cpp \
-  qt/unspenttablemodel.cpp \
   qt/askpassphrasedialog.cpp \
+  qt/coincontroldialog.cpp \
+  qt/coincontroltreewidget.cpp \
   qt/coinselectiondialog.cpp \
   qt/editaddressdialog.cpp \
   qt/openuridialog.cpp \
@@ -387,8 +392,9 @@ BITCOIN_QT_WALLET_CPP = \
   qt/receiverequestdialog.cpp \
   qt/recentrequeststablemodel.cpp \
   qt/resultsdialog.cpp \
-  qt/sendcoinspage.cpp \
+  qt/sendcoinsdialog.cpp \
   qt/sendcoinsentry.cpp \
+  qt/shieldcoinsdialog.cpp \
   qt/signverifymessagedialog.cpp \
   qt/transactiondesc.cpp \
   qt/transactiondescdialog.cpp \
@@ -396,11 +402,12 @@ BITCOIN_QT_WALLET_CPP = \
   qt/transactionrecord.cpp \
   qt/transactiontablemodel.cpp \
   qt/transactionview.cpp \
+  qt/unspentpage.cpp \
+  qt/unspenttablemodel.cpp \
   qt/walletframe.cpp \
   qt/walletmodel.cpp \
   qt/walletmodeltransaction.cpp \
-  qt/walletview.cpp \
-  qt/shieldcoinsdialog.cpp
+  qt/walletview.cpp
 
 BITCOIN_QT_CPP = $(BITCOIN_QT_BASE_CPP)
 if TARGET_WINDOWS

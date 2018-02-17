@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_QT_SENDCOINSPAGE_H
-#define BITCOIN_QT_SENDCOINSPAGE_H
+#ifndef BITCOIN_QT_SENDCOINSDIALOG_H
+#define BITCOIN_QT_SENDCOINSDIALOG_H
 
 #include "walletmodel.h"
 
@@ -19,7 +19,7 @@ class SendCoinsEntry;
 class SendCoinsRecipient;
 
 namespace Ui {
-    class SendCoinsPage;
+    class SendCoinsDialog;
 }
 
 QT_BEGIN_NAMESPACE
@@ -28,14 +28,14 @@ QT_END_NAMESPACE
 
 const int defaultConfirmTarget = 25;
 
-/** Dialog for sending litecoinzs */
-class SendCoinsPage : public QDialog
+/** Dialog for sending bitcoins */
+class SendCoinsDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit SendCoinsPage(const PlatformStyle *platformStyle, QWidget *parent = 0);
-    ~SendCoinsPage();
+    explicit SendCoinsDialog(const PlatformStyle *platformStyle, QWidget *parent = 0);
+    ~SendCoinsDialog();
 
     void setClientModel(ClientModel *clientModel);
     void setModel(WalletModel *model);
@@ -55,11 +55,10 @@ public Q_SLOTS:
     SendCoinsEntry *addEntry();
     void updateTabsAndLabels();
     void setBalance(const CAmount& balance, const CAmount& unconfirmedBalance, const CAmount& immatureBalance,
-                    const CAmount& watchOnlyBalance, const CAmount& watchUnconfBalance, const CAmount& watchImmatureBalancei,
-                    const CAmount& t_balance, const CAmount& z_balance, const CAmount& unshielded);
+                    const CAmount& watchOnlyBalance, const CAmount& watchUnconfBalance, const CAmount& watchImmatureBalance);
 
 private:
-    Ui::SendCoinsPage *ui;
+    Ui::SendCoinsDialog *ui;
     ClientModel *clientModel;
     WalletModel *model;
     bool fNewRecipientAllowed;
@@ -79,15 +78,19 @@ private Q_SLOTS:
     void on_buttonMinimizeFee_clicked();
     void removeEntry(SendCoinsEntry* entry);
     void updateDisplayUnit();
-//    void coinSelectionFeatureChanged(bool);
-    void coinSelectionButtonClicked();
-//    void coinSelectionChangeChecked(int);
-//    void coinSelectionChangeEdited(const QString &);
-    void coinSelectionUpdateLabels();
-    void coinSelectionClipboardAmount();
-    void coinSelectionClipboardFee();
-    void coinSelectionClipboardAfterFee();
-    void coinSelectionClipboardChange();
+    void coinControlFeatureChanged(bool);
+    void coinControlButtonClicked();
+    void coinControlChangeChecked(int);
+    void coinControlChangeEdited(const QString &);
+    void coinControlUpdateLabels();
+    void coinControlClipboardQuantity();
+    void coinControlClipboardAmount();
+    void coinControlClipboardFee();
+    void coinControlClipboardAfterFee();
+    void coinControlClipboardBytes();
+    void coinControlClipboardPriority();
+    void coinControlClipboardLowOutput();
+    void coinControlClipboardChange();
     void setMinimumFee();
     void updateFeeSectionControls();
     void updateMinFeeLabel();
@@ -119,4 +122,4 @@ private:
     int secDelay;
 };
 
-#endif // BITCOIN_QT_SENDCOINSPAGE_H
+#endif // BITCOIN_QT_SENDCOINSDIALOG_H

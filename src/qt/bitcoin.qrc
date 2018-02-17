@@ -97,6 +97,7 @@
         <file alias="reload">res/images/reload.png</file>
         <file alias="reset">res/images/reset.png</file>
         <file alias="remove3">res/images/remove3.png</file>
+        <file alias="send3">res/images/send3.png</file>
     </qresource>
     <qresource prefix="/movies">
         <file alias="spinner-000">res/movies/spinner-000.png</file>

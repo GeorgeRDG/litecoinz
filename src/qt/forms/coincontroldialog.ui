@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CoinSelectionDialog</class>
- <widget class="QDialog" name="CoinSelectionDialog">
+ <class>CoinControlDialog</class>
+ <widget class="QDialog" name="CoinControlDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -23,7 +23,7 @@
       <number>10</number>
      </property>
      <item>
-      <layout class="QFormLayout" name="formLayoutCoinSelection1">
+      <layout class="QFormLayout" name="formLayoutCoinControl1">
        <property name="horizontalSpacing">
         <number>10</number>
        </property>
@@ -37,7 +37,7 @@
         <number>6</number>
        </property>
        <item row="0" column="0">
-        <widget class="QLabel" name="labelCoinSelectionQuantityText">
+        <widget class="QLabel" name="labelCoinControlQuantityText">
          <property name="font">
           <font>
            <weight>75</weight>
@@ -50,7 +50,7 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QLabel" name="labelCoinSelectionQuantity">
+        <widget class="QLabel" name="labelCoinControlQuantity">
          <property name="cursor">
           <cursorShape>IBeamCursor</cursorShape>
          </property>
@@ -66,7 +66,7 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QLabel" name="labelCoinSelectionBytesText">
+        <widget class="QLabel" name="labelCoinControlBytesText">
          <property name="font">
           <font>
            <weight>75</weight>
@@ -79,7 +79,7 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QLabel" name="labelCoinSelectionBytes">
+        <widget class="QLabel" name="labelCoinControlBytes">
          <property name="cursor">
           <cursorShape>IBeamCursor</cursorShape>
          </property>
@@ -97,7 +97,7 @@
       </layout>
      </item>
      <item>
-      <layout class="QFormLayout" name="formLayoutCoinSelection2">
+      <layout class="QFormLayout" name="formLayoutCoinControl2">
        <property name="horizontalSpacing">
         <number>10</number>
        </property>
@@ -111,7 +111,7 @@
         <number>6</number>
        </property>
        <item row="0" column="0">
-        <widget class="QLabel" name="labelCoinSelectionAmountText">
+        <widget class="QLabel" name="labelCoinControlAmountText">
          <property name="font">
           <font>
            <weight>75</weight>
@@ -124,7 +124,7 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QLabel" name="labelCoinSelectionAmount">
+        <widget class="QLabel" name="labelCoinControlAmount">
          <property name="cursor">
           <cursorShape>IBeamCursor</cursorShape>
          </property>
@@ -132,15 +132,28 @@
           <enum>Qt::ActionsContextMenu</enum>
          </property>
          <property name="text">
-          <string notr="true">0.00 LTZ</string>
+          <string notr="true">0.00 BTC</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
          </property>
         </widget>
        </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="labelCoinControlPriorityText">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Priority:</string>
+         </property>
+        </widget>
+       </item>
        <item row="1" column="1">
-        <widget class="QLabel" name="labelCoinSelectionPriority">
+        <widget class="QLabel" name="labelCoinControlPriority">
          <property name="cursor">
           <cursorShape>IBeamCursor</cursorShape>
          </property>
@@ -155,23 +168,10 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="labelCoinSelectionlPriorityText">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Priority:</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
      <item>
-      <layout class="QFormLayout" name="formLayoutCoinSelection3">
+      <layout class="QFormLayout" name="formLayoutCoinControl3">
        <property name="horizontalSpacing">
         <number>10</number>
        </property>
@@ -185,7 +185,7 @@
         <number>6</number>
        </property>
        <item row="0" column="0">
-        <widget class="QLabel" name="labelCoinSelectionFeeText">
+        <widget class="QLabel" name="labelCoinControlFeeText">
          <property name="font">
           <font>
            <weight>75</weight>
@@ -198,7 +198,7 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QLabel" name="labelCoinSelectionFee">
+        <widget class="QLabel" name="labelCoinControlFee">
          <property name="cursor">
           <cursorShape>IBeamCursor</cursorShape>
          </property>
@@ -206,7 +206,7 @@
           <enum>Qt::ActionsContextMenu</enum>
          </property>
          <property name="text">
-          <string notr="true">0.00 LTZ</string>
+          <string notr="true">0.00 BTC</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -214,7 +214,7 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QLabel" name="labelCoinSelectionLowOutputText">
+        <widget class="QLabel" name="labelCoinControlLowOutputText">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -230,7 +230,7 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QLabel" name="labelCoinSelectionLowOutput">
+        <widget class="QLabel" name="labelCoinControlLowOutput">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -251,7 +251,7 @@
       </layout>
      </item>
      <item>
-      <layout class="QFormLayout" name="formLayoutCoinSelection4">
+      <layout class="QFormLayout" name="formLayoutCoinControl4">
        <property name="horizontalSpacing">
         <number>10</number>
        </property>
@@ -265,7 +265,7 @@
         <number>6</number>
        </property>
        <item row="0" column="0">
-        <widget class="QLabel" name="labelCoinSelectionAfterFeeText">
+        <widget class="QLabel" name="labelCoinControlAfterFeeText">
          <property name="font">
           <font>
            <weight>75</weight>
@@ -278,7 +278,7 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QLabel" name="labelCoinSelectionAfterFee">
+        <widget class="QLabel" name="labelCoinControlAfterFee">
          <property name="cursor">
           <cursorShape>IBeamCursor</cursorShape>
          </property>
@@ -286,7 +286,7 @@
           <enum>Qt::ActionsContextMenu</enum>
          </property>
          <property name="text">
-          <string notr="true">0.00 LTZ</string>
+          <string notr="true">0.00 BTC</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -294,7 +294,7 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QLabel" name="labelCoinSelectionChangeText">
+        <widget class="QLabel" name="labelCoinControlChangeText">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -310,7 +310,7 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QLabel" name="labelCoinSelectionChange">
+        <widget class="QLabel" name="labelCoinControlChange">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -321,7 +321,7 @@
           <enum>Qt::ActionsContextMenu</enum>
          </property>
          <property name="text">
-          <string notr="true">0.00 LTZ</string>
+          <string notr="true">0.00 BTC</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -333,59 +333,175 @@
     </layout>
    </item>
    <item>
-    <widget class="QTableView" name="tableViewT">
-     <property name="contextMenuPolicy">
-      <enum>Qt::CustomContextMenu</enum>
+    <widget class="QFrame" name="frame">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>40</height>
+      </size>
      </property>
-     <property name="toolTip">
-      <string>Right-click to edit address or label</string>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
-     <property name="tabKeyNavigation">
-      <bool>false</bool>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
      </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
-     </property>
-     <property name="selectionMode">
-      <enum>QAbstractItemView::SingleSelection</enum>
-     </property>
-     <property name="selectionBehavior">
-      <enum>QAbstractItemView::SelectRows</enum>
-     </property>
-     <property name="sortingEnabled">
-      <bool>true</bool>
-     </property>
-     <attribute name="verticalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayoutPanel" stretch="0,0,0,0,0">
+        <property name="spacing">
+         <number>14</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="pushButtonSelectAll">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>(un)select all</string>
+          </property>
+          <property name="autoDefault">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="radioTreeMode">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Tree mode</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="radioListMode">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>List mode</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="labelLocked">
+          <property name="text">
+           <string notr="true">(1 locked)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
-    <widget class="QTableView" name="tableViewZ">
+    <widget class="CoinControlTreeWidget" name="treeWidget">
      <property name="contextMenuPolicy">
       <enum>Qt::CustomContextMenu</enum>
      </property>
-     <property name="toolTip">
-      <string>Right-click to edit address or label</string>
-     </property>
-     <property name="tabKeyNavigation">
+     <property name="sortingEnabled">
       <bool>false</bool>
      </property>
-     <property name="alternatingRowColors">
+     <property name="columnCount">
+      <number>12</number>
+     </property>
+     <attribute name="headerShowSortIndicator" stdset="0">
       <bool>true</bool>
-     </property>
-     <property name="selectionMode">
-      <enum>QAbstractItemView::SingleSelection</enum>
-     </property>
-     <property name="selectionBehavior">
-      <enum>QAbstractItemView::SelectRows</enum>
-     </property>
-     <property name="sortingEnabled">
-      <bool>true</bool>
-     </property>
-     <attribute name="verticalHeaderVisible">
+     </attribute>
+     <attribute name="headerStretchLastSection">
       <bool>false</bool>
      </attribute>
+     <column>
+      <property name="text">
+       <string/>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Amount</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Received with label</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Received with address</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Date</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Confirmations</string>
+      </property>
+      <property name="toolTip">
+       <string>Confirmed</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Priority</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string/>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string/>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string/>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string/>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string/>
+      </property>
+     </column>
     </widget>
    </item>
    <item>
@@ -406,6 +522,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CoinControlTreeWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>coincontroltreewidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

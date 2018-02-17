@@ -143,11 +143,18 @@ void WalletFrame::gotoReceiveCoinsPage()
         i.value()->gotoReceiveCoinsPage();
 }
 
-void WalletFrame::gotoSendCoinsPage(QString addr)
+void WalletFrame::gotoSendCoinsDialog(QString addr)
 {
     QMap<QString, WalletView*>::const_iterator i;
     for (i = mapWalletViews.constBegin(); i != mapWalletViews.constEnd(); ++i)
-        i.value()->gotoSendCoinsPage(addr);
+        i.value()->gotoSendCoinsDialog(addr);
+}
+
+void WalletFrame::gotoSendZCoinsDialog(QString addr)
+{
+    QMap<QString, WalletView*>::const_iterator i;
+    for (i = mapWalletViews.constBegin(); i != mapWalletViews.constEnd(); ++i)
+        i.value()->gotoSendZCoinsDialog(addr);
 }
 
 void WalletFrame::gotoSignMessageTab(QString addr)
