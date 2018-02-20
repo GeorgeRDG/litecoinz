@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SendCoinsEntry</class>
- <widget class="QStackedWidget" name="SendCoinsEntry">
+ <class>SendZCoinsEntry</class>
+ <widget class="QStackedWidget" name="SendZCoinsEntry">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -16,7 +16,7 @@
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
-  <widget class="QFrame" name="SendCoins">
+  <widget class="QFrame" name="SendZCoins">
    <property name="toolTip">
     <string>This is a normal payment.</string>
    </property>
@@ -93,7 +93,7 @@
      </widget>
     </item>
     <item row="2" column="1">
-     <layout class="QHBoxLayout" name="horizontalLayoutAmount" stretch="0,0,1">
+     <layout class="QHBoxLayout" name="horizontalLayoutAmount" stretch="0,0,0,1">
       <item>
        <widget class="BitcoinAmountField" name="payAmount"/>
       </item>
@@ -109,6 +109,13 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkboxSendToZAddress">
+        <property name="text">
+         <string>Send to a z-Address</string>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="checkboxSubtractFeeFromAmount">
@@ -221,7 +228,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QFrame" name="SendCoins_UnauthenticatedPaymentRequest">
+  <widget class="QFrame" name="SendZCoins_UnauthenticatedPaymentRequest">
    <property name="palette">
     <palette>
      <active>
@@ -706,7 +713,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QFrame" name="SendCoins_AuthenticatedPaymentRequest">
+  <widget class="QFrame" name="SendZCoins_AuthenticatedPaymentRequest">
    <property name="palette">
     <palette>
      <active>

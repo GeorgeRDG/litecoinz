@@ -1,9 +1,10 @@
 // Copyright (c) 2011-2015 The Bitcoin Core developers
+// Copyright (c) 2017-2018 The LitecoinZ developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_QT_SENDCOINSENTRY_H
-#define BITCOIN_QT_SENDCOINSENTRY_H
+#ifndef BITCOIN_QT_SENDZCOINSENTRY_H
+#define BITCOIN_QT_SENDZCOINSENTRY_H
 
 #include "walletmodel.h"
 
@@ -13,7 +14,7 @@ class WalletModel;
 class PlatformStyle;
 
 namespace Ui {
-    class SendCoinsEntry;
+    class SendZCoinsEntry;
 }
 
 /**
@@ -21,13 +22,13 @@ namespace Ui {
  * Stacked widget, with different UIs for payment requests
  * with a strong payee identity.
  */
-class SendCoinsEntry : public QStackedWidget
+class SendZCoinsEntry : public QStackedWidget
 {
     Q_OBJECT
 
 public:
-    explicit SendCoinsEntry(const PlatformStyle *platformStyle, QWidget *parent = 0);
-    ~SendCoinsEntry();
+    explicit SendZCoinsEntry(const PlatformStyle *platformStyle, QWidget *parent = 0);
+    ~SendZCoinsEntry();
 
     void setModel(WalletModel *model);
     bool validate();
@@ -50,7 +51,7 @@ public Q_SLOTS:
     void clear();
 
 Q_SIGNALS:
-    void removeEntry(SendCoinsEntry *entry);
+    void removeEntry(SendZCoinsEntry *entry);
     void payAmountChanged();
     void subtractFeeFromAmountChanged();
 
@@ -60,14 +61,15 @@ private Q_SLOTS:
     void on_addressBookButton_clicked();
     void on_pasteButton_clicked();
     void updateDisplayUnit();
+    void sendToZAddressChangeChecked(int);
 
 private:
     SendCoinsRecipient recipient;
-    Ui::SendCoinsEntry *ui;
+    Ui::SendZCoinsEntry *ui;
     WalletModel *model;
     const PlatformStyle *platformStyle;
 
     bool updateLabel(const QString &address);
 };
 
-#endif // BITCOIN_QT_SENDCOINSENTRY_H
+#endif // BITCOIN_QT_SENDZCOINSENTRY_H

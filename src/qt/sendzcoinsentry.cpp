@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "sendcoinsentry.h"
-#include "ui_sendcoinsentry.h"
+#include "sendzcoinsentry.h"
+#include "ui_sendzcoinsentry.h"
 
 #include "addressbookdialog.h"
 #include "addresstablemodel.h"
@@ -15,9 +15,9 @@
 #include <QApplication>
 #include <QClipboard>
 
-SendCoinsEntry::SendCoinsEntry(const PlatformStyle *platformStyle, QWidget *parent) :
+SendZCoinsEntry::SendZCoinsEntry(const PlatformStyle *platformStyle, QWidget *parent) :
     QStackedWidget(parent),
-    ui(new Ui::SendCoinsEntry),
+    ui(new Ui::SendZCoinsEntry),
     model(0),
     platformStyle(platformStyle)
 {
@@ -29,7 +29,7 @@ SendCoinsEntry::SendCoinsEntry(const PlatformStyle *platformStyle, QWidget *pare
     ui->deleteButton_is->setIcon(QIcon(":/images/clear"));
     ui->deleteButton_s->setIcon(QIcon(":/images/clear"));
 
-    setCurrentWidget(ui->SendCoins);
+    setCurrentWidget(ui->SendZCoins);
 
     if (platformStyle->getUseExtraSpacing())
         ui->payToLayout->setSpacing(4);
@@ -48,20 +48,22 @@ SendCoinsEntry::SendCoinsEntry(const PlatformStyle *platformStyle, QWidget *pare
     connect(ui->deleteButton, SIGNAL(clicked()), this, SLOT(deleteClicked()));
     connect(ui->deleteButton_is, SIGNAL(clicked()), this, SLOT(deleteClicked()));
     connect(ui->deleteButton_s, SIGNAL(clicked()), this, SLOT(deleteClicked()));
+
+    connect(ui->checkboxSendToZAddress, SIGNAL(stateChanged(int)), this, SLOT(sendToZAddressChangeChecked(int)));
 }
 
-SendCoinsEntry::~SendCoinsEntry()
+SendZCoinsEntry::~SendZCoinsEntry()
 {
     delete ui;
 }
 
-void SendCoinsEntry::on_pasteButton_clicked()
+void SendZCoinsEntry::on_pasteButton_clicked()
 {
     // Paste text from clipboard into recipient field
     ui->payTo->setText(QApplication::clipboard()->text());
 }
 
-void SendCoinsEntry::on_addressBookButton_clicked()
+void SendZCoinsEntry::on_addressBookButton_clicked()
 {
     if(!model)
         return;
@@ -74,12 +76,12 @@ void SendCoinsEntry::on_addressBookButton_clicked()
     }
 }
 
-void SendCoinsEntry::on_payTo_textChanged(const QString &address)
+void SendZCoinsEntry::on_payTo_textChanged(const QString &address)
 {
     updateLabel(address);
 }
 
-void SendCoinsEntry::setModel(WalletModel *model)
+void SendZCoinsEntry::setModel(WalletModel *model)
 {
     this->model = model;
 
@@ -89,13 +91,14 @@ void SendCoinsEntry::setModel(WalletModel *model)
     clear();
 }
 
-void SendCoinsEntry::clear()
+void SendZCoinsEntry::clear()
 {
     // clear UI elements for normal payment
     ui->payTo->clear();
     ui->addAsLabel->clear();
     ui->payAmount->clear();
     ui->checkboxSubtractFeeFromAmount->setCheckState(Qt::Unchecked);
+    ui->checkboxSendToZAddress->setCheckState(Qt::Unchecked);
     ui->messageTextLabel->clear();
     ui->messageTextLabel->hide();
     ui->messageLabel->hide();
@@ -110,12 +113,12 @@ void SendCoinsEntry::clear()
     updateDisplayUnit();
 }
 
-void SendCoinsEntry::deleteClicked()
+void SendZCoinsEntry::deleteClicked()
 {
     Q_EMIT removeEntry(this);
 }
 
-bool SendCoinsEntry::validate()
+bool SendZCoinsEntry::validate()
 {
     if (!model)
         return false;
@@ -154,7 +157,7 @@ bool SendCoinsEntry::validate()
     return retval;
 }
 
-SendCoinsRecipient SendCoinsEntry::getValue()
+SendCoinsRecipient SendZCoinsEntry::getValue()
 {
     // Payment request
     if (recipient.paymentRequest.IsInitialized())
@@ -170,19 +173,20 @@ SendCoinsRecipient SendCoinsEntry::getValue()
     return recipient;
 }
 
-QWidget *SendCoinsEntry::setupTabChain(QWidget *prev)
+QWidget *SendZCoinsEntry::setupTabChain(QWidget *prev)
 {
     QWidget::setTabOrder(prev, ui->payTo);
     QWidget::setTabOrder(ui->payTo, ui->addAsLabel);
     QWidget *w = ui->payAmount->setupTabChain(ui->addAsLabel);
-    QWidget::setTabOrder(w, ui->checkboxSubtractFeeFromAmount);
+    QWidget::setTabOrder(w, ui->checkboxSendToZAddress);
+    QWidget::setTabOrder(ui->checkboxSendToZAddress, ui->checkboxSubtractFeeFromAmount);
     QWidget::setTabOrder(ui->checkboxSubtractFeeFromAmount, ui->addressBookButton);
     QWidget::setTabOrder(ui->addressBookButton, ui->pasteButton);
     QWidget::setTabOrder(ui->pasteButton, ui->deleteButton);
     return ui->deleteButton;
 }
 
-void SendCoinsEntry::setValue(const SendCoinsRecipient &value)
+void SendZCoinsEntry::setValue(const SendCoinsRecipient &value)
 {
     recipient = value;
 
@@ -193,14 +197,14 @@ void SendCoinsEntry::setValue(const SendCoinsRecipient &value)
             ui->payTo_is->setText(recipient.address);
             ui->payAmount_is->setValue(recipient.amount);
             ui->payAmount_is->setReadOnly(true);
-            setCurrentWidget(ui->SendCoins_UnauthenticatedPaymentRequest);
+            setCurrentWidget(ui->SendZCoins_UnauthenticatedPaymentRequest);
         }
         else // authenticated
         {
             ui->payTo_s->setText(recipient.authenticatedMerchant);
             ui->payAmount_s->setValue(recipient.amount);
             ui->payAmount_s->setReadOnly(true);
-            setCurrentWidget(ui->SendCoins_AuthenticatedPaymentRequest);
+            setCurrentWidget(ui->SendZCoins_AuthenticatedPaymentRequest);
         }
     }
     else // normal payment
@@ -218,23 +222,23 @@ void SendCoinsEntry::setValue(const SendCoinsRecipient &value)
     }
 }
 
-void SendCoinsEntry::setAddress(const QString &address)
+void SendZCoinsEntry::setAddress(const QString &address)
 {
     ui->payTo->setText(address);
     ui->payAmount->setFocus();
 }
 
-bool SendCoinsEntry::isClear()
+bool SendZCoinsEntry::isClear()
 {
     return ui->payTo->text().isEmpty() && ui->payTo_is->text().isEmpty() && ui->payTo_s->text().isEmpty();
 }
 
-void SendCoinsEntry::setFocus()
+void SendZCoinsEntry::setFocus()
 {
     ui->payTo->setFocus();
 }
 
-void SendCoinsEntry::updateDisplayUnit()
+void SendZCoinsEntry::updateDisplayUnit()
 {
     if(model && model->getOptionsModel())
     {
@@ -245,9 +249,12 @@ void SendCoinsEntry::updateDisplayUnit()
     }
 }
 
-bool SendCoinsEntry::updateLabel(const QString &address)
+bool SendZCoinsEntry::updateLabel(const QString &address)
 {
     if(!model)
+        return false;
+
+    if(ui->checkboxSendToZAddress->checkState() == Qt::Checked)
         return false;
 
     // Fill in label from address book, if address has an associated label
@@ -259,4 +266,28 @@ bool SendCoinsEntry::updateLabel(const QString &address)
     }
 
     return false;
+}
+
+void SendZCoinsEntry::sendToZAddressChangeChecked(int state)
+{
+    if (state == Qt::Checked)
+    {
+        ui->addAsLabel->clear();
+        ui->addAsLabel->setEnabled(false);
+        ui->addAsLabel->setVisible(false);
+        ui->labellLabel->setVisible(false);
+        ui->addressBookButton->setVisible(false);
+        ui->payTo->clear();
+        GUIUtil::setupZAddressWidget(ui->payTo, this);
+    }
+    else
+    {
+        ui->addAsLabel->clear();
+        ui->addAsLabel->setEnabled(true);
+        ui->addAsLabel->setVisible(true);
+        ui->labellLabel->setVisible(true);
+        ui->addressBookButton->setVisible(true);
+        ui->payTo->clear();
+        GUIUtil::setupAddressWidget(ui->payTo, this);
+    }
 }

@@ -15,6 +15,7 @@
 #include "platformstyle.h"
 #include "receivecoinsdialog.h"
 #include "sendcoinsdialog.h"
+#include "sendzcoinsdialog.h"
 #include "signverifymessagedialog.h"
 #include "transactiontablemodel.h"
 #include "transactionview.h"
@@ -65,7 +66,7 @@ WalletView::WalletView(const PlatformStyle *platformStyle, QWidget *parent):
 
     receiveCoinsPage = new ReceiveCoinsDialog(platformStyle);
     sendCoinsDialog = new SendCoinsDialog(platformStyle);
-    sendZCoinsDialog = new SendCoinsDialog(platformStyle);
+    sendZCoinsDialog = new SendZCoinsDialog(platformStyle);
 
     addWidget(overviewPage);
     addWidget(addressBookPage);

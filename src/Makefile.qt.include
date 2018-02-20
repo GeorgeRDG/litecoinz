@@ -99,7 +99,6 @@ QT_FORMS_UI = \
   qt/forms/addressbookdialog.ui \
   qt/forms/askpassphrasedialog.ui \
   qt/forms/coincontroldialog.ui \
-  qt/forms/coinselectiondialog.ui \
   qt/forms/debugwindow.ui \
   qt/forms/editaddressdialog.ui \
   qt/forms/helpmessagedialog.ui \
@@ -112,6 +111,8 @@ QT_FORMS_UI = \
   qt/forms/resultsdialog.ui \
   qt/forms/sendcoinsdialog.ui \
   qt/forms/sendcoinsentry.ui \
+  qt/forms/sendzcoinsdialog.ui \
+  qt/forms/sendzcoinsentry.ui \
   qt/forms/signverifymessagedialog.ui \
   qt/forms/shieldcoinsdialog.ui \
   qt/forms/transactiondescdialog.ui \
@@ -131,7 +132,6 @@ QT_MOC_CPP = \
   qt/moc_clientmodel.cpp \
   qt/moc_coincontroldialog.cpp \
   qt/moc_coincontroltreewidget.cpp \
-  qt/moc_coinselectiondialog.cpp \
   qt/moc_csvmodelwriter.cpp \
   qt/moc_editaddressdialog.cpp \
   qt/moc_guiutil.cpp \
@@ -154,6 +154,8 @@ QT_MOC_CPP = \
   qt/moc_rpcconsole.cpp \
   qt/moc_sendcoinsdialog.cpp \
   qt/moc_sendcoinsentry.cpp \
+  qt/moc_sendzcoinsdialog.cpp \
+  qt/moc_sendzcoinsentry.cpp \
   qt/moc_signverifymessagedialog.cpp \
   qt/moc_splashscreen.cpp \
   qt/moc_shieldcoinsdialog.cpp \
@@ -204,7 +206,6 @@ BITCOIN_QT_H = \
   qt/clientmodel.h \
   qt/coincontroldialog.h \
   qt/coincontroltreewidget.h \
-  qt/coinselectiondialog.h \
   qt/csvmodelwriter.h \
   qt/editaddressdialog.h \
   qt/guiconstants.h \
@@ -231,6 +232,8 @@ BITCOIN_QT_H = \
   qt/rpcconsole.h \
   qt/sendcoinsdialog.h \
   qt/sendcoinsentry.h \
+  qt/sendzcoinsdialog.h \
+  qt/sendzcoinsentry.h \
   qt/signverifymessagedialog.h \
   qt/shieldcoinsdialog.h \
   qt/splashscreen.h \
@@ -382,7 +385,6 @@ BITCOIN_QT_WALLET_CPP = \
   qt/askpassphrasedialog.cpp \
   qt/coincontroldialog.cpp \
   qt/coincontroltreewidget.cpp \
-  qt/coinselectiondialog.cpp \
   qt/editaddressdialog.cpp \
   qt/openuridialog.cpp \
   qt/overviewpage.cpp \
@@ -394,6 +396,8 @@ BITCOIN_QT_WALLET_CPP = \
   qt/resultsdialog.cpp \
   qt/sendcoinsdialog.cpp \
   qt/sendcoinsentry.cpp \
+  qt/sendzcoinsdialog.cpp \
+  qt/sendzcoinsentry.cpp \
   qt/shieldcoinsdialog.cpp \
   qt/signverifymessagedialog.cpp \
   qt/transactiondesc.cpp \

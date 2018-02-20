@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_QT_SENDCOINSPAGE_H
-#define BITCOIN_QT_SENDCOINSPAGE_H
+#ifndef BITCOIN_QT_SENDZCOINSDIALOG_H
+#define BITCOIN_QT_SENDZCOINSDIALOG_H
 
 #include "walletmodel.h"
 
@@ -15,27 +15,29 @@
 class ClientModel;
 class OptionsModel;
 class PlatformStyle;
-class SendCoinsEntry;
+class SendZCoinsEntry;
 class SendCoinsRecipient;
 
 namespace Ui {
-    class SendCoinsPage;
+    class SendZCoinsDialog;
 }
+
+#define ASYMP_UTF8 "\xE2\x89\x88"
 
 QT_BEGIN_NAMESPACE
 class QUrl;
 QT_END_NAMESPACE
 
-const int defaultConfirmTarget = 25;
+const int defaultZConfirmTarget = 25;
 
-/** Dialog for sending litecoinzs */
-class SendCoinsPage : public QDialog
+/** Dialog for sending bitcoins */
+class SendZCoinsDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit SendCoinsPage(const PlatformStyle *platformStyle, QWidget *parent = 0);
-    ~SendCoinsPage();
+    explicit SendZCoinsDialog(const PlatformStyle *platformStyle, QWidget *parent = 0);
+    ~SendZCoinsDialog();
 
     void setClientModel(ClientModel *clientModel);
     void setModel(WalletModel *model);
@@ -48,18 +50,25 @@ public:
     void pasteEntry(const SendCoinsRecipient &rv);
     bool handlePaymentRequest(const SendCoinsRecipient &recipient);
 
+    void updateLabels();
+
+    static QList<CAmount> payAmounts;
+    static bool fSubtractFeeFromAmount;
+
+    //! Minimum absolute fee (not per kilobyte)
+    CAmount nMinimumTotalFee;
+
 public Q_SLOTS:
     void clear();
     void reject();
     void accept();
-    SendCoinsEntry *addEntry();
+    SendZCoinsEntry *addEntry();
     void updateTabsAndLabels();
     void setBalance(const CAmount& balance, const CAmount& unconfirmedBalance, const CAmount& immatureBalance,
-                    const CAmount& watchOnlyBalance, const CAmount& watchUnconfBalance, const CAmount& watchImmatureBalancei,
-                    const CAmount& t_balance, const CAmount& z_balance, const CAmount& unshielded);
+                    const CAmount& watchOnlyBalance, const CAmount& watchUnconfBalance, const CAmount& watchImmatureBalance);
 
 private:
-    Ui::SendCoinsPage *ui;
+    Ui::SendZCoinsDialog *ui;
     ClientModel *clientModel;
     WalletModel *model;
     bool fNewRecipientAllowed;
@@ -77,17 +86,14 @@ private Q_SLOTS:
     void on_sendButton_clicked();
     void on_buttonChooseFee_clicked();
     void on_buttonMinimizeFee_clicked();
-    void removeEntry(SendCoinsEntry* entry);
+    void removeEntry(SendZCoinsEntry* entry);
     void updateDisplayUnit();
-//    void coinSelectionFeatureChanged(bool);
-    void coinSelectionButtonClicked();
-//    void coinSelectionChangeChecked(int);
-//    void coinSelectionChangeEdited(const QString &);
-    void coinSelectionUpdateLabels();
-    void coinSelectionClipboardAmount();
-    void coinSelectionClipboardFee();
-    void coinSelectionClipboardAfterFee();
-    void coinSelectionClipboardChange();
+    void coinControlUpdateLabels();
+    void coinControlClipboardAmount();
+    void coinControlClipboardFee();
+    void coinControlClipboardAfterFee();
+    void clipboardLowOutput();
+    void coinControlClipboardChange();
     void setMinimumFee();
     void updateFeeSectionControls();
     void updateMinFeeLabel();
@@ -101,12 +107,12 @@ Q_SIGNALS:
 
 
 
-class SendConfirmationDialog : public QMessageBox
+class SendZConfirmationDialog : public QMessageBox
 {
     Q_OBJECT
 
 public:
-    SendConfirmationDialog(const QString &title, const QString &text, int secDelay = 0, QWidget *parent = 0);
+    SendZConfirmationDialog(const QString &title, const QString &text, int secDelay = 0, QWidget *parent = 0);
     int exec();
 
 private Q_SLOTS:
@@ -119,4 +125,4 @@ private:
     int secDelay;
 };
 
-#endif // BITCOIN_QT_SENDCOINSPAGE_H
+#endif // BITCOIN_QT_SENDZCOINSDIALOG_H

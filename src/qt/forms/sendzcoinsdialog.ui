@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SendCoinsPage</class>
- <widget class="QDialog" name="SendCoinsPage">
+ <class>SendZCoinsDialog</class>
+ <widget class="QDialog" name="SendZCoinsDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>850</width>
-    <height>685</height>
+    <height>594</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -67,7 +67,7 @@
        <number>6</number>
       </property>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayoutCoinSelection" stretch="0,0,0,0">
+       <layout class="QVBoxLayout" name="verticalLayoutCoinSelection" stretch="0,0,0,0,1">
         <property name="spacing">
          <number>0</number>
         </property>
@@ -107,7 +107,7 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayoutCoinSelection2" stretch="0,0,0">
+         <layout class="QHBoxLayout" name="horizontalLayoutCoinSelection2" stretch="0">
           <property name="spacing">
            <number>8</number>
           </property>
@@ -115,49 +115,7 @@
            <number>10</number>
           </property>
           <item>
-           <widget class="QPushButton" name="pushButtonCoinSelection">
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <property name="text">
-             <string>Select coins...</string>
-            </property>
-            <property name="autoDefault">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacerCoinSelection">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>1</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QLabel" name="labelCoinSelectionInsuffFunds">
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color:red;font-weight:bold;</string>
-            </property>
-            <property name="text">
-             <string>Insufficient funds!</string>
-            </property>
-            <property name="margin">
-             <number>5</number>
-            </property>
-           </widget>
+           <widget class="QComboBox" name="comboBoxCoinSelection"/>
           </item>
          </layout>
         </item>
@@ -192,7 +150,7 @@
             <number>0</number>
            </property>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayoutCoinSelection3" stretch="0,0,0,0">
+            <layout class="QHBoxLayout" name="horizontalLayoutCoinSelection3" stretch="0,0,0,0,0,1,0">
              <property name="spacing">
               <number>20</number>
              </property>
@@ -204,89 +162,6 @@
              </property>
              <item>
               <layout class="QFormLayout" name="formLayoutCoinSelection1">
-               <property name="horizontalSpacing">
-                <number>10</number>
-               </property>
-               <property name="verticalSpacing">
-                <number>14</number>
-               </property>
-               <property name="leftMargin">
-                <number>10</number>
-               </property>
-               <property name="topMargin">
-                <number>4</number>
-               </property>
-               <property name="rightMargin">
-                <number>6</number>
-               </property>
-               <item row="0" column="0">
-                <widget class="QLabel" name="labelCoinSelectionQuantityText">
-                 <property name="font">
-                  <font>
-                   <weight>75</weight>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Quantity:</string>
-                 </property>
-                 <property name="margin">
-                  <number>0</number>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
-                <widget class="QLabel" name="labelCoinSelectionQuantity">
-                 <property name="cursor">
-                  <cursorShape>IBeamCursor</cursorShape>
-                 </property>
-                 <property name="contextMenuPolicy">
-                  <enum>Qt::ActionsContextMenu</enum>
-                 </property>
-                 <property name="text">
-                  <string notr="true">0</string>
-                 </property>
-                 <property name="margin">
-                  <number>0</number>
-                 </property>
-                 <property name="textInteractionFlags">
-                  <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="labelCoinSelectionBytesText">
-                 <property name="font">
-                  <font>
-                   <weight>75</weight>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Bytes:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QLabel" name="labelCoinSelectionBytes">
-                 <property name="cursor">
-                  <cursorShape>IBeamCursor</cursorShape>
-                 </property>
-                 <property name="contextMenuPolicy">
-                  <enum>Qt::ActionsContextMenu</enum>
-                 </property>
-                 <property name="text">
-                  <string notr="true">0</string>
-                 </property>
-                 <property name="textInteractionFlags">
-                  <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QFormLayout" name="formLayoutCoinSelection2">
                <property name="horizontalSpacing">
                 <number>10</number>
                </property>
@@ -327,36 +202,7 @@
                   <enum>Qt::ActionsContextMenu</enum>
                  </property>
                  <property name="text">
-                  <string notr="true">0.00 BTC</string>
-                 </property>
-                 <property name="textInteractionFlags">
-                  <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="labelCoinSelectionPriorityText">
-                 <property name="font">
-                  <font>
-                   <weight>75</weight>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Priority:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QLabel" name="labelCoinSelectionPriority">
-                 <property name="cursor">
-                  <cursorShape>IBeamCursor</cursorShape>
-                 </property>
-                 <property name="contextMenuPolicy">
-                  <enum>Qt::ActionsContextMenu</enum>
-                 </property>
-                 <property name="text">
-                  <string notr="true">medium</string>
+                  <string notr="true">0.00 LTZ</string>
                  </property>
                  <property name="textInteractionFlags">
                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -366,7 +212,7 @@
               </layout>
              </item>
              <item>
-              <layout class="QFormLayout" name="formLayoutCoinSelection3">
+              <layout class="QFormLayout" name="formLayoutCoinSelection2">
                <property name="horizontalSpacing">
                 <number>10</number>
                </property>
@@ -407,36 +253,7 @@
                   <enum>Qt::ActionsContextMenu</enum>
                  </property>
                  <property name="text">
-                  <string notr="true">0.00 BTC</string>
-                 </property>
-                 <property name="textInteractionFlags">
-                  <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="labelCoinSelectionLowOutputText">
-                 <property name="font">
-                  <font>
-                   <weight>75</weight>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Dust:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QLabel" name="labelCoinSelectionLowOutput">
-                 <property name="cursor">
-                  <cursorShape>IBeamCursor</cursorShape>
-                 </property>
-                 <property name="contextMenuPolicy">
-                  <enum>Qt::ActionsContextMenu</enum>
-                 </property>
-                 <property name="text">
-                  <string notr="true">no</string>
+                  <string notr="true">0.00 LTZ</string>
                  </property>
                  <property name="textInteractionFlags">
                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -446,7 +263,7 @@
               </layout>
              </item>
              <item>
-              <layout class="QFormLayout" name="formLayoutCoinSelection4">
+              <layout class="QFormLayout" name="formLayoutCoinSelection3">
                <property name="horizontalSpacing">
                 <number>10</number>
                </property>
@@ -487,14 +304,33 @@
                   <enum>Qt::ActionsContextMenu</enum>
                  </property>
                  <property name="text">
-                  <string notr="true">0.00 BTC</string>
+                  <string notr="true">0.00 LTZ</string>
                  </property>
                  <property name="textInteractionFlags">
                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="0">
+              </layout>
+             </item>
+             <item>
+              <layout class="QFormLayout" name="formLayoutCoinSelection4">
+               <property name="horizontalSpacing">
+                <number>10</number>
+               </property>
+               <property name="verticalSpacing">
+                <number>14</number>
+               </property>
+               <property name="leftMargin">
+                <number>6</number>
+               </property>
+               <property name="topMargin">
+                <number>4</number>
+               </property>
+               <property name="rightMargin">
+                <number>6</number>
+               </property>
+               <item row="0" column="0">
                 <widget class="QLabel" name="labelCoinSelectionChangeText">
                  <property name="font">
                   <font>
@@ -507,7 +343,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="1" column="1">
+               <item row="0" column="1">
                 <widget class="QLabel" name="labelCoinSelectionChange">
                  <property name="cursor">
                   <cursorShape>IBeamCursor</cursorShape>
@@ -516,7 +352,7 @@
                   <enum>Qt::ActionsContextMenu</enum>
                  </property>
                  <property name="text">
-                  <string notr="true">0.00 BTC</string>
+                  <string notr="true">0.00 LTZ</string>
                  </property>
                  <property name="textInteractionFlags">
                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -525,13 +361,93 @@
                </item>
               </layout>
              </item>
+             <item>
+              <layout class="QFormLayout" name="formLayoutCoinSelection5">
+               <property name="horizontalSpacing">
+                <number>10</number>
+               </property>
+               <property name="verticalSpacing">
+                <number>14</number>
+               </property>
+               <property name="leftMargin">
+                <number>6</number>
+               </property>
+               <property name="topMargin">
+                <number>4</number>
+               </property>
+               <property name="rightMargin">
+                <number>6</number>
+               </property>
+               <item row="0" column="0">
+                <widget class="QLabel" name="labelCoinSelectionLowOutputText">
+                 <property name="font">
+                  <font>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Dust:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLabel" name="labelCoinSelectionLowOutput">
+                 <property name="cursor">
+                  <cursorShape>IBeamCursor</cursorShape>
+                 </property>
+                 <property name="contextMenuPolicy">
+                  <enum>Qt::ActionsContextMenu</enum>
+                 </property>
+                 <property name="text">
+                  <string notr="true">no</string>
+                 </property>
+                 <property name="textInteractionFlags">
+                  <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QLabel" name="labelCoinSelectionInsuffFunds">
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color:red;font-weight:bold;</string>
+               </property>
+               <property name="text">
+                <string>Insufficient funds!</string>
+               </property>
+               <property name="margin">
+                <number>5</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacerCoinSelection">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>1</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
             </layout>
            </item>
           </layout>
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayoutCoinSelection4" stretch="0">
+         <layout class="QHBoxLayout" name="horizontalLayoutCoinSelection4">
           <property name="spacing">
            <number>12</number>
           </property>
@@ -544,29 +460,20 @@
           <property name="rightMargin">
            <number>5</number>
           </property>
-          <item>
-           <widget class="QLabel" name="labelCoinSelectionChangeLabel">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="margin">
-             <number>3</number>
-            </property>
-           </widget>
-          </item>
          </layout>
+        </item>
+        <item>
+         <spacer name="verticalSpacerCoinSelection">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>800</width>
+            <height>1</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </item>
@@ -584,7 +491,7 @@
         <x>0</x>
         <y>0</y>
         <width>830</width>
-        <height>157</height>
+        <height>117</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1">
@@ -661,7 +568,7 @@
        <number>0</number>
       </property>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayoutFee2" stretch="0,0,0,0">
+       <layout class="QVBoxLayout" name="verticalLayoutFee2" stretch="0,0,0">
         <property name="spacing">
          <number>0</number>
         </property>
@@ -671,9 +578,6 @@
         <property name="topMargin">
          <number>0</number>
         </property>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3"/>
-        </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayoutFee1">
           <property name="bottomMargin">
@@ -874,7 +778,7 @@
                  <item>
                   <widget class="QCheckBox" name="checkBoxMinimumFee">
                    <property name="toolTip">
-                    <string>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks. But be aware that this can end up in a never confirming transaction once there is more demand for litecoinz transactions than the network can process.</string>
+                    <string>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks. But be aware that this can end up in a never confirming transaction once there is more demand for bitcoin transactions than the network can process.</string>
                    </property>
                    <property name="text">
                     <string/>
@@ -887,7 +791,7 @@
                     <bool>true</bool>
                    </property>
                    <property name="toolTip">
-                    <string>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks. But be aware that this can end up in a never confirming transaction once there is more demand for litecoinz transactions than the network can process.</string>
+                    <string>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks. But be aware that this can end up in a never confirming transaction once there is more demand for bitcoin transactions than the network can process.</string>
                    </property>
                    <property name="text">
                     <string>(read the tooltip)</string>
@@ -1253,7 +1157,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Spendable balance (T+Z-U):</string>
+          <string>Balance (Z+T):</string>
          </property>
         </widget>
        </item>
@@ -1290,28 +1194,12 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <tabstops>
-  <tabstop>pushButtonCoinSelection</tabstop>
-  <tabstop>scrollArea</tabstop>
-  <tabstop>buttonChooseFee</tabstop>
-  <tabstop>buttonMinimizeFee</tabstop>
-  <tabstop>radioSmartFee</tabstop>
-  <tabstop>sliderSmartFee</tabstop>
-  <tabstop>radioCustomFee</tabstop>
-  <tabstop>radioCustomPerKilobyte</tabstop>
-  <tabstop>radioCustomAtLeast</tabstop>
-  <tabstop>customFee</tabstop>
-  <tabstop>checkBoxMinimumFee</tabstop>
-  <tabstop>sendButton</tabstop>
-  <tabstop>clearButton</tabstop>
-  <tabstop>addButton</tabstop>
- </tabstops>
  <resources>
   <include location="../bitcoin.qrc"/>
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="groupCustomFee"/>
   <buttongroup name="groupFee"/>
+  <buttongroup name="groupCustomFee"/>
  </buttongroups>
 </ui>

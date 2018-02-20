@@ -664,6 +664,32 @@ bool WalletModel::isSpent(const COutPoint& outpoint) const
     return wallet->IsSpent(outpoint.hash, outpoint.n);
 }
 
+void WalletModel::listZCoins(std::map<QString, std::vector<CUnspentNotePlaintextEntry> >& mapCoins) const
+{
+    std::set<libzcash::PaymentAddress> zaddrs = {};
+    int nMinDepth = 1;
+    int nMaxDepth = 9999999;
+
+    std::set<libzcash::PaymentAddress> addresses;
+
+    LOCK2(cs_main, wallet->cs_wallet); // ListLockedCoins, mapWallet
+
+    wallet->GetPaymentAddresses(addresses);
+    for (auto addr : addresses ) {
+        if (wallet->HaveSpendingKey(addr)) {
+            zaddrs.insert(addr);
+        }
+    }
+
+    if (zaddrs.size() > 0) {
+        std::vector<CUnspentNotePlaintextEntry> entries;
+        wallet->GetUnspentFilteredNotes(entries, zaddrs, nMinDepth, nMaxDepth);
+        for (CUnspentNotePlaintextEntry & entry : entries) {
+            mapCoins[QString::fromStdString(CZCPaymentAddress(entry.address).ToString())].push_back(entry);
+        }
+    }
+}
+
 // AvailableCoins + LockedCoins grouped by wallet address (put change in one group with wallet address)
 void WalletModel::listCoins(std::map<QString, std::vector<COutput> >& mapCoins) const
 {
