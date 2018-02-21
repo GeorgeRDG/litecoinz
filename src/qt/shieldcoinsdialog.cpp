@@ -21,11 +21,10 @@
 #include <univalue.h>
 #include "rpc/server.h"
 
-#include "wallet/asyncrpcoperation_shieldcoinbase.h"
-
 #include <QApplication>
 #include <QSettings>
 #include <QMessageBox>
+#include <QTimer>
 
 ShieldCoinsDialog::ShieldCoinsDialog(const PlatformStyle *platformStyle, QWidget *parent) :
     QDialog(parent),
@@ -66,33 +65,57 @@ ShieldCoinsDialog::~ShieldCoinsDialog()
 
 void ShieldCoinsDialog::on_shieldButton_clicked()
 {
+
     UniValue params(UniValue::VARR);
-    params.push_back("*");
-    params.push_back(ui->reqShieldAddress->text().toStdString());
-    params.push_back(ValueFromAmount(payTxFee.GetFeePerK()));
-    params.push_back(ui->operationLimit->value());
+    UniValue ret;
 
-    UniValue ret = z_shieldcoinbase(params, false);
+    try {
+        params.push_back("*");
+        params.push_back(ui->reqShieldAddress->text().toStdString());
+        params.push_back(ValueFromAmount(payTxFee.GetFeePerK()));
+        params.push_back(ui->operationLimit->value());
 
-    QString remainingUTXOs = QString("%1").arg(ret[0].get_int());
-    //QString remainingValue = QString("%1").arg(ret[1].get_real());
-    QString remainingValue = BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), AmountFromValue(ret[1].get_real()));
-    QString shieldingUTXOs = QString("%1").arg(ret[2].get_int());
-    //QString shieldingValue = QString("%1").arg(ret[3].get_real());
-    QString shieldingValue = BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), AmountFromValue(ret[3].get_real()));
-    QString opid = QString::fromStdString(ret[4].get_str());
+        ret = z_shieldcoinbase(params, false);
+    } catch (std::exception &e) {
+        qFatal("Error %s ", e.what());
+    } catch (...) {
+        qFatal("Error <unknown>");
+    }
 
-    QString label1 = "Operation was submitted in background.";
-    QString label2 = "remainingUTXOs: " + remainingUTXOs;
-    QString label3 = "remainingValue: " + remainingValue;
-    QString label4 = "shieldingUTXOs: " + shieldingUTXOs;
-    QString label5 = "shieldingValue: " + shieldingValue;
-    QString label6 = "opid: " + opid;
+    try {
+        UniValue ret1 = find_value(ret, "remainingUTXOs");
+        UniValue ret2 = find_value(ret, "remainingValue");
+        UniValue ret3 = find_value(ret, "shieldingUTXOs");
+        UniValue ret4 = find_value(ret, "shieldingValue");
+        UniValue ret5 = find_value(ret, "opid");
 
-    ResultsDialog dlg(platformStyle, "Shielding coinbase.", label1, label2, label3, label4, label5, label6, this);
-    dlg.exec();
+        QString remainingUTXOs = QString("%1").arg(ret1.get_int());
+        QString remainingValue = BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), AmountFromValue(ret2.get_real()));
+        QString shieldingUTXOs = QString("%1").arg(ret3.get_int());
+        QString shieldingValue = BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), AmountFromValue(ret4.get_real()));
+        QString opid = QString::fromStdString(ret5.get_str());
 
-    this->close();
+        QString label1 = "Operation was submitted in background.";
+        QString label2 = "remainingUTXOs: " + remainingUTXOs;
+        QString label3 = "remainingValue: " + remainingValue;
+        QString label4 = "shieldingUTXOs: " + shieldingUTXOs;
+        QString label5 = "shieldingValue: " + shieldingValue;
+
+        ResultsDialog dlg(platformStyle, this);
+        dlg.setOperationId(opid);
+        dlg.setLabels(label1, label2, label3, label4, label5);
+
+        this->close();
+        dlg.exec();
+    } catch (std::exception &e) {
+        qDebug("Error %s ", e.what());
+        QMessageBox msgBox("", e.what(), QMessageBox::Critical, 0, 0, 0, this, Qt::WindowTitleHint | Qt::WindowSystemMenuHint);
+        msgBox.exec();
+    } catch (...) {
+        qDebug("Error <unknown>");
+        QMessageBox msgBox("", "Error <unknown>", QMessageBox::Critical, 0, 0, 0, this, Qt::WindowTitleHint | Qt::WindowSystemMenuHint);
+        msgBox.exec();
+    }
 }
 
 void ShieldCoinsDialog::on_deleteButton_clicked()

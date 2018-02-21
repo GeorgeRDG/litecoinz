@@ -139,8 +139,9 @@ void SendZCoinsDialog::setModel(WalletModel *model)
         }
 
         setBalance(model->getBalance(), model->getUnconfirmedBalance(), model->getImmatureBalance(),
-                   model->getWatchBalance(), model->getWatchUnconfirmedBalance(), model->getWatchImmatureBalance());
-        connect(model, SIGNAL(balanceChanged(CAmount,CAmount,CAmount,CAmount,CAmount,CAmount)), this, SLOT(setBalance(CAmount,CAmount,CAmount,CAmount,CAmount,CAmount)));
+                   model->getWatchBalance(), model->getWatchUnconfirmedBalance(), model->getWatchImmatureBalance(),
+                   model->getTBalance(), model->getZBalance(false), model->getUnshielded());
+        connect(model, SIGNAL(balanceChanged(CAmount,CAmount,CAmount,CAmount,CAmount,CAmount,CAmount,CAmount,CAmount)), this, SLOT(setBalance(CAmount,CAmount,CAmount,CAmount,CAmount,CAmount,CAmount,CAmount,CAmount)));
         connect(model->getOptionsModel(), SIGNAL(displayUnitChanged(int)), this, SLOT(updateDisplayUnit()));
         updateDisplayUnit();
 
@@ -496,8 +497,10 @@ bool SendZCoinsDialog::handlePaymentRequest(const SendCoinsRecipient &rv)
 }
 
 void SendZCoinsDialog::setBalance(const CAmount& balance, const CAmount& unconfirmedBalance, const CAmount& immatureBalance,
-                                 const CAmount& watchBalance, const CAmount& watchUnconfirmedBalance, const CAmount& watchImmatureBalance)
+                                  const CAmount& watchBalance, const CAmount& watchUnconfirmedBalance, const CAmount& watchImmatureBalance,
+                                  const CAmount& t_balance, const CAmount& z_balance, const CAmount& unshielded)
 {
+    Q_UNUSED(balance);
     Q_UNUSED(unconfirmedBalance);
     Q_UNUSED(immatureBalance);
     Q_UNUSED(watchBalance);
@@ -506,13 +509,13 @@ void SendZCoinsDialog::setBalance(const CAmount& balance, const CAmount& unconfi
 
     if(model && model->getOptionsModel())
     {
-        ui->labelBalance->setText(BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), balance));
+        ui->labelBalance->setText(BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), (t_balance + z_balance - unshielded)));
     }
 }
 
 void SendZCoinsDialog::updateDisplayUnit()
 {
-    setBalance(model->getBalance(), 0, 0, 0, 0, 0);
+    setBalance(0, 0, 0, 0, 0, 0, model->getTBalance(), model->getZBalance(false), model->getUnshielded());
     ui->customFee->setDisplayUnit(model->getOptionsModel()->getDisplayUnit());
     updateMinFeeLabel();
     updateSmartFeeLabel();

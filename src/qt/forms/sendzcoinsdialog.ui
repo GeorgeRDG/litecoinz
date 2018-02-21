@@ -1156,8 +1156,11 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="toolTip">
+          <string/>
+         </property>
          <property name="text">
-          <string>Balance (Z+T):</string>
+          <string>Balance (Z+T-U):</string>
          </property>
         </widget>
        </item>
@@ -1171,6 +1174,9 @@
          </property>
          <property name="cursor">
           <cursorShape>IBeamCursor</cursorShape>
+         </property>
+         <property name="toolTip">
+          <string>This is the total balance available to be spent. It's calculate adding balances in private and trasparent addresses minus transaction still in the coinbase that must be shielded before using them.</string>
          </property>
          <property name="text">
           <string notr="true">123.456 LTZ</string>

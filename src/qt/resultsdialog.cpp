@@ -6,26 +6,99 @@
 #include "ui_resultsdialog.h"
 #include "platformstyle.h"
 
-ResultsDialog::ResultsDialog(const PlatformStyle *platformStyle, const QString& strTitle, const QString& strLabel_1, const QString& strLabel_2, const QString& strLabel_3, const QString& strLabel_4, const QString& strLabel_5, const QString& strLabel_6, QWidget *parent) :
+#include <univalue.h>
+#include "rpc/server.h"
+
+#include <QTimer>
+#include <QMessageBox>
+
+ResultsDialog::ResultsDialog(const PlatformStyle *platformStyle, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::ResultsDialog),
-    strTitle(strTitle),
-    strLabel_1(strLabel_1),
-    strLabel_2(strLabel_2),
-    strLabel_3(strLabel_3),
-    strLabel_4(strLabel_4),
-    strLabel_5(strLabel_5),
-    strLabel_6(strLabel_6)
+    ui(new Ui::ResultsDialog)
 {
     ui->setupUi(this);
 
-    setWindowTitle(strTitle);
-    ui->label_1->setText(strLabel_1);
-    ui->label_2->setText(strLabel_2);
-    ui->label_3->setText(strLabel_3);
-    ui->label_4->setText(strLabel_4);
-    ui->label_5->setText(strLabel_5);
-    ui->label_6->setText(strLabel_6);
+    setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::WindowTitleHint);
+
+    ui->buttonBox->hide();
+    ui->progressBar->hide();
+}
+
+int ResultsDialog::exec()
+{
+    counter = 0;
+    skipEsc = true;
+
+    ui->progressBar->setValue(counter);
+    ui->progressBar->setMinimum(0);
+    ui->progressBar->show();
+
+    connect(&timer, SIGNAL(timeout()), this, SLOT(updateProgressBar()));
+    timer.start(1000);
+    QDialog::exec();
+}
+
+void ResultsDialog::reject()
+{
+    if(!skipEsc)
+        QDialog::reject();
+}
+
+void ResultsDialog::setOperationId(QString opid)
+{
+    strOperationId = opid;
+    ui->labelOperationId->setText("opid: " + strOperationId);
+}
+
+void ResultsDialog::setLabels(QString label1, QString label2, QString label3, QString label4, QString label5)
+{
+    ui->label_1->setText(label1);
+    ui->label_2->setText(label2);
+    ui->label_3->setText(label3);
+    ui->label_4->setText(label4);
+    ui->label_5->setText(label5);
+}
+
+void ResultsDialog::updateProgressBar()
+{
+    QString strStatus;
+    try {
+        /* Check and display the operation status */
+        UniValue obj(UniValue::VARR);
+        UniValue params(UniValue::VARR);
+        obj.push_back(strOperationId.toStdString());
+        params.push_back(obj);
+        UniValue ret = z_getoperationstatus(params, false);
+
+        UniValue status = find_value(ret[0], "status");
+        strStatus = QString::fromStdString(status.get_str());
+    } catch (std::exception &e) {
+        strStatus = "Ops... an internal error occurred!";
+        qDebug("Error %s ", e.what());
+        QMessageBox msgBox("", e.what(), QMessageBox::Critical, 0, 0, 0, this, Qt::WindowTitleHint | Qt::WindowSystemMenuHint);
+        msgBox.exec();
+    } catch (...) {
+        strStatus = "Ops... an internal error occurred!";
+        qDebug("Error <unknown>");
+        QMessageBox msgBox("", "Error <unknown>", QMessageBox::Critical, 0, 0, 0, this, Qt::WindowTitleHint | Qt::WindowSystemMenuHint);
+        msgBox.exec();
+    }
+
+    ui->labelResult->setText("Status: " + strStatus);
+
+    if(strStatus == "executing")
+    {
+        counter++;
+        ui->progressBar->setValue(counter);
+    }
+    else
+    {
+        timer.stop();
+        ui->progressBar->setValue(100);
+        ui->progressBar->hide();
+        ui->buttonBox->show();
+        skipEsc = false;
+    }
 }
 
 ResultsDialog::~ResultsDialog()
@@ -35,5 +108,5 @@ ResultsDialog::~ResultsDialog()
 
 void ResultsDialog::on_buttonBox_clicked()
 {
-    this->close();
+    QDialog::done(QDialog::Accepted);
 }

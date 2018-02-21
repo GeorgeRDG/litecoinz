@@ -7,6 +7,8 @@
 
 #include "platformstyle.h"
 #include <QDialog>
+#include <QTimer>
+#include <QProgressDialog>
 
 namespace Ui {
     class ResultsDialog;
@@ -19,21 +21,28 @@ class ResultsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ResultsDialog(const PlatformStyle *platformStyle, const QString& strTitle, const QString& strLabel_1, const QString& strLabel_2, const QString& strLabel_3, const QString& strLabel_4, const QString& strLabel_5, const QString& strLabel_6, QWidget *parent);
+    explicit ResultsDialog(const PlatformStyle *platformStyle, QWidget *parent);
     ~ResultsDialog();
+
+    void setOperationId(QString opid);
+    void setLabels(QString label1, QString label2, QString label3, QString label4, QString label5);
 
 public Q_SLOTS:
     void on_buttonBox_clicked();
+    int exec() override;
+    void reject() override;
 
 private:
     Ui::ResultsDialog *ui;
-    QString strTitle;
-    QString strLabel_1;
-    QString strLabel_2;
-    QString strLabel_3;
-    QString strLabel_4;
-    QString strLabel_5;
-    QString strLabel_6;
+    QString strOperationId;
+
+    int counter;
+    QTimer timer;
+
+    bool skipEsc;
+
+private Q_SLOTS:
+    void updateProgressBar();
 };
 
 #endif // BITCOIN_QT_RESULTSDIALOG_H
