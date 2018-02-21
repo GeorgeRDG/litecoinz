@@ -23,6 +23,9 @@ SendZCoinsEntry::SendZCoinsEntry(const PlatformStyle *platformStyle, QWidget *pa
 {
     ui->setupUi(this);
 
+    ui->addAsMemo->setVisible(false);
+    ui->memoLabel->setVisible(false);
+
     ui->addressBookButton->setIcon(QIcon(":/images/addressbook1"));
     ui->pasteButton->setIcon(QIcon(":/images/paste"));
     ui->deleteButton->setIcon(QIcon(":/images/clear"));
@@ -96,12 +99,10 @@ void SendZCoinsEntry::clear()
     // clear UI elements for normal payment
     ui->payTo->clear();
     ui->addAsLabel->clear();
+    ui->addAsMemo->clear();
     ui->payAmount->clear();
     ui->checkboxSubtractFeeFromAmount->setCheckState(Qt::Unchecked);
     ui->checkboxSendToZAddress->setCheckState(Qt::Unchecked);
-    ui->messageTextLabel->clear();
-    ui->messageTextLabel->hide();
-    ui->messageLabel->hide();
     // clear UI elements for unauthenticated payment request
     ui->payTo_is->clear();
     ui->payAmount_is->clear();
@@ -166,8 +167,8 @@ SendCoinsRecipient SendZCoinsEntry::getValue()
     // Normal payment
     recipient.address = ui->payTo->text();
     recipient.label = ui->addAsLabel->text();
+    recipient.message = ui->addAsMemo->text();
     recipient.amount = ui->payAmount->value();
-    recipient.message = ui->messageTextLabel->text();
     recipient.fSubtractFeeFromAmount = (ui->checkboxSubtractFeeFromAmount->checkState() == Qt::Checked);
 
     return recipient;
@@ -177,7 +178,8 @@ QWidget *SendZCoinsEntry::setupTabChain(QWidget *prev)
 {
     QWidget::setTabOrder(prev, ui->payTo);
     QWidget::setTabOrder(ui->payTo, ui->addAsLabel);
-    QWidget *w = ui->payAmount->setupTabChain(ui->addAsLabel);
+    QWidget::setTabOrder(ui->addAsLabel, ui->addAsMemo);
+    QWidget *w = ui->payAmount->setupTabChain(ui->addAsMemo);
     QWidget::setTabOrder(w, ui->checkboxSendToZAddress);
     QWidget::setTabOrder(ui->checkboxSendToZAddress, ui->checkboxSubtractFeeFromAmount);
     QWidget::setTabOrder(ui->checkboxSubtractFeeFromAmount, ui->addressBookButton);
@@ -209,12 +211,8 @@ void SendZCoinsEntry::setValue(const SendCoinsRecipient &value)
     }
     else // normal payment
     {
-        // message
-        ui->messageTextLabel->setText(recipient.message);
-        ui->messageTextLabel->setVisible(!recipient.message.isEmpty());
-        ui->messageLabel->setVisible(!recipient.message.isEmpty());
-
         ui->addAsLabel->clear();
+        ui->addAsMemo->clear();
         ui->payTo->setText(recipient.address); // this may set a label from addressbook
         if (!recipient.label.isEmpty()) // if a label had been set from the addressbook, don't overwrite with an empty label
             ui->addAsLabel->setText(recipient.label);
@@ -270,23 +268,30 @@ bool SendZCoinsEntry::updateLabel(const QString &address)
 
 void SendZCoinsEntry::sendToZAddressChangeChecked(int state)
 {
+    ui->addAsLabel->clear();
+    ui->addAsMemo->clear();
+
     if (state == Qt::Checked)
     {
-        ui->addAsLabel->clear();
-        ui->addAsLabel->setEnabled(false);
         ui->addAsLabel->setVisible(false);
         ui->labellLabel->setVisible(false);
-        ui->addressBookButton->setVisible(false);
+
+        ui->addAsMemo->setVisible(true);
+        ui->memoLabel->setVisible(true);
+
+        ui->addressBookButton->setEnabled(false);
         ui->payTo->clear();
         GUIUtil::setupZAddressWidget(ui->payTo, this);
     }
     else
     {
-        ui->addAsLabel->clear();
-        ui->addAsLabel->setEnabled(true);
         ui->addAsLabel->setVisible(true);
         ui->labellLabel->setVisible(true);
-        ui->addressBookButton->setVisible(true);
+
+        ui->addAsMemo->setVisible(false);
+        ui->memoLabel->setVisible(false);
+
+        ui->addressBookButton->setEnabled(true);
         ui->payTo->clear();
         GUIUtil::setupAddressWidget(ui->payTo, this);
     }
