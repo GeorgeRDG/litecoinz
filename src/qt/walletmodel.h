@@ -147,6 +147,7 @@ public:
 
     // Check address for validity
     bool validateAddress(const QString &address);
+    bool validateZAddress(const QString &address);
 
     // Return status record for SendCoins, contains error id + information
     struct SendCoinsReturn
@@ -156,11 +157,21 @@ public:
         StatusCode status;
     };
 
+    // Return status record for SendZCoins, contains error id + opid
+    struct SendZCoinsReturn
+    {
+        SendZCoinsReturn(StatusCode status = OK, QString opid = NULL):
+            status(status), opid(opid) {}
+        StatusCode status;
+        QString opid;
+    };
+
     // prepare transaction for getting txfee before sending coins
     SendCoinsReturn prepareTransaction(WalletModelTransaction &transaction, const CCoinControl *coinControl = NULL);
 
     // Send coins to a list of recipients
     SendCoinsReturn sendCoins(WalletModelTransaction &transaction);
+    SendZCoinsReturn sendZCoins(WalletModelTransaction &transaction);
 
     // Wallet encryption
     bool setWalletEncrypted(bool encrypted, const SecureString &passphrase);

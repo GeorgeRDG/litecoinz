@@ -246,6 +246,25 @@ bool WalletModel::validateAddress(const QString &address)
     return addressParsed.IsValid();
 }
 
+bool WalletModel::validateZAddress(const QString &address)
+{
+    bool isZaddr = false;
+
+    // Validate the passed LitecoinZ z-address
+    try {
+        CZCPaymentAddress zaddr(address.toStdString());
+        zaddr.Get();
+        isZaddr = true;
+    } catch (const std::runtime_error&) {
+        isZaddr = false;
+    }
+
+    if (isZaddr)
+        return QValidator::Acceptable;
+
+    return QValidator::Invalid;
+}
+
 WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransaction &transaction, const CCoinControl *coinControl)
 {
     CAmount total = 0;
@@ -290,7 +309,7 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
         }
         else
         {   // User-entered litecoinz address / amount:
-            if(!validateAddress(rcp.address))
+            if((!validateAddress(rcp.address)) && (!validateZAddress(rcp.address)))
             {
                 return InvalidAddress;
             }
@@ -355,6 +374,13 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
     }
 
     return SendCoinsReturn(OK);
+}
+
+WalletModel::SendZCoinsReturn WalletModel::sendZCoins(WalletModelTransaction &transaction)
+{
+    // TODO
+    //
+    return SendZCoinsReturn(OK, QString::fromStdString("opid-1234-5678-9123"));
 }
 
 WalletModel::SendCoinsReturn WalletModel::sendCoins(WalletModelTransaction &transaction)

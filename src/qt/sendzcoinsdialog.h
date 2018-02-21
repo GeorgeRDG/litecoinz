@@ -83,6 +83,8 @@ private:
     void minimizeFeeSection(bool fMinimize);
     void updateFeeMinimizedLabel();
 
+    CAmount nPayFee = 0;
+
 private Q_SLOTS:
     void on_sendButton_clicked();
     void on_buttonChooseFee_clicked();

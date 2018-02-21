@@ -173,7 +173,6 @@ void SendZCoinsDialog::setModel(WalletModel *model)
 
     // Load Input COINS combobox
     ui->comboBoxCoinSelection->clear();
-//    ui->comboBoxCoinSelection->addItem("");
 
     std::map<QString, std::vector<COutput> > mapCoins;
     model->listCoins(mapCoins);
@@ -248,7 +247,7 @@ void SendZCoinsDialog::on_sendButton_clicked()
     }
 
     fNewRecipientAllowed = false;
-/*
+
     WalletModel::UnlockContext ctx(model->requestUnlock());
     if(!ctx.isValid())
     {
@@ -260,7 +259,7 @@ void SendZCoinsDialog::on_sendButton_clicked()
     // prepare transaction for getting txFee earlier
     WalletModelTransaction currentTransaction(recipients);
     WalletModel::SendCoinsReturn prepareStatus;
-    prepareStatus = model->prepareTransaction(currentTransaction, CoinSelectionDialog::coinControl);
+    prepareStatus = model->prepareTransaction(currentTransaction);
 
     // process prepareStatus and on error generate message shown to user
     processSendCoinsReturn(prepareStatus,
@@ -351,18 +350,18 @@ void SendZCoinsDialog::on_sendButton_clicked()
     }
 
     // now send the prepared transaction
-    WalletModel::SendCoinsReturn sendStatus = model->sendCoins(currentTransaction);
+    WalletModel::SendZCoinsReturn sendZStatus = model->sendZCoins(currentTransaction);
     // process sendStatus and on error generate message shown to user
-    processSendCoinsReturn(sendStatus);
+//marco    processSendCoinsReturn(sendZStatus);
 
-    if (sendStatus.status == WalletModel::OK)
+    if (sendZStatus.status == WalletModel::OK)
     {
+        QString opid = sendZStatus.opid;
+        ui->labelCoinSelectionFeatures->setText(opid);
         accept();
-        CoinSelectionDialog::coinControl->UnSelectAll();
         coinControlUpdateLabels();
     }
     fNewRecipientAllowed = true;
-*/
 }
 
 void SendZCoinsDialog::clear()
@@ -723,6 +722,7 @@ void SendZCoinsDialog::coinControlUpdateLabels()
 
     // set pay amounts
     SendZCoinsDialog::payAmounts.clear();
+    SendZCoinsDialog::fSubtractFeeFromAmount = false;
     for(int i = 0; i < ui->entries->count(); ++i)
     {
         SendZCoinsEntry *entry = qobject_cast<SendZCoinsEntry*>(ui->entries->itemAt(i)->widget());
@@ -730,6 +730,8 @@ void SendZCoinsDialog::coinControlUpdateLabels()
         {
             SendCoinsRecipient rcp = entry->getValue();
             SendZCoinsDialog::payAmounts.append(rcp.amount);
+            if (rcp.fSubtractFeeFromAmount)
+                SendZCoinsDialog::fSubtractFeeFromAmount = true;
         }
     }
 
@@ -759,7 +761,6 @@ void SendZCoinsDialog::updateLabels()
     }
 
     CAmount nAmount             = 0;
-    CAmount nPayFee             = 0;
     CAmount nAfterFee           = 0;
     CAmount nChange             = 0;
     bool fAllowFree             = false;
