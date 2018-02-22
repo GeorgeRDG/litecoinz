@@ -122,7 +122,6 @@ void WalletView::setClientModel(ClientModel *clientModel)
 
     overviewPage->setClientModel(clientModel);
     sendCoinsDialog->setClientModel(clientModel);
-    sendZCoinsDialog->setClientModel(clientModel);
 }
 
 void WalletView::setWalletModel(WalletModel *walletModel)

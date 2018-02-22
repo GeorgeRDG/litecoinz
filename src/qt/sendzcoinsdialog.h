@@ -22,8 +22,6 @@ namespace Ui {
     class SendZCoinsDialog;
 }
 
-#define ASYMP_UTF8 "\xE2\x89\x88"
-
 QT_BEGIN_NAMESPACE
 class QUrl;
 QT_END_NAMESPACE
@@ -39,7 +37,6 @@ public:
     explicit SendZCoinsDialog(const PlatformStyle *platformStyle, QWidget *parent = 0);
     ~SendZCoinsDialog();
 
-    void setClientModel(ClientModel *clientModel);
     void setModel(WalletModel *model);
 
     /** Set up the tab chain manually, as Qt messes up the tab chain by default in some cases (issue https://bugreports.qt-project.org/browse/QTBUG-10907).
@@ -85,8 +82,6 @@ private:
 
 private Q_SLOTS:
     void on_sendButton_clicked();
-    void on_buttonChooseFee_clicked();
-    void on_buttonMinimizeFee_clicked();
     void removeEntry(SendZCoinsEntry* entry);
     void updateDisplayUnit();
     void coinControlUpdateLabels();
@@ -95,10 +90,7 @@ private Q_SLOTS:
     void coinControlClipboardAfterFee();
     void clipboardLowOutput();
     void coinControlClipboardChange();
-    void setMinimumFee();
     void updateFeeSectionControls();
-    void updateMinFeeLabel();
-    void updateSmartFeeLabel();
     void updateGlobalFeeVariables();
 
 Q_SIGNALS:
