@@ -761,6 +761,7 @@ void SendZCoinsDialog::updateLabels()
     }
 
     CAmount nAmount             = 0;
+    CAmount nPayFee             = 0;
     CAmount nAfterFee           = 0;
     CAmount nChange             = 0;
     bool fAllowFree             = false;
