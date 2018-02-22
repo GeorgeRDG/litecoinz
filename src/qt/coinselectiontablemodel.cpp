@@ -164,11 +164,6 @@ CoinSelectionTableModel::CoinSelectionTableModel(CWallet *wallet, WalletModel *p
     connect(walletModel->getOptionsModel(), SIGNAL(displayUnitChanged(int)), this, SLOT(updateDisplayUnit()));
 }
 
-void CoinSelectionTableModel::refresh()
-{
-    Q_EMIT dataChanged(index(0, Balance), index(priv->size()-1, Balance));
-}
-
 void CoinSelectionTableModel::updateDisplayUnit()
 {
     Q_EMIT dataChanged(index(0, Balance), index(priv->size()-1, Balance));
@@ -262,4 +257,11 @@ QModelIndex CoinSelectionTableModel::index(int row, int column, const QModelInde
         return createIndex(row, column, priv->index(row));
     }
     return QModelIndex();
+}
+
+void CoinSelectionTableModel::refresh()
+{
+    Q_EMIT layoutAboutToBeChanged();
+    priv->refreshCoinSelectionTable();
+    Q_EMIT layoutChanged();
 }

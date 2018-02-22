@@ -531,7 +531,7 @@ void SendZCoinsDialog::coinControlClipboardChange()
 void SendZCoinsDialog::coinSelectionButtonClicked()
 {
     CoinSelectionDialog dlg(platformStyle);
-    dlg.setModel(model->getCoinSelectionTableModel());
+    dlg.setModel(model);
     if(dlg.exec())
     {
         inputAddress = dlg.getReturnAddress();

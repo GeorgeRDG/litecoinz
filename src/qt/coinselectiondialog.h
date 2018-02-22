@@ -5,6 +5,8 @@
 #ifndef BITCOIN_QT_COINSELECTIONDIALOG_H
 #define BITCOIN_QT_COINSELECTIONDIALOG_H
 
+#include "walletmodel.h"
+
 #include <QDialog>
 
 class CoinSelectionTableModel;
@@ -30,13 +32,14 @@ public:
     explicit CoinSelectionDialog(const PlatformStyle *platformStyle,  QWidget *parent = 0);
     ~CoinSelectionDialog();
 
-    void setModel(CoinSelectionTableModel *model);
+    void setModel(WalletModel *model);
     const QString &getReturnAddress() const { return returnAddress; }
     const QString &getReturnAmount() const { return returnAmount; }
 
 private:
     Ui::CoinSelectionDialog *ui;
-    CoinSelectionTableModel *model;
+    WalletModel *model;
+    CoinSelectionTableModel *coinSelectionModel;
     QSortFilterProxyModel *proxyModelCoinSelectionZ;
     QSortFilterProxyModel *proxyModelCoinSelectionT;
     QString returnAddress;
@@ -44,6 +47,9 @@ private:
 
 public Q_SLOTS:
     void done(int retval);
+
+    /** Refresh table model */
+    void refreshTableModel();
 
 private Q_SLOTS:
     /** Set button states based on selected tab and selection */

@@ -2,10 +2,6 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#if defined(HAVE_CONFIG_H)
-#include "config/bitcoin-config.h"
-#endif
-
 #include "coinselectiondialog.h"
 #include "ui_coinselectiondialog.h"
 
@@ -13,6 +9,7 @@
 #include "bitcoingui.h"
 #include "guiutil.h"
 #include "platformstyle.h"
+#include "walletmodel.h"
 
 #include <QSortFilterProxyModel>
 
@@ -39,20 +36,22 @@ CoinSelectionDialog::~CoinSelectionDialog()
     delete ui;
 }
 
-void CoinSelectionDialog::setModel(CoinSelectionTableModel *model)
+void CoinSelectionDialog::setModel(WalletModel *model)
 {
     this->model = model;
     if(!model)
         return;
 
+    coinSelectionModel = model->getCoinSelectionTableModel();
+
     proxyModelCoinSelectionZ = new QSortFilterProxyModel(this);
-    proxyModelCoinSelectionZ->setSourceModel(model);
+    proxyModelCoinSelectionZ->setSourceModel(coinSelectionModel);
     proxyModelCoinSelectionZ->setDynamicSortFilter(true);
     proxyModelCoinSelectionZ->setSortCaseSensitivity(Qt::CaseInsensitive);
     proxyModelCoinSelectionZ->setFilterCaseSensitivity(Qt::CaseInsensitive);
 
     proxyModelCoinSelectionT = new QSortFilterProxyModel(this);
-    proxyModelCoinSelectionT->setSourceModel(model);
+    proxyModelCoinSelectionT->setSourceModel(coinSelectionModel);
     proxyModelCoinSelectionT->setDynamicSortFilter(true);
     proxyModelCoinSelectionT->setSortCaseSensitivity(Qt::CaseInsensitive);
     proxyModelCoinSelectionT->setFilterCaseSensitivity(Qt::CaseInsensitive);
@@ -85,6 +84,8 @@ void CoinSelectionDialog::setModel(CoinSelectionTableModel *model)
 
     connect(ui->tableViewT->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
         this, SLOT(selectionCoinSelectionTChanged()));
+
+    connect(model, SIGNAL(balanceChanged(CAmount,CAmount,CAmount,CAmount,CAmount,CAmount,CAmount,CAmount,CAmount)), this, SLOT(refreshTableModel()));
 
     selectionCoinSelectionZChanged();
     selectionCoinSelectionTChanged();
@@ -158,3 +159,9 @@ void CoinSelectionDialog::done(int retval)
 
     QDialog::done(retval);
 }
+
+void CoinSelectionDialog::refreshTableModel()
+{
+    coinSelectionModel->refresh();
+}
+

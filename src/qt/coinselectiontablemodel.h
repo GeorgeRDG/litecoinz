@@ -45,7 +45,6 @@ public:
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
     Qt::ItemFlags flags(const QModelIndex &index) const;
     /*@}*/
-    void refresh();
 
 private:
     WalletModel *walletModel;
@@ -55,6 +54,7 @@ private:
 
 public Q_SLOTS:
     void updateDisplayUnit();
+    void refresh();
 
     friend class CoinSelectionTablePriv;
 };
