@@ -2,17 +2,16 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#if defined(HAVE_CONFIG_H)
-#include "config/bitcoin-config.h"
-#endif
-
 #include "unspentpage.h"
 #include "ui_unspentpage.h"
 
 #include "unspenttablemodel.h"
-#include "bitcoingui.h"
+#include "bitcoinunits.h"
+#include "clientmodel.h"
+#include "optionsmodel.h"
 #include "guiutil.h"
 #include "platformstyle.h"
+#include "walletmodel.h"
 
 #include <QSortFilterProxyModel>
 
@@ -34,20 +33,22 @@ UnspentPage::~UnspentPage()
     delete ui;
 }
 
-void UnspentPage::setModel(UnspentTableModel *model)
+void UnspentPage::setModel(WalletModel *model)
 {
     this->model = model;
     if(!model)
         return;
 
+    unspentModel = model->getUnspentTableModel();
+
     proxyModelUnspentZ = new QSortFilterProxyModel(this);
-    proxyModelUnspentZ->setSourceModel(model);
+    proxyModelUnspentZ->setSourceModel(unspentModel);
     proxyModelUnspentZ->setDynamicSortFilter(true);
     proxyModelUnspentZ->setSortCaseSensitivity(Qt::CaseInsensitive);
     proxyModelUnspentZ->setFilterCaseSensitivity(Qt::CaseInsensitive);
 
     proxyModelUnspentT = new QSortFilterProxyModel(this);
-    proxyModelUnspentT->setSourceModel(model);
+    proxyModelUnspentT->setSourceModel(unspentModel);
     proxyModelUnspentT->setDynamicSortFilter(true);
     proxyModelUnspentT->setSortCaseSensitivity(Qt::CaseInsensitive);
     proxyModelUnspentT->setFilterCaseSensitivity(Qt::CaseInsensitive);
@@ -81,6 +82,8 @@ void UnspentPage::setModel(UnspentTableModel *model)
     connect(ui->tableViewT->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
         this, SLOT(selectionUnspentTChanged()));
 
+    connect(model, SIGNAL(balanceChanged(CAmount,CAmount,CAmount,CAmount,CAmount,CAmount,CAmount,CAmount,CAmount)), this, SLOT(refreshTableModel()));
+
     selectionUnspentZChanged();
     selectionUnspentTChanged();
 }
@@ -109,4 +112,9 @@ void UnspentPage::selectionUnspentTChanged()
     {
         ui->tableViewZ->selectionModel()->clear();
     }
+}
+
+void UnspentPage::refreshTableModel()
+{
+    unspentModel->refresh();
 }

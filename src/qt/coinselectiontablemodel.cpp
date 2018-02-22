@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "unspenttablemodel.h"
+#include "coinselectiontablemodel.h"
 
 #include "bitcoinunits.h"
 #include "guiutil.h"
@@ -17,14 +17,14 @@
 #include <QFont>
 #include <QDebug>
 
-const QString UnspentTableModel::ZUnspent = "Z";
-const QString UnspentTableModel::TUnspent = "T";
+const QString CoinSelectionTableModel::ZCoinSelection = "Z";
+const QString CoinSelectionTableModel::TCoinSelection = "T";
 
-struct UnspentTableEntry
+struct CoinSelectionTableEntry
 {
     enum Type {
-        ZUnspent,
-        TUnspent,
+        ZCoinSelection,
+        TCoinSelection,
         Hidden
     };
 
@@ -32,54 +32,55 @@ struct UnspentTableEntry
     QString address;
     CAmount balance;
 
-    UnspentTableEntry() {}
-    UnspentTableEntry(Type type, const QString &address, const CAmount &balance):
+    CoinSelectionTableEntry() {}
+    CoinSelectionTableEntry(Type type, const QString &address, const CAmount &balance):
         type(type), address(address), balance(balance) {}
 };
 
-struct UnspentTableEntryLessThan
+struct CoinSelectionTableEntryLessThan
 {
-    bool operator()(const UnspentTableEntry &a, const UnspentTableEntry &b) const
+    bool operator()(const CoinSelectionTableEntry &a, const CoinSelectionTableEntry &b) const
     {
         return a.address < b.address;
     }
-    bool operator()(const UnspentTableEntry &a, const QString &b) const
+    bool operator()(const CoinSelectionTableEntry &a, const QString &b) const
     {
         return a.address < b;
     }
-    bool operator()(const QString &a, const UnspentTableEntry &b) const
+    bool operator()(const QString &a, const CoinSelectionTableEntry &b) const
     {
         return a < b.address;
     }
 };
 
-/* Determine unspent type from unspent purpose */
-static UnspentTableEntry::Type translateUnspentType(const QString &strPurpose)
+/* Determine coinselection type from coinselection purpose */
+static CoinSelectionTableEntry::Type translateCoinSelectionType(const QString &strPurpose)
 {
-    UnspentTableEntry::Type unspentType = UnspentTableEntry::Hidden;
-    if (strPurpose == "tunspent")
-        unspentType = UnspentTableEntry::TUnspent;
-    else if (strPurpose == "zunspent")
-        unspentType = UnspentTableEntry::ZUnspent;
-    return unspentType;
+    CoinSelectionTableEntry::Type coinselectionType = CoinSelectionTableEntry::Hidden;
+    if (strPurpose == "tcoinselection")
+        coinselectionType = CoinSelectionTableEntry::TCoinSelection;
+    else if (strPurpose == "zcoinselection")
+        coinselectionType = CoinSelectionTableEntry::ZCoinSelection;
+    return coinselectionType;
 }
 
 // Private implementation
-class UnspentTablePriv
+class CoinSelectionTablePriv
 {
 public:
     CWallet *wallet;
-    QList<UnspentTableEntry> cachedUnspentTable;
-    UnspentTableModel *parent;
+    WalletModel *walletModel;
+    QList<CoinSelectionTableEntry> cachedCoinSelectionTable;
+    CoinSelectionTableModel *parent;
 
-    UnspentTablePriv(CWallet *wallet, UnspentTableModel *parent):
-        wallet(wallet), parent(parent) {}
+    CoinSelectionTablePriv(CWallet *wallet, WalletModel *walletModel, CoinSelectionTableModel *parent):
+        wallet(wallet), walletModel(walletModel), parent(parent) {}
 
-    void refreshUnspentTable()
+    void refreshCoinSelectionTable()
     {
-        cachedUnspentTable.clear();
+        cachedCoinSelectionTable.clear();
         {
-            // T-Unspent
+            // T-CoinSelection
             std::vector<COutput> vecOutputs;
 
             LOCK(wallet->cs_wallet);
@@ -94,8 +95,8 @@ public:
 
                 CTxDestination address;
                 if (ExtractDestination(out.tx->vout[out.i].scriptPubKey, address)) {
-                    UnspentTableEntry::Type unspentType = translateUnspentType(QString::fromStdString("tunspent"));
-                    cachedUnspentTable.append(UnspentTableEntry(unspentType,
+                    CoinSelectionTableEntry::Type unspentType = translateCoinSelectionType(QString::fromStdString("tcoinselection"));
+                    cachedCoinSelectionTable.append(CoinSelectionTableEntry(unspentType,
                                                   QString::fromStdString(CBitcoinAddress(address).ToString()),
                                                   CAmount(out.tx->vout[out.i].nValue)
                                              )
@@ -103,7 +104,7 @@ public:
                 }
             }
 
-            // Z-Unspent
+            // Z-CoinSelection
             std::set<libzcash::PaymentAddress> zaddrs = {};
             int nMinDepth = 1;
             int nMaxDepth = 9999999;
@@ -117,35 +118,34 @@ public:
             }
 
             if (zaddrs.size() > 0) {
-                std::vector<CUnspentNotePlaintextEntry> entries; 
+                std::vector<CUnspentNotePlaintextEntry> entries;
                 wallet->GetUnspentFilteredNotes(entries, zaddrs, nMinDepth, nMaxDepth);
                 for (CUnspentNotePlaintextEntry & entry : entries) {
-                    UnspentTableEntry::Type unspentType = translateUnspentType(QString::fromStdString("zunspent"));
-                    cachedUnspentTable.append(UnspentTableEntry(unspentType,
+                    CoinSelectionTableEntry::Type unspentType = translateCoinSelectionType(QString::fromStdString("zcoinselection"));
+                    cachedCoinSelectionTable.append(CoinSelectionTableEntry(unspentType,
                                                   QString::fromStdString(CZCPaymentAddress(entry.address).ToString()),
                                                   CAmount(entry.plaintext.value)
                                              )
                     );
                 }
             }
-
         }
-        // qLowerBound() and qUpperBound() require our cachedUnspentTable list to be sorted in asc order
+        // qLowerBound() and qUpperBound() require our cachedCoinSelectionTable list to be sorted in asc order
         // Even though the map is already sorted this re-sorting step is needed because the originating map
         // is sorted by binary address, not by base58() address.
-        qSort(cachedUnspentTable.begin(), cachedUnspentTable.end(), UnspentTableEntryLessThan());
+        qSort(cachedCoinSelectionTable.begin(), cachedCoinSelectionTable.end(), CoinSelectionTableEntryLessThan());
     }
 
     int size()
     {
-        return cachedUnspentTable.size();
+        return cachedCoinSelectionTable.size();
     }
 
-    UnspentTableEntry *index(int idx)
+    CoinSelectionTableEntry *index(int idx)
     {
-        if(idx >= 0 && idx < cachedUnspentTable.size())
+        if(idx >= 0 && idx < cachedCoinSelectionTable.size())
         {
-            return &cachedUnspentTable[idx];
+            return &cachedCoinSelectionTable[idx];
         }
         else
         {
@@ -154,44 +154,49 @@ public:
     }
 };
 
-UnspentTableModel::UnspentTableModel(CWallet *wallet, WalletModel *parent) :
+CoinSelectionTableModel::CoinSelectionTableModel(CWallet *wallet, WalletModel *parent) :
     QAbstractTableModel(parent), walletModel(parent), wallet(wallet), priv(0)
 {
     columns << tr("Address") << tr("Balance");
-    priv = new UnspentTablePriv(wallet, this);
-    priv->refreshUnspentTable();
+    priv = new CoinSelectionTablePriv(wallet, walletModel, this);
+    priv->refreshCoinSelectionTable();
 
     connect(walletModel->getOptionsModel(), SIGNAL(displayUnitChanged(int)), this, SLOT(updateDisplayUnit()));
 }
 
-void UnspentTableModel::updateDisplayUnit()
+void CoinSelectionTableModel::refresh()
 {
     Q_EMIT dataChanged(index(0, Balance), index(priv->size()-1, Balance));
 }
 
-UnspentTableModel::~UnspentTableModel()
+void CoinSelectionTableModel::updateDisplayUnit()
+{
+    Q_EMIT dataChanged(index(0, Balance), index(priv->size()-1, Balance));
+}
+
+CoinSelectionTableModel::~CoinSelectionTableModel()
 {
     delete priv;
 }
 
-int UnspentTableModel::rowCount(const QModelIndex &parent) const
+int CoinSelectionTableModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return priv->size();
 }
 
-int UnspentTableModel::columnCount(const QModelIndex &parent) const
+int CoinSelectionTableModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return columns.length();
 }
 
-QVariant UnspentTableModel::data(const QModelIndex &index, int role) const
+QVariant CoinSelectionTableModel::data(const QModelIndex &index, int role) const
 {
     if(!index.isValid())
         return QVariant();
 
-    UnspentTableEntry *rec = static_cast<UnspentTableEntry*>(index.internalPointer());
+    CoinSelectionTableEntry *rec = static_cast<CoinSelectionTableEntry*>(index.internalPointer());
 
     if(role == Qt::DisplayRole)
     {
@@ -216,17 +221,17 @@ QVariant UnspentTableModel::data(const QModelIndex &index, int role) const
     {
         switch(rec->type)
         {
-        case UnspentTableEntry::ZUnspent:
-            return ZUnspent;
-        case UnspentTableEntry::TUnspent:
-            return TUnspent;
+        case CoinSelectionTableEntry::ZCoinSelection:
+            return ZCoinSelection;
+        case CoinSelectionTableEntry::TCoinSelection:
+            return TCoinSelection;
         default: break;
         }
     }
     return QVariant();
 }
 
-QVariant UnspentTableModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant CoinSelectionTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if(orientation == Qt::Horizontal)
     {
@@ -238,31 +243,23 @@ QVariant UnspentTableModel::headerData(int section, Qt::Orientation orientation,
     return QVariant();
 }
 
-Qt::ItemFlags UnspentTableModel::flags(const QModelIndex &index) const
+Qt::ItemFlags CoinSelectionTableModel::flags(const QModelIndex &index) const
 {
     if(!index.isValid())
         return 0;
-    UnspentTableEntry *rec = static_cast<UnspentTableEntry*>(index.internalPointer());
+    CoinSelectionTableEntry *rec = static_cast<CoinSelectionTableEntry*>(index.internalPointer());
 
     Qt::ItemFlags retval = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
     return retval;
 }
 
-QModelIndex UnspentTableModel::index(int row, int column, const QModelIndex &parent) const
+QModelIndex CoinSelectionTableModel::index(int row, int column, const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    UnspentTableEntry *data = priv->index(row);
+    CoinSelectionTableEntry *data = priv->index(row);
     if(data)
     {
         return createIndex(row, column, priv->index(row));
     }
     return QModelIndex();
 }
-
-void UnspentTableModel::refresh()
-{
-    Q_EMIT layoutAboutToBeChanged();
-    priv->refreshUnspentTable();
-    Q_EMIT layoutChanged();
-}
-

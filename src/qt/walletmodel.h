@@ -17,6 +17,7 @@
 #include <QObject>
 
 class AddressTableModel;
+class CoinSelectionTableModel;
 class OptionsModel;
 class PlatformStyle;
 class RecentRequestsTableModel;
@@ -129,6 +130,7 @@ public:
 
     OptionsModel *getOptionsModel();
     AddressTableModel *getAddressTableModel();
+    CoinSelectionTableModel *getCoinSelectionTableModel();
     TransactionTableModel *getTransactionTableModel();
     UnspentTableModel *getUnspentTableModel();
     RecentRequestsTableModel *getRecentRequestsTableModel();
@@ -208,7 +210,6 @@ public:
     void getOutputs(const std::vector<COutPoint>& vOutpoints, std::vector<COutput>& vOutputs);
     bool isSpent(const COutPoint& outpoint) const;
     void listCoins(std::map<QString, std::vector<COutput> >& mapCoins) const;
-    void listZCoins(std::map<QString, std::vector<CUnspentNotePlaintextEntry> >& mapCoins) const;
 
     bool isLockedCoin(uint256 hash, unsigned int n) const;
     void lockCoin(COutPoint& output);
@@ -228,6 +229,7 @@ private:
     OptionsModel *optionsModel;
 
     AddressTableModel *addressTableModel;
+    CoinSelectionTableModel *coinSelectionTableModel;
     UnspentTableModel *unspentTableModel;
     TransactionTableModel *transactionTableModel;
     RecentRequestsTableModel *recentRequestsTableModel;

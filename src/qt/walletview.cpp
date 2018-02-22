@@ -132,7 +132,7 @@ void WalletView::setWalletModel(WalletModel *walletModel)
     transactionView->setModel(walletModel);
     overviewPage->setWalletModel(walletModel);
     addressBookPage->setModel(walletModel->getAddressTableModel());
-    unspentPage->setModel(walletModel->getUnspentTableModel());
+    unspentPage->setModel(walletModel);
     receiveCoinsPage->setModel(walletModel);
     sendCoinsDialog->setModel(walletModel);
     sendZCoinsDialog->setModel(walletModel);

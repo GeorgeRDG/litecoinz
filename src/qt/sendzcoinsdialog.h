@@ -12,7 +12,6 @@
 #include <QString>
 #include <QTimer>
 
-class ClientModel;
 class OptionsModel;
 class PlatformStyle;
 class SendZCoinsEntry;
@@ -55,6 +54,9 @@ public:
     //! Minimum absolute fee (not per kilobyte)
     CAmount nMinimumTotalFee;
 
+    CAmount inputAmount;
+    QString inputAddress;
+
 public Q_SLOTS:
     void clear();
     void reject();
@@ -67,7 +69,6 @@ public Q_SLOTS:
 
 private:
     Ui::SendZCoinsDialog *ui;
-    ClientModel *clientModel;
     WalletModel *model;
     bool fNewRecipientAllowed;
     bool fFeeMinimized;
@@ -84,6 +85,7 @@ private Q_SLOTS:
     void on_sendButton_clicked();
     void removeEntry(SendZCoinsEntry* entry);
     void updateDisplayUnit();
+    void coinSelectionButtonClicked();
     void coinControlUpdateLabels();
     void coinControlClipboardAmount();
     void coinControlClipboardFee();

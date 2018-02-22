@@ -107,7 +107,7 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayoutCoinSelection2" stretch="0">
+         <layout class="QHBoxLayout" name="horizontalLayoutCoinSelection2" stretch="0,0">
           <property name="spacing">
            <number>8</number>
           </property>
@@ -115,7 +115,30 @@
            <number>10</number>
           </property>
           <item>
-           <widget class="QComboBox" name="comboBoxCoinSelection"/>
+           <widget class="QPushButton" name="pushButtonCoinSelection">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="text">
+             <string>Inputs...</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="coinSelectionText">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -424,7 +447,7 @@
                 <string>Insufficient funds!</string>
                </property>
                <property name="margin">
-                <number>5</number>
+                <number>0</number>
                </property>
               </widget>
              </item>
@@ -491,7 +514,7 @@
         <x>0</x>
         <y>0</y>
         <width>830</width>
-        <height>287</height>
+        <height>292</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1">

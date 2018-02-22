@@ -7,7 +7,7 @@
 
 #include "addresstablemodel.h"
 #include "bitcoinunits.h"
-#include "clientmodel.h"
+#include "coinselectiondialog.h"
 #include "guiutil.h"
 #include "optionsmodel.h"
 #include "platformstyle.h"
@@ -31,6 +31,7 @@
 #include <QTimer>
 
 #define SEND_CONFIRM_DELAY   3
+#define ASYMP_UTF8 "\xE2\x89\x88"
 #define ASYNC_RPC_OPERATION_DEFAULT_MINERS_FEE   1000
 
 QList<CAmount> SendZCoinsDialog::payAmounts;
@@ -39,7 +40,6 @@ bool SendZCoinsDialog::fSubtractFeeFromAmount = false;
 SendZCoinsDialog::SendZCoinsDialog(const PlatformStyle *platformStyle, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SendZCoinsDialog),
-    clientModel(0),
     model(0),
     fNewRecipientAllowed(true),
     platformStyle(platformStyle)
@@ -62,7 +62,7 @@ SendZCoinsDialog::SendZCoinsDialog(const PlatformStyle *platformStyle, QWidget *
     connect(ui->clearButton, SIGNAL(clicked()), this, SLOT(clear()));
 
     // Coin Control
-    connect(ui->comboBoxCoinSelection, SIGNAL(currentTextChanged(const QString &)), SLOT(coinControlUpdateLabels()));
+    connect(ui->pushButtonCoinSelection, SIGNAL(clicked()), this, SLOT(coinSelectionButtonClicked()));
 
     // Coin Control: clipboard actions
     QAction *clipboardAmountAction = new QAction(tr("Copy amount"), this);
@@ -87,9 +87,6 @@ SendZCoinsDialog::SendZCoinsDialog(const PlatformStyle *platformStyle, QWidget *
     QSettings settings;
     if (!settings.contains("nTransactionFee"))
         settings.setValue("nTransactionFee", (qint64)DEFAULT_TRANSACTION_FEE);
-    if (!settings.contains("fUseCustomFee"))
-        settings.setValue("fUseCustomFee", false);
-    ui->checkBoxCustomFee->setChecked(settings.value("fUseCustomFee").toBool());
     ui->customFee->setValue(settings.value("nTransactionFee").toLongLong());
 }
 
@@ -127,45 +124,12 @@ void SendZCoinsDialog::setModel(WalletModel *model)
         updateFeeSectionControls();
         updateGlobalFeeVariables();
     }
-
-    // Load Input COINS combobox
-    ui->comboBoxCoinSelection->clear();
-
-    std::map<QString, std::vector<COutput> > mapCoins;
-    model->listCoins(mapCoins);
-    BOOST_FOREACH(const PAIRTYPE(QString, std::vector<COutput>)& coins, mapCoins) {
-        QString sWalletAddress = coins.first;
-        CAmount nSum = 0;
-        BOOST_FOREACH(const COutput& out, coins.second) {
-            if (out.tx->IsCoinBase())
-                continue;
-
-            if (!out.fSpendable)
-                continue;
-
-            nSum += out.tx->vout[out.i].nValue;
-            ui->comboBoxCoinSelection->addItem(BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), nSum) + " - " + sWalletAddress);
-        }
-    }
-
-    std::map<QString, std::vector<CUnspentNotePlaintextEntry> > mapZCoins;
-    model->listZCoins(mapZCoins);
-    BOOST_FOREACH(const PAIRTYPE(QString, std::vector<CUnspentNotePlaintextEntry>)& coins, mapZCoins) {
-        QString sWalletAddress = coins.first;
-        CAmount nSum = 0;
-        for (const CUnspentNotePlaintextEntry& entry : coins.second)
-            nSum += CAmount(entry.plaintext.value);
-
-        if (nSum > 0)
-            ui->comboBoxCoinSelection->addItem(BitcoinUnits::formatWithUnit(model->getOptionsModel()->getDisplayUnit(), nSum) + " - " + sWalletAddress);
-    }
 }
 
 SendZCoinsDialog::~SendZCoinsDialog()
 {
     QSettings settings;
     settings.setValue("nTransactionFee", (qint64)ui->customFee->value());
-    settings.setValue("fUseCustomFee", ui->checkBoxCustomFee->isChecked());
 
     delete ui;
 }
@@ -542,13 +506,13 @@ void SendZCoinsDialog::coinControlClipboardAmount()
 // Coin Control: copy label "Fee" to clipboard
 void SendZCoinsDialog::coinControlClipboardFee()
 {
-    GUIUtil::setClipboard(ui->labelCoinSelectionFee->text().left(ui->labelCoinSelectionFee->text().indexOf(" ")));
+    GUIUtil::setClipboard(ui->labelCoinSelectionFee->text().left(ui->labelCoinSelectionFee->text().indexOf(" ")).replace(ASYMP_UTF8, ""));
 }
 
 // Coin Control: copy label "After fee" to clipboard
 void SendZCoinsDialog::coinControlClipboardAfterFee()
 {
-    GUIUtil::setClipboard(ui->labelCoinSelectionAfterFee->text().left(ui->labelCoinSelectionAfterFee->text().indexOf(" ")));
+    GUIUtil::setClipboard(ui->labelCoinSelectionAfterFee->text().left(ui->labelCoinSelectionAfterFee->text().indexOf(" ")).replace(ASYMP_UTF8, ""));
 }
 
 // copy label "Dust" to clipboard
@@ -560,7 +524,21 @@ void SendZCoinsDialog::clipboardLowOutput()
 // Coin Control: copy label "Change" to clipboard
 void SendZCoinsDialog::coinControlClipboardChange()
 {
-    GUIUtil::setClipboard(ui->labelCoinSelectionChange->text().left(ui->labelCoinSelectionChange->text().indexOf(" ")));
+    GUIUtil::setClipboard(ui->labelCoinSelectionChange->text().left(ui->labelCoinSelectionChange->text().indexOf(" ")).replace(ASYMP_UTF8, ""));
+}
+
+// Coin Control: button inputs -> show actual coin selection dialog
+void SendZCoinsDialog::coinSelectionButtonClicked()
+{
+    CoinSelectionDialog dlg(platformStyle);
+    dlg.setModel(model->getCoinSelectionTableModel());
+    if(dlg.exec())
+    {
+        inputAddress = dlg.getReturnAddress();
+        inputAmount = AmountFromValue(dlg.getReturnAmount().toStdString());
+        ui->coinSelectionText->setText(inputAddress);
+        coinControlUpdateLabels();
+    }
 }
 
 // Coin Control: update labels
@@ -570,7 +548,7 @@ void SendZCoinsDialog::coinControlUpdateLabels()
         return;
 
     // only enable the feature if inputs are selected
-    ui->checkBoxCustomFee->setEnabled(ui->comboBoxCoinSelection->count() > 0);
+    ui->checkBoxCustomFee->setEnabled(!ui->coinSelectionText->text().isEmpty());
 
     // set pay amounts
     SendZCoinsDialog::payAmounts.clear();
@@ -587,9 +565,11 @@ void SendZCoinsDialog::coinControlUpdateLabels()
         }
     }
 
-    if (ui->comboBoxCoinSelection->count() > 0)
+    if (!ui->coinSelectionText->text().isEmpty())
         // actual coin control calculation
         SendZCoinsDialog::updateLabels();
+    else
+        ui->labelCoinSelectionInsuffFunds->hide();
 }
 
 void SendZCoinsDialog::updateLabels()
@@ -619,8 +599,7 @@ void SendZCoinsDialog::updateLabels()
     bool fAllowFree             = false;
 
     // Amount
-    UniValue balance = ui->comboBoxCoinSelection->currentText().split(" ").at(0).toStdString().c_str();
-    nAmount += AmountFromValue(balance);
+    nAmount += inputAmount;
 
     // Fee
     nPayFee = ASYNC_RPC_OPERATION_DEFAULT_MINERS_FEE;
@@ -679,8 +658,10 @@ void SendZCoinsDialog::updateLabels()
     ui->labelCoinSelectionLowOutput->setText(fDust ? tr("yes") : tr("no"));                            // Dust
     if (nPayFee > 0 && (nMinimumTotalFee < nPayFee))
     {
-        ui->labelCoinSelectionFee->setText(ui->labelCoinSelectionFee->text());
-        ui->labelCoinSelectionAfterFee->setText(ui->labelCoinSelectionAfterFee->text());
+        ui->labelCoinSelectionFee->setText(ASYMP_UTF8 + ui->labelCoinSelectionFee->text());
+        ui->labelCoinSelectionAfterFee->setText(ASYMP_UTF8 + ui->labelCoinSelectionAfterFee->text());
+        if (nChange > 0 && !SendZCoinsDialog::fSubtractFeeFromAmount)
+            ui->labelCoinSelectionChange->setText(ASYMP_UTF8 + ui->labelCoinSelectionChange->text());
     }
 
     ui->labelCoinSelectionLowOutput->setStyleSheet((fDust) ? "color:red;" : "");                                     // Dust = "yes"

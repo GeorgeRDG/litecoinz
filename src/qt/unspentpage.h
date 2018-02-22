@@ -5,6 +5,8 @@
 #ifndef BITCOIN_QT_UNSPENTPAGE_H
 #define BITCOIN_QT_UNSPENTPAGE_H
 
+#include "walletmodel.h"
+
 #include <QDialog>
 
 class UnspentTableModel;
@@ -30,11 +32,12 @@ public:
     explicit UnspentPage(const PlatformStyle *platformStyle,  QWidget *parent = 0);
     ~UnspentPage();
 
-    void setModel(UnspentTableModel *model);
+    void setModel(WalletModel *model);
 
 private:
     Ui::UnspentPage *ui;
-    UnspentTableModel *model;
+    WalletModel *model;
+    UnspentTableModel *unspentModel;
     QSortFilterProxyModel *proxyModelUnspentZ;
     QSortFilterProxyModel *proxyModelUnspentT;
 
@@ -42,6 +45,11 @@ private Q_SLOTS:
     /** Set button states based on selected tab and selection */
     void selectionUnspentZChanged();
     void selectionUnspentTChanged();
+
+public Q_SLOTS:
+    /** Refresh table model */
+    void refreshTableModel();
+
 };
 
 #endif // BITCOIN_QT_UNSPENTPAGE_H

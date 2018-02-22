@@ -2,27 +2,27 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_QT_UNSPENTTABLEMODEL_H
-#define BITCOIN_QT_UNSPENTTABLEMODEL_H
+#ifndef BITCOIN_QT_COINSELECTIONTABLEMODEL_H
+#define BITCOIN_QT_COINSELECTIONTABLEMODEL_H
 
 #include <QAbstractTableModel>
 #include <QStringList>
 
-class UnspentTablePriv;
+class CoinSelectionTablePriv;
 class WalletModel;
 
 class CWallet;
 
 /**
-   Qt model of the unspent transaction.
+   Qt model of the coinselection transaction.
  */
-class UnspentTableModel : public QAbstractTableModel
+class CoinSelectionTableModel : public QAbstractTableModel
 {
     Q_OBJECT
 
 public:
-    explicit UnspentTableModel(CWallet *wallet, WalletModel *parent = 0);
-    ~UnspentTableModel();
+    explicit CoinSelectionTableModel(CWallet *wallet, WalletModel *parent = 0);
+    ~CoinSelectionTableModel();
 
     enum ColumnIndex {
         Address = 0,
@@ -33,8 +33,8 @@ public:
         TypeRole = Qt::UserRole
     };
 
-    static const QString ZUnspent;
-    static const QString TUnspent;
+    static const QString ZCoinSelection;
+    static const QString TCoinSelection;
 
     /** @name Methods overridden from QAbstractTableModel
         @{*/
@@ -45,18 +45,18 @@ public:
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
     Qt::ItemFlags flags(const QModelIndex &index) const;
     /*@}*/
+    void refresh();
 
 private:
     WalletModel *walletModel;
     CWallet *wallet;
-    UnspentTablePriv *priv;
+    CoinSelectionTablePriv *priv;
     QStringList columns;
 
 public Q_SLOTS:
     void updateDisplayUnit();
-    void refresh();
 
-    friend class UnspentTablePriv;
+    friend class CoinSelectionTablePriv;
 };
 
-#endif // BITCOIN_QT_UNSPENTTABLEMODEL_H
+#endif // BITCOIN_QT_COINSELECTIONTABLEMODEL_H
