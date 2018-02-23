@@ -530,7 +530,7 @@ void SendZCoinsDialog::coinControlClipboardChange()
 // Coin Control: button inputs -> show actual coin selection dialog
 void SendZCoinsDialog::coinSelectionButtonClicked()
 {
-    CoinSelectionDialog dlg(platformStyle);
+    CoinSelectionDialog dlg(this);
     dlg.setModel(model);
     if(dlg.exec())
     {

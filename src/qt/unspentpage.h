@@ -10,6 +10,7 @@
 #include <QDialog>
 
 class UnspentTableModel;
+class OptionsModel;
 class PlatformStyle;
 
 namespace Ui {
@@ -18,6 +19,7 @@ namespace Ui {
 
 QT_BEGIN_NAMESPACE
 class QItemSelection;
+class QMenu;
 class QModelIndex;
 class QSortFilterProxyModel;
 class QTableView;
@@ -40,11 +42,22 @@ private:
     UnspentTableModel *unspentModel;
     QSortFilterProxyModel *proxyModelUnspentZ;
     QSortFilterProxyModel *proxyModelUnspentT;
+    QMenu *contextZMenu;
+    QMenu *contextTMenu;
+
+    const PlatformStyle *platformStyle;
 
 private Q_SLOTS:
-    /** Set button states based on selected tab and selection */
     void selectionUnspentZChanged();
     void selectionUnspentTChanged();
+    void onCopyZAddressAction();
+    void onCopyZTxidAction();
+    void onCopyZAmountAction();
+    void onCopyTAddressAction();
+    void onCopyTTxidAction();
+    void onCopyTAmountAction();
+    void contextualZMenu(const QPoint &point);
+    void contextualTMenu(const QPoint &point);
 
 public Q_SLOTS:
     /** Refresh table model */

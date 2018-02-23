@@ -17,6 +17,7 @@ namespace Ui {
 
 QT_BEGIN_NAMESPACE
 class QItemSelection;
+class QMenu;
 class QModelIndex;
 class QSortFilterProxyModel;
 class QTableView;
@@ -55,6 +56,13 @@ private:
     Tabs tab;
     QString returnValue;
     QSortFilterProxyModel *proxyModel;
+    QMenu *contextMenu;
+
+private Q_SLOTS:
+    void onCopyAddressAction();
+    void onCopyLabelAction();
+    void contextualMenu(const QPoint &point);
+
 };
 
 #endif // BITCOIN_QT_ADDRESSBOOKDIALOG_H

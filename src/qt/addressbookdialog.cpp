@@ -61,12 +61,46 @@ AddressBookDialog::AddressBookDialog(const PlatformStyle *platformStyle, Mode mo
         break;
     }
 
+    // Context menu actions
+    QAction *copyAddressAction = new QAction(tr("&Copy Address"), this);
+    QAction *copyLabelAction = new QAction(tr("Copy &Label"), this);
+
+    // Build context menu
+    contextMenu = new QMenu(this);
+    contextMenu->addAction(copyAddressAction);
+    contextMenu->addAction(copyLabelAction);
+    contextMenu->addSeparator();
+
+    // Connect signals for context menu actions
+    connect(copyAddressAction, SIGNAL(triggered()), this, SLOT(onCopyAddressAction()));
+    connect(copyLabelAction, SIGNAL(triggered()), this, SLOT(onCopyLabelAction()));
+
+    connect(ui->tableView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextualMenu(QPoint)));
     connect(ui->closeButton, SIGNAL(clicked()), this, SLOT(accept()));
 }
 
 AddressBookDialog::~AddressBookDialog()
 {
     delete ui;
+}
+
+void AddressBookDialog::onCopyAddressAction()
+{
+    GUIUtil::copyEntryData(ui->tableView, AddressTableModel::Address);
+}
+
+void AddressBookDialog::onCopyLabelAction()
+{
+    GUIUtil::copyEntryData(ui->tableView, AddressTableModel::Label);
+}
+
+void AddressBookDialog::contextualMenu(const QPoint &point)
+{
+    QModelIndex index = ui->tableView->indexAt(point);
+    if(index.isValid())
+    {
+        contextMenu->exec(QCursor::pos());
+    }
 }
 
 void AddressBookDialog::setModel(AddressTableModel *model)

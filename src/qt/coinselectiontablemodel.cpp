@@ -30,11 +30,11 @@ struct CoinSelectionTableEntry
 
     Type type;
     QString address;
-    CAmount balance;
+    CAmount amount;
 
     CoinSelectionTableEntry() {}
-    CoinSelectionTableEntry(Type type, const QString &address, const CAmount &balance):
-        type(type), address(address), balance(balance) {}
+    CoinSelectionTableEntry(Type type, const QString &address, const CAmount &amount):
+        type(type), address(address), amount(amount) {}
 };
 
 struct CoinSelectionTableEntryLessThan
@@ -82,6 +82,7 @@ public:
         {
             // T-CoinSelection
             std::vector<COutput> vecOutputs;
+            std::map<QString, std::vector<COutput> > mapCoins;
 
             LOCK(wallet->cs_wallet);
             wallet->AvailableCoins(vecOutputs, false, NULL, true);
@@ -95,17 +96,24 @@ public:
 
                 CTxDestination address;
                 if (ExtractDestination(out.tx->vout[out.i].scriptPubKey, address)) {
+                    mapCoins[QString::fromStdString(CBitcoinAddress(address).ToString())].push_back(out);
+                }
+            }
+            BOOST_FOREACH(const PAIRTYPE(QString, std::vector<COutput>)& coins, mapCoins) {
+                QString sWalletAddress = coins.first;
+                CAmount nSum = 0;
+                for (const COutput& out : coins.second)
+                    nSum += CAmount(out.tx->vout[out.i].nValue);
+                if (nSum > 0)
+                {
                     CoinSelectionTableEntry::Type unspentType = translateCoinSelectionType(QString::fromStdString("tcoinselection"));
-                    cachedCoinSelectionTable.append(CoinSelectionTableEntry(unspentType,
-                                                  QString::fromStdString(CBitcoinAddress(address).ToString()),
-                                                  CAmount(out.tx->vout[out.i].nValue)
-                                             )
-                    );
+                    cachedCoinSelectionTable.append(CoinSelectionTableEntry(unspentType, sWalletAddress, nSum));
                 }
             }
 
             // Z-CoinSelection
             std::set<libzcash::PaymentAddress> zaddrs = {};
+            std::map<QString, std::vector<CUnspentNotePlaintextEntry> > mapZCoins;
             int nMinDepth = 1;
             int nMaxDepth = 9999999;
 
@@ -121,12 +129,18 @@ public:
                 std::vector<CUnspentNotePlaintextEntry> entries;
                 wallet->GetUnspentFilteredNotes(entries, zaddrs, nMinDepth, nMaxDepth);
                 for (CUnspentNotePlaintextEntry & entry : entries) {
-                    CoinSelectionTableEntry::Type unspentType = translateCoinSelectionType(QString::fromStdString("zcoinselection"));
-                    cachedCoinSelectionTable.append(CoinSelectionTableEntry(unspentType,
-                                                  QString::fromStdString(CZCPaymentAddress(entry.address).ToString()),
-                                                  CAmount(entry.plaintext.value)
-                                             )
-                    );
+                    mapZCoins[QString::fromStdString(CZCPaymentAddress(entry.address).ToString())].push_back(entry);
+                }
+                BOOST_FOREACH(const PAIRTYPE(QString, std::vector<CUnspentNotePlaintextEntry>)& coins, mapZCoins) {
+                    QString sWalletAddress = coins.first;
+                    CAmount nSum = 0;
+                    for (const CUnspentNotePlaintextEntry& entry : coins.second)
+                        nSum += CAmount(entry.plaintext.value);
+                    if (nSum > 0)
+                    {
+                        CoinSelectionTableEntry::Type unspentType = translateCoinSelectionType(QString::fromStdString("zcoinselection"));
+                        cachedCoinSelectionTable.append(CoinSelectionTableEntry(unspentType, sWalletAddress, nSum));
+                    }
                 }
             }
         }
@@ -157,7 +171,7 @@ public:
 CoinSelectionTableModel::CoinSelectionTableModel(CWallet *wallet, WalletModel *parent) :
     QAbstractTableModel(parent), walletModel(parent), wallet(wallet), priv(0)
 {
-    columns << tr("Address") << tr("Balance");
+    columns << tr("Address") << tr("Amount");
     priv = new CoinSelectionTablePriv(wallet, walletModel, this);
     priv->refreshCoinSelectionTable();
 
@@ -166,7 +180,7 @@ CoinSelectionTableModel::CoinSelectionTableModel(CWallet *wallet, WalletModel *p
 
 void CoinSelectionTableModel::updateDisplayUnit()
 {
-    Q_EMIT dataChanged(index(0, Balance), index(priv->size()-1, Balance));
+    Q_EMIT dataChanged(index(0, Amount), index(priv->size()-1, Amount));
 }
 
 CoinSelectionTableModel::~CoinSelectionTableModel()
@@ -193,14 +207,14 @@ QVariant CoinSelectionTableModel::data(const QModelIndex &index, int role) const
 
     CoinSelectionTableEntry *rec = static_cast<CoinSelectionTableEntry*>(index.internalPointer());
 
-    if(role == Qt::DisplayRole)
+    if(role == Qt::DisplayRole || role == Qt::EditRole)
     {
         switch(index.column())
         {
         case Address:
             return rec->address;
-        case Balance:
-            return BitcoinUnits::format(walletModel->getOptionsModel()->getDisplayUnit(), rec->balance);
+        case Amount:
+            return BitcoinUnits::format(walletModel->getOptionsModel()->getDisplayUnit(), rec->amount);
         }
     }
     else if (role == Qt::FontRole)
@@ -257,6 +271,25 @@ QModelIndex CoinSelectionTableModel::index(int row, int column, const QModelInde
         return createIndex(row, column, priv->index(row));
     }
     return QModelIndex();
+}
+
+int CoinSelectionTableModel::lookupAddress(const QString &address) const
+{
+    QModelIndexList lst = match(index(0, Address, QModelIndex()),
+                                Qt::EditRole, address, 1, Qt::MatchExactly);
+    if(lst.isEmpty())
+    {
+        return -1;
+    }
+    else
+    {
+        return lst.at(0).row();
+    }
+}
+
+void CoinSelectionTableModel::emitDataChanged(int idx)
+{
+    Q_EMIT dataChanged(index(idx, 0, QModelIndex()), index(idx, columns.length()-1, QModelIndex()));
 }
 
 void CoinSelectionTableModel::refresh()

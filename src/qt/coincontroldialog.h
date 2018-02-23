@@ -44,7 +44,7 @@ class CoinControlDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit CoinControlDialog(const PlatformStyle *platformStyle, QWidget *parent = 0);
+    explicit CoinControlDialog(QWidget *parent);
     ~CoinControlDialog();
 
     void setModel(WalletModel *model);
@@ -68,8 +68,6 @@ private:
     QAction *copyTransactionHashAction;
     QAction *lockAction;
     QAction *unlockAction;
-
-    const PlatformStyle *platformStyle;
 
     void sortView(int, Qt::SortOrder);
     void updateView();

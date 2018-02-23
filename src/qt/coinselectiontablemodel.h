@@ -26,7 +26,7 @@ public:
 
     enum ColumnIndex {
         Address = 0,
-        Balance = 1
+        Amount = 1
     };
 
     enum RoleIndex {
@@ -46,11 +46,19 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const;
     /*@}*/
 
+    /* Look up row index of an address in the model.
+       Return -1 if not found.
+     */
+    int lookupAddress(const QString &address) const;
+
 private:
     WalletModel *walletModel;
     CWallet *wallet;
     CoinSelectionTablePriv *priv;
     QStringList columns;
+
+    /** Notify listeners that data changed. */
+    void emitDataChanged(int index);
 
 public Q_SLOTS:
     void updateDisplayUnit();

@@ -2,6 +2,10 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
+#if defined(HAVE_CONFIG_H)
+#include "config/bitcoin-config.h"
+#endif
+
 #include "coinselectiondialog.h"
 #include "ui_coinselectiondialog.h"
 
@@ -11,10 +15,10 @@
 #include "platformstyle.h"
 #include "walletmodel.h"
 
+#include <QMenu>
 #include <QSortFilterProxyModel>
 
-
-CoinSelectionDialog::CoinSelectionDialog(const PlatformStyle *platformStyle, QWidget *parent) :
+CoinSelectionDialog::CoinSelectionDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CoinSelectionDialog),
     model(0)
@@ -26,14 +30,80 @@ CoinSelectionDialog::CoinSelectionDialog(const PlatformStyle *platformStyle, QWi
 
     setWindowTitle(tr("CoinSelection transactions list"));
 
-    connect(ui->tableViewT, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(accept()));
+    // Context menu actions
+    QAction *copyZAddressAction = new QAction(tr("&Copy Address"), this);
+    QAction *copyZAmountAction = new QAction(tr("Copy &Amount"), this);
+
+    QAction *copyTAddressAction = new QAction(tr("&Copy Address"), this);
+    QAction *copyTAmountAction = new QAction(tr("Copy &Amount"), this);
+
+    // Build context menu
+    contextZMenu = new QMenu(this);
+    contextZMenu->addAction(copyZAddressAction);
+    contextZMenu->addAction(copyZAmountAction);
+    contextZMenu->addSeparator();
+
+    contextTMenu = new QMenu(this);
+    contextTMenu->addAction(copyTAddressAction);
+    contextTMenu->addAction(copyTAmountAction);
+    contextTMenu->addSeparator();
+
+    // Connect signals for context menu actions
+    connect(copyZAddressAction, SIGNAL(triggered()), this, SLOT(onCopyZAddressAction()));
+    connect(copyZAmountAction, SIGNAL(triggered()), this, SLOT(onCopyZAmountAction()));
+
+    connect(copyTAddressAction, SIGNAL(triggered()), this, SLOT(onCopyTAddressAction()));
+    connect(copyTAmountAction, SIGNAL(triggered()), this, SLOT(onCopyTAmountAction()));
+
+    connect(ui->tableViewZ, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextualZMenu(QPoint)));
+    connect(ui->tableViewT, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextualTMenu(QPoint)));
+
     connect(ui->tableViewZ, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(accept()));
+    connect(ui->tableViewT, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(accept()));
     connect(ui->closeButton, SIGNAL(clicked()), this, SLOT(accept()));
 }
 
 CoinSelectionDialog::~CoinSelectionDialog()
 {
     delete ui;
+}
+
+void CoinSelectionDialog::onCopyZAddressAction()
+{
+    GUIUtil::copyEntryData(ui->tableViewZ, CoinSelectionTableModel::Address);
+}
+
+void CoinSelectionDialog::onCopyZAmountAction()
+{
+    GUIUtil::copyEntryData(ui->tableViewZ, CoinSelectionTableModel::Amount);
+}
+
+void CoinSelectionDialog::onCopyTAddressAction()
+{
+    GUIUtil::copyEntryData(ui->tableViewT, CoinSelectionTableModel::Address);
+}
+
+void CoinSelectionDialog::onCopyTAmountAction()
+{
+    GUIUtil::copyEntryData(ui->tableViewT, CoinSelectionTableModel::Amount);
+}
+
+void CoinSelectionDialog::contextualZMenu(const QPoint &point)
+{
+    QModelIndex index = ui->tableViewZ->indexAt(point);
+    if(index.isValid())
+    {
+        contextZMenu->exec(QCursor::pos());
+    }
+}
+
+void CoinSelectionDialog::contextualTMenu(const QPoint &point)
+{
+    QModelIndex index = ui->tableViewT->indexAt(point);
+    if(index.isValid())
+    {
+        contextTMenu->exec(QCursor::pos());
+    }
 }
 
 void CoinSelectionDialog::setModel(WalletModel *model)
@@ -69,14 +139,14 @@ void CoinSelectionDialog::setModel(WalletModel *model)
     // Set column widths
 #if QT_VERSION < 0x050000
     ui->tableViewZ->horizontalHeader()->setResizeMode(CoinSelectionTableModel::Address, QHeaderView::Stretch);
-    ui->tableViewZ->horizontalHeader()->setResizeMode(CoinSelectionTableModel::Balance, QHeaderView::ResizeToContents);
+    ui->tableViewZ->horizontalHeader()->setResizeMode(CoinSelectionTableModel::Amount, QHeaderView::ResizeToContents);
     ui->tableViewT->horizontalHeader()->setResizeMode(CoinSelectionTableModel::Address, QHeaderView::Stretch);
-    ui->tableViewT->horizontalHeader()->setResizeMode(CoinSelectionTableModel::Balance, QHeaderView::ResizeToContents);
+    ui->tableViewT->horizontalHeader()->setResizeMode(CoinSelectionTableModel::Amount, QHeaderView::ResizeToContents);
 #else
     ui->tableViewZ->horizontalHeader()->setSectionResizeMode(CoinSelectionTableModel::Address, QHeaderView::Stretch);
-    ui->tableViewZ->horizontalHeader()->setSectionResizeMode(CoinSelectionTableModel::Balance, QHeaderView::ResizeToContents);
+    ui->tableViewZ->horizontalHeader()->setSectionResizeMode(CoinSelectionTableModel::Amount, QHeaderView::ResizeToContents);
     ui->tableViewT->horizontalHeader()->setSectionResizeMode(CoinSelectionTableModel::Address, QHeaderView::Stretch);
-    ui->tableViewT->horizontalHeader()->setSectionResizeMode(CoinSelectionTableModel::Balance, QHeaderView::ResizeToContents);
+    ui->tableViewT->horizontalHeader()->setSectionResizeMode(CoinSelectionTableModel::Amount, QHeaderView::ResizeToContents);
 #endif
 
     connect(ui->tableViewZ->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
@@ -134,8 +204,8 @@ void CoinSelectionDialog::done(int retval)
 
         QVariant address = index1.data();
         returnAddress = address.toString();
-        QVariant balance = index2.data();
-        returnAmount = balance.toString();
+        QVariant amount = index2.data();
+        returnAmount = amount.toString();
     }
 
     if(tableZ->selectionModel()->hasSelection())
@@ -147,8 +217,8 @@ void CoinSelectionDialog::done(int retval)
 
         QVariant address = index1.data();
         returnAddress = address.toString();
-        QVariant balance = index2.data();
-        returnAmount = balance.toString();
+        QVariant amount = index2.data();
+        returnAmount = amount.toString();
     }
 
     if(returnAddress.isEmpty())

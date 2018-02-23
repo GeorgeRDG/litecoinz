@@ -30,11 +30,12 @@ struct UnspentTableEntry
 
     Type type;
     QString address;
-    CAmount balance;
+    QString txid;
+    CAmount amount;
 
     UnspentTableEntry() {}
-    UnspentTableEntry(Type type, const QString &address, const CAmount &balance):
-        type(type), address(address), balance(balance) {}
+    UnspentTableEntry(Type type, const QString &address, const QString &txid, const CAmount &amount):
+        type(type), address(address), txid(txid), amount(amount) {}
 };
 
 struct UnspentTableEntryLessThan
@@ -97,6 +98,7 @@ public:
                     UnspentTableEntry::Type unspentType = translateUnspentType(QString::fromStdString("tunspent"));
                     cachedUnspentTable.append(UnspentTableEntry(unspentType,
                                                   QString::fromStdString(CBitcoinAddress(address).ToString()),
+                                                  QString::fromStdString(out.tx->GetHash().GetHex()),
                                                   CAmount(out.tx->vout[out.i].nValue)
                                              )
                     );
@@ -123,6 +125,7 @@ public:
                     UnspentTableEntry::Type unspentType = translateUnspentType(QString::fromStdString("zunspent"));
                     cachedUnspentTable.append(UnspentTableEntry(unspentType,
                                                   QString::fromStdString(CZCPaymentAddress(entry.address).ToString()),
+                                                  QString::fromStdString(entry.jsop.hash.ToString()),
                                                   CAmount(entry.plaintext.value)
                                              )
                     );
@@ -157,7 +160,7 @@ public:
 UnspentTableModel::UnspentTableModel(CWallet *wallet, WalletModel *parent) :
     QAbstractTableModel(parent), walletModel(parent), wallet(wallet), priv(0)
 {
-    columns << tr("Address") << tr("Balance");
+    columns << tr("Address") << tr("Txid") << tr("Amount");
     priv = new UnspentTablePriv(wallet, this);
     priv->refreshUnspentTable();
 
@@ -166,7 +169,7 @@ UnspentTableModel::UnspentTableModel(CWallet *wallet, WalletModel *parent) :
 
 void UnspentTableModel::updateDisplayUnit()
 {
-    Q_EMIT dataChanged(index(0, Balance), index(priv->size()-1, Balance));
+    Q_EMIT dataChanged(index(0, Amount), index(priv->size()-1, Amount));
 }
 
 UnspentTableModel::~UnspentTableModel()
@@ -193,14 +196,16 @@ QVariant UnspentTableModel::data(const QModelIndex &index, int role) const
 
     UnspentTableEntry *rec = static_cast<UnspentTableEntry*>(index.internalPointer());
 
-    if(role == Qt::DisplayRole)
+    if(role == Qt::DisplayRole || role == Qt::EditRole)
     {
         switch(index.column())
         {
         case Address:
             return rec->address;
-        case Balance:
-            return BitcoinUnits::format(walletModel->getOptionsModel()->getDisplayUnit(), rec->balance);
+        case Txid:
+            return rec->txid;
+        case Amount:
+            return BitcoinUnits::formatWithUnit(walletModel->getOptionsModel()->getDisplayUnit(), rec->amount);
         }
     }
     else if (role == Qt::FontRole)
@@ -259,10 +264,28 @@ QModelIndex UnspentTableModel::index(int row, int column, const QModelIndex &par
     return QModelIndex();
 }
 
+int UnspentTableModel::lookupAddress(const QString &address) const
+{
+    QModelIndexList lst = match(index(0, Address, QModelIndex()),
+                                Qt::EditRole, address, 1, Qt::MatchExactly);
+    if(lst.isEmpty())
+    {
+        return -1;
+    }
+    else
+    {
+        return lst.at(0).row();
+    }
+}
+
+void UnspentTableModel::emitDataChanged(int idx)
+{
+    Q_EMIT dataChanged(index(idx, 0, QModelIndex()), index(idx, columns.length()-1, QModelIndex()));
+}
+
 void UnspentTableModel::refresh()
 {
     Q_EMIT layoutAboutToBeChanged();
     priv->refreshUnspentTable();
     Q_EMIT layoutChanged();
 }
-

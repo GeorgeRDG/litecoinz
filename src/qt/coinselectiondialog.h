@@ -10,7 +10,6 @@
 #include <QDialog>
 
 class CoinSelectionTableModel;
-class PlatformStyle;
 
 namespace Ui {
     class CoinSelectionDialog;
@@ -18,6 +17,7 @@ namespace Ui {
 
 QT_BEGIN_NAMESPACE
 class QItemSelection;
+class QMenu;
 class QModelIndex;
 class QSortFilterProxyModel;
 class QTableView;
@@ -29,7 +29,7 @@ class CoinSelectionDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit CoinSelectionDialog(const PlatformStyle *platformStyle,  QWidget *parent = 0);
+    explicit CoinSelectionDialog(QWidget *parent);
     ~CoinSelectionDialog();
 
     void setModel(WalletModel *model);
@@ -44,17 +44,26 @@ private:
     QSortFilterProxyModel *proxyModelCoinSelectionT;
     QString returnAddress;
     QString returnAmount;
+    QMenu *contextZMenu;
+    QMenu *contextTMenu;
+
+private Q_SLOTS:
+    /** Set button states based on selected tab and selection */
+    void selectionCoinSelectionZChanged();
+    void selectionCoinSelectionTChanged();
+
+    void onCopyZAddressAction();
+    void onCopyZAmountAction();
+    void onCopyTAddressAction();
+    void onCopyTAmountAction();
+    void contextualZMenu(const QPoint &point);
+    void contextualTMenu(const QPoint &point);
 
 public Q_SLOTS:
     void done(int retval);
 
     /** Refresh table model */
     void refreshTableModel();
-
-private Q_SLOTS:
-    /** Set button states based on selected tab and selection */
-    void selectionCoinSelectionZChanged();
-    void selectionCoinSelectionTChanged();
 };
 
 #endif // BITCOIN_QT_COINSELECTIONDIALOG_H

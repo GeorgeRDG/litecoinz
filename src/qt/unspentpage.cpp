@@ -2,6 +2,10 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
+#if defined(HAVE_CONFIG_H)
+#include "config/bitcoin-config.h"
+#endif
+
 #include "unspentpage.h"
 #include "ui_unspentpage.h"
 
@@ -13,12 +17,16 @@
 #include "platformstyle.h"
 #include "walletmodel.h"
 
+#include <QIcon>
+#include <QMenu>
+#include <QMessageBox>
 #include <QSortFilterProxyModel>
 
 UnspentPage::UnspentPage(const PlatformStyle *platformStyle, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::UnspentPage),
-    model(0)
+    model(0),
+    platformStyle(platformStyle)
 {
     ui->setupUi(this);
 
@@ -26,11 +34,93 @@ UnspentPage::UnspentPage(const PlatformStyle *platformStyle, QWidget *parent) :
     ui->tableViewT->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     setWindowTitle(tr("Unspent transactions list"));
+
+    // Context menu actions
+    QAction *copyZAddressAction = new QAction(tr("&Copy Address"), this);
+    QAction *copyZTxidAction = new QAction(tr("Copy &Transaction ID"), this);
+    QAction *copyZAmountAction = new QAction(tr("Copy &Amount"), this);
+
+    QAction *copyTAddressAction = new QAction(tr("&Copy Address"), this);
+    QAction *copyTTxidAction = new QAction(tr("Copy &Transaction ID"), this);
+    QAction *copyTAmountAction = new QAction(tr("Copy &Amount"), this);
+
+    // Build context menu
+    contextZMenu = new QMenu(this);
+    contextZMenu->addAction(copyZAddressAction);
+    contextZMenu->addAction(copyZTxidAction);
+    contextZMenu->addAction(copyZAmountAction);
+    contextZMenu->addSeparator();
+
+    contextTMenu = new QMenu(this);
+    contextTMenu->addAction(copyTAddressAction);
+    contextTMenu->addAction(copyTTxidAction);
+    contextTMenu->addAction(copyTAmountAction);
+    contextTMenu->addSeparator();
+
+    // Connect signals for context menu actions
+    connect(copyZAddressAction, SIGNAL(triggered()), this, SLOT(onCopyZAddressAction()));
+    connect(copyZTxidAction, SIGNAL(triggered()), this, SLOT(onCopyZTxidAction()));
+    connect(copyZAmountAction, SIGNAL(triggered()), this, SLOT(onCopyZAmountAction()));
+
+    connect(copyTAddressAction, SIGNAL(triggered()), this, SLOT(onCopyTAddressAction()));
+    connect(copyTTxidAction, SIGNAL(triggered()), this, SLOT(onCopyTTxidAction()));
+    connect(copyTAmountAction, SIGNAL(triggered()), this, SLOT(onCopyTAmountAction()));
+
+    connect(ui->tableViewZ, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextualZMenu(QPoint)));
+    connect(ui->tableViewT, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextualTMenu(QPoint)));
 }
 
 UnspentPage::~UnspentPage()
 {
     delete ui;
+}
+
+void UnspentPage::onCopyZAddressAction()
+{
+    GUIUtil::copyEntryData(ui->tableViewZ, UnspentTableModel::Address);
+}
+
+void UnspentPage::onCopyZTxidAction()
+{
+    GUIUtil::copyEntryData(ui->tableViewZ, UnspentTableModel::Txid);
+}
+
+void UnspentPage::onCopyZAmountAction()
+{
+    GUIUtil::copyEntryData(ui->tableViewZ, UnspentTableModel::Amount);
+}
+
+void UnspentPage::onCopyTAddressAction()
+{
+    GUIUtil::copyEntryData(ui->tableViewT, UnspentTableModel::Address);
+}
+
+void UnspentPage::onCopyTTxidAction()
+{
+    GUIUtil::copyEntryData(ui->tableViewT, UnspentTableModel::Txid);
+}
+
+void UnspentPage::onCopyTAmountAction()
+{
+    GUIUtil::copyEntryData(ui->tableViewT, UnspentTableModel::Amount);
+}
+
+void UnspentPage::contextualZMenu(const QPoint &point)
+{
+    QModelIndex index = ui->tableViewZ->indexAt(point);
+    if(index.isValid())
+    {
+        contextZMenu->exec(QCursor::pos());
+    }
+}
+
+void UnspentPage::contextualTMenu(const QPoint &point)
+{
+    QModelIndex index = ui->tableViewT->indexAt(point);
+    if(index.isValid())
+    {
+        contextTMenu->exec(QCursor::pos());
+    }
 }
 
 void UnspentPage::setModel(WalletModel *model)
@@ -66,14 +156,18 @@ void UnspentPage::setModel(WalletModel *model)
     // Set column widths
 #if QT_VERSION < 0x050000
     ui->tableViewZ->horizontalHeader()->setResizeMode(UnspentTableModel::Address, QHeaderView::Stretch);
-    ui->tableViewZ->horizontalHeader()->setResizeMode(UnspentTableModel::Balance, QHeaderView::ResizeToContents);
+    ui->tableViewZ->horizontalHeader()->setResizeMode(UnspentTableModel::Txid, QHeaderView::ResizeToContents);
+    ui->tableViewZ->horizontalHeader()->setResizeMode(UnspentTableModel::Amount, QHeaderView::ResizeToContents);
     ui->tableViewT->horizontalHeader()->setResizeMode(UnspentTableModel::Address, QHeaderView::Stretch);
-    ui->tableViewT->horizontalHeader()->setResizeMode(UnspentTableModel::Balance, QHeaderView::ResizeToContents);
+    ui->tableViewT->horizontalHeader()->setResizeMode(UnspentTableModel::Txid, QHeaderView::ResizeToContents);
+    ui->tableViewT->horizontalHeader()->setResizeMode(UnspentTableModel::Amount, QHeaderView::ResizeToContents);
 #else
     ui->tableViewZ->horizontalHeader()->setSectionResizeMode(UnspentTableModel::Address, QHeaderView::Stretch);
-    ui->tableViewZ->horizontalHeader()->setSectionResizeMode(UnspentTableModel::Balance, QHeaderView::ResizeToContents);
+    ui->tableViewZ->horizontalHeader()->setSectionResizeMode(UnspentTableModel::Txid, QHeaderView::ResizeToContents);
+    ui->tableViewZ->horizontalHeader()->setSectionResizeMode(UnspentTableModel::Amount, QHeaderView::ResizeToContents);
     ui->tableViewT->horizontalHeader()->setSectionResizeMode(UnspentTableModel::Address, QHeaderView::Stretch);
-    ui->tableViewT->horizontalHeader()->setSectionResizeMode(UnspentTableModel::Balance, QHeaderView::ResizeToContents);
+    ui->tableViewT->horizontalHeader()->setSectionResizeMode(UnspentTableModel::Txid, QHeaderView::ResizeToContents);
+    ui->tableViewT->horizontalHeader()->setSectionResizeMode(UnspentTableModel::Amount, QHeaderView::ResizeToContents);
 #endif
 
     connect(ui->tableViewZ->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
